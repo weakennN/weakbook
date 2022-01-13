@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: '123456'
+    url: jdbc:mysql://localhost:3307/weakbook?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
