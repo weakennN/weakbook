@@ -1,5 +1,6 @@
 package com.weakennN.weakbook.controller;
 
+import com.weakennN.weakbook.binding.UserRegisterBinding;
 import com.weakennN.weakbook.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,17 @@ public class RegisterController {
 
     @GetMapping({"/", ""})
     public String getRegisterView(Model model) {
+        if (!model.containsAttribute("userRegisterBinding")) {
+            model.addAttribute("userRegisterBinding", new UserRegisterBinding());
+        }
+
         return "register";
     }
 
     @PostMapping("/registerUser")
-    public void registerUser() {
-        this.userService.registerUser();
+    public String registerUser(UserRegisterBinding userRegisterBinding) {
+        this.userService.registerUser(userRegisterBinding);
+
+        return "redirect:/index";
     }
 }
