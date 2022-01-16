@@ -25,6 +25,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register", "/login").anonymous()
                 .antMatchers("/").authenticated()
                 .and()
+                .rememberMe().alwaysRemember(true)
+                .and()
                 .formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")

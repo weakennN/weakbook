@@ -8,9 +8,10 @@
 </head>
 <body>
 
-<form th:action="@{/login/loginUser}">
+<form th:action="@{/login/loginUser}" th:method="post">
     <input th:name="email" type="text">
     <input th:name="password" type="text">
+    <button type="submit">Submit</button>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"

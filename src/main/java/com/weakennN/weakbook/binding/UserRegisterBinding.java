@@ -1,11 +1,28 @@
 package com.weakennN.weakbook.binding;
 
+import com.weakennN.weakbook.binding.validators.password.ConfirmPasswordValidatorConstraint;
+import com.weakennN.weakbook.binding.validators.password.PasswordValidatorConstraint;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@ConfirmPasswordValidatorConstraint
 public class UserRegisterBinding {
 
+    @NotNull
+    @NotBlank
     private String firstName;
+    @NotNull
+    @NotBlank
     private String lastName;
+    @NotNull
+    @Email
     private String email;
+    @PasswordValidatorConstraint
     private String password;
+    @NotNull
+    private String confirmPassword;
 
     public String getFirstName() {
         return firstName;
@@ -37,5 +54,13 @@ public class UserRegisterBinding {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
