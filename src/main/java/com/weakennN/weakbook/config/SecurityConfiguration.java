@@ -26,14 +26,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").authenticated()
                 .and()
                 .rememberMe().alwaysRemember(true)
+                .rememberMeCookieName("GHHa3Ags")
                 .and()
                 .formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/login/loginUser")
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true);
-        // TODO logout
+                .defaultSuccessUrl("/", true)
+                .and()
+                .logout()
+                .deleteCookies("JSESSIONID", "GHHa3Ags")
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true);
     }
 
     @Override

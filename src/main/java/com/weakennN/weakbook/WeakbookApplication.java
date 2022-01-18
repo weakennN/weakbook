@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class WeakbookApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WeakbookApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(WeakbookApplication.class, args);
+    }
 }

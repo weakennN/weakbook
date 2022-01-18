@@ -2,9 +2,8 @@ package com.weakennN.weakbook.entity;
 
 import org.springframework.lang.NonNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +21,8 @@ public class User extends BaseEntity {
     @NonNull
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
     @Column(name = "profile_picture")
     private String profilePicture = "";
     @Column(name = "banner_picture")

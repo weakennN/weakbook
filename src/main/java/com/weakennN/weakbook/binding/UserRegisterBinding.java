@@ -1,6 +1,7 @@
 package com.weakennN.weakbook.binding;
 
 import com.weakennN.weakbook.binding.validators.password.ConfirmPasswordValidatorConstraint;
+import com.weakennN.weakbook.binding.validators.password.NameValidatorConstraint;
 import com.weakennN.weakbook.binding.validators.password.PasswordValidatorConstraint;
 
 import javax.validation.constraints.Email;
@@ -12,9 +13,11 @@ public class UserRegisterBinding {
 
     @NotNull
     @NotBlank
+    @NameValidatorConstraint
     private String firstName;
     @NotNull
     @NotBlank
+    @NameValidatorConstraint
     private String lastName;
     @NotNull
     @Email
