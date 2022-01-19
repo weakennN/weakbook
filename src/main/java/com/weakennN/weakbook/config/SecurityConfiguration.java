@@ -22,6 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/static/js/**").permitAll()
                 .antMatchers("/register", "/login").anonymous()
                 .antMatchers("/").authenticated()
                 .and()
@@ -39,7 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID", "GHHa3Ags")
                 .clearAuthentication(true)
                 .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .and()
+                .csrf().disable().cors();
     }
 
     @Override
