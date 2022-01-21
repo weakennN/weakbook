@@ -12,6 +12,15 @@ public class PostPicture extends BaseEntity {
     @Column(name = "path")
     private String path;
 
+    public PostPicture() {
+
+    }
+
+    public PostPicture(Post post, String path) {
+        this.post = post;
+        this.path = path;
+    }
+
     public Post getPost() {
         return post;
     }

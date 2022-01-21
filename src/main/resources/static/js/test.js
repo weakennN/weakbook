@@ -7,7 +7,7 @@
     });
 
  */
-let data = {
+/*let data = {
     content: "content123"
 };
 $.ajax({
@@ -23,3 +23,6 @@ $.ajax({
         alert("error")
     }
 });
+
+ */
+
