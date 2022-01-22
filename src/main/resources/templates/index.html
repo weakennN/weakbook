@@ -11,12 +11,9 @@
 </head>
 <body>
 <div class="container-lg">
-    <div class="row">
-        <div class="col-md-3 col-12">
-
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="card post mb-2">
+    <div class="row d-flex justify-content-md-center">
+        <div class="col-md-6 col-12 p-0 m-0">
+            <div class="card post mb-3">
                 <div class="card-body">
                     <div class="d-flex flex-row">
                         <a href="#" class="mt-1" style="width: 40px;height: 40px;">
@@ -37,16 +34,16 @@
                 <div class="px-3">
                     <div class="d-flex mt-2">
                         <p class="mb-0">100 likes</p>
-                        <p class="ms-auto mb-0">100 Likes</p>
-                        <p class="ms-2 mb-0">40 Comments</p>
+                        <p class="ms-auto mb-0">40 Comments</p>
                     </div>
                     <hr class="mt-2 mb-0">
                     <div class="py-2">
-                        <input placeholder="Write a comment." style="border-radius: 20px" class="form-control" type="text">
+                        <input placeholder="Write a comment." style="border-radius: 20px" class="form-control"
+                               type="text">
                     </div>
                 </div>
             </div>
-            <div class="card post mb-2">
+            <div class="card post mb-3">
                 <div class="card-body">
                     <div class="d-flex flex-row">
                         <div class="mt-1" style="width: 40px;height: 40px;">
@@ -76,9 +73,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 col-12">
-
         </div>
     </div>
 </div>
@@ -119,7 +113,7 @@
             cache: false,
             timeout: 600000,
             success: function (data) {
-                alert(data.imagesUrls)
+                alert(data.userView.firstName)
             },
             error: function (e) {
                 alert(e);

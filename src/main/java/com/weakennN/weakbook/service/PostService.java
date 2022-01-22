@@ -3,11 +3,11 @@ package com.weakennN.weakbook.service;
 import com.weakennN.weakbook.binding.PostBinding;
 import com.weakennN.weakbook.entity.Post;
 import com.weakennN.weakbook.entity.PostPicture;
-import com.weakennN.weakbook.repository.PostPictureRepository;
-import com.weakennN.weakbook.repository.PostRepository;
-import com.weakennN.weakbook.repository.UserRepository;
+import com.weakennN.weakbook.entity.User;
+import com.weakennN.weakbook.repository.*;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.view.PostView;
+import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,22 +21,26 @@ public class PostService {
     private UserRepository userRepository;
     private DropBoxService dropBoxService;
     private ImageService imageService;
-    private PostPictureRepository postPictureRepository;
+    private CommentRepository commentRepository;
+    private PostLikeRepository postLikeRepository;
 
     public PostService(PostRepository postRepository, UserRepository userRepository
-            , DropBoxService dropBoxService, ImageService imageService, PostPictureRepository postPictureRepository) {
+            , DropBoxService dropBoxService, ImageService imageService
+            , CommentRepository commentRepository, PostLikeRepository postLikeRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.dropBoxService = dropBoxService;
         this.imageService = imageService;
-        this.postPictureRepository = postPictureRepository;
+        this.commentRepository = commentRepository;
+        this.postLikeRepository = postLikeRepository;
     }
 
     public PostView savePost(PostBinding postBinding) {
         ModelMapper mapper = new ModelMapper();
         Post post = mapper.map(postBinding, Post.class);
         ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setUser(this.userRepository.findByEmail(applicationUser.getEmail()).get());
+        User user = this.userRepository.findByEmail(applicationUser.getEmail()).get();
+        post.setUser(user);
 
         for (int i = 0; i < postBinding.getBase64Images().size(); i++) {
             String path = this.imageService.generateRandomUrl(30);
@@ -46,14 +50,21 @@ public class PostService {
         }
 
         this.postRepository.save(post);
-        return this.mapPost(post);
+        return this.mapPost(post, user);
     }
 
-    private PostView mapPost(Post post) {
+    private PostView mapPost(Post post, User user) {
+        ModelMapper mapper = new ModelMapper();
         PostView postView = new PostView();
-        postView.setContent(post.getContent());
+        postView
+                .setId(post.getId())
+                .setContent(post.getContent())
+                .setNumberComments(this.commentRepository.countCommentByPost(post))
+                .setNumberLikes(this.postLikeRepository.countPostLikeByPost(post))
+                .setUser(mapper.map(user, UserView.class));
+        postView.getUser().setProfilePictureUrl(user.getProfilePicture());
         for (PostPicture postPicture : post.getPictures()) {
-            System.out.println(this.dropBoxService.getImageUrl(postPicture.getPath()));
+            // System.out.println(this.dropBoxService.getImageUrl(postPicture.getPath()));
             postView.addImageUrl(this.dropBoxService.getImageUrl(postPicture.getPath()));
         }
 
