@@ -17,9 +17,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UserRepository userRepository;
+    private DropBoxService dropBoxService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, DropBoxService dropBoxService) {
         this.userRepository = userRepository;
+        this.dropBoxService = dropBoxService;
     }
 
     public void registerUser(UserRegisterBinding userRegisterBinding) {
@@ -27,9 +29,12 @@ public class UserService {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         User user = modelMapper.map(userRegisterBinding, User.class);
         user.setPassword(bCryptPasswordEncoder.encode(userRegisterBinding.getPassword()));
-        this.userRepository.save(user);
+        user = this.userRepository.save(user);
         ApplicationUser applicationUser = ApplicationUserService.map(user);
         Authentication authentication = new UsernamePasswordAuthenticationToken(applicationUser, applicationUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        this.dropBoxService.createFolder("/users/user-" + user.getId());
+        this.dropBoxService.createFolder("/users/user-" + user.getId() + "/images");
     }
 }

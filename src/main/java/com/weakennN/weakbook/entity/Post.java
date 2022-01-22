@@ -40,4 +40,8 @@ public class Post extends BaseEntity {
     public void addPicture(PostPicture postPicture) {
         this.pictures.add(postPicture);
     }
+
+    public List<PostPicture> getPictures() {
+        return this.pictures;
+    }
 }
