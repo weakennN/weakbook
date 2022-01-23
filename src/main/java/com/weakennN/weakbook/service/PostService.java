@@ -41,18 +41,13 @@ public class PostService {
         ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = this.userRepository.findByEmail(applicationUser.getEmail()).get();
         post.setUser(user);
-
-        for (int i = 0; i < postBinding.getBase64Images().size(); i++) {
-            String path = this.imageService.generateRandomUrl(30);
-            this.dropBoxService.upload(path, Base64.getDecoder().decode(postBinding.getBase64Images().get(i)));
-            PostPicture postPicture = new PostPicture(post, path);
-            post.addPicture(postPicture);
-        }
-
+        this.addPicturesToPost(postBinding, post);
         this.postRepository.save(post);
+
         return this.mapPost(post, user);
     }
 
+    // TODO: improve the mapping
     private PostView mapPost(Post post, User user) {
         ModelMapper mapper = new ModelMapper();
         PostView postView = new PostView();
@@ -69,5 +64,14 @@ public class PostService {
         }
 
         return postView;
+    }
+
+    private void addPicturesToPost(PostBinding postBinding, Post post) {
+        for (int i = 0; i < postBinding.getBase64Images().size(); i++) {
+            String path = this.imageService.generateRandomUrl(30);
+            this.dropBoxService.upload(path, Base64.getDecoder().decode(postBinding.getBase64Images().get(i)));
+            PostPicture postPicture = new PostPicture(post, path);
+            post.addPicture(postPicture);
+        }
     }
 }

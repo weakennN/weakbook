@@ -16,6 +16,8 @@ public class Post extends BaseEntity {
     private List<PostLike> likes = new ArrayList<>();
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostPicture> pictures = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     public String getContent() {
         return content;
@@ -43,5 +45,9 @@ public class Post extends BaseEntity {
 
     public List<PostPicture> getPictures() {
         return this.pictures;
+    }
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
     }
 }
