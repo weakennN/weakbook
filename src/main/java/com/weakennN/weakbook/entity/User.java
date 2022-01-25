@@ -3,6 +3,7 @@ package com.weakennN.weakbook.entity;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,10 @@ public class User extends BaseEntity {
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Friend> friends = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<FriendRequest> friendRequests = new ArrayList<>();
     @Column(name = "profile_picture")
     private String profilePicture = "";
     @Column(name = "banner_picture")
