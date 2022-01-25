@@ -103,21 +103,39 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
+        /*  $.ajax({
+              type: "POST",
+              contentType: "application/json",
+              url: "/",
+              data: JSON.stringify({
+                  postId: 16,
+                  replyTo: 4,
+                  comment: "comment to post"
+              }),
+              dataType: 'json',
+              cache: false,
+              timeout: 600000,
+              success: function (data) {
+                  alert(Object.keys(data));
+              },
+              error: function (e) {
+                  alert(e);
+              }
+          });
+
+         */
         $.ajax({
-            type: "POST",
+            type: "GET",
             contentType: "application/json",
-            url: "/comment",
-            data: JSON.stringify({
-                postId: 16,
-                replyTo: 4,
-                comment: "comment to post"
-            }),
+            url: "/getPosts",
             dataType: 'json',
             cache: false,
             timeout: 600000,
             success: function (data) {
-                alert(Object.keys(data));
+                for (const value of data) {
+                    console.log(value)
+                }
             },
             error: function (e) {
                 alert(e);

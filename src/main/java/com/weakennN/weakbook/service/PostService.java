@@ -11,7 +11,9 @@ import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -74,5 +76,19 @@ public class PostService {
             PostPicture postPicture = new PostPicture(post, path);
             post.addPicture(postPicture);
         }
+    }
+    
+    // TODO: maybe cache views
+    public List<PostView> getPosts() {
+        ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = this.userRepository.findByEmail(applicationUser.getEmail()).get();
+        List<Post> posts = this.postRepository.findAllByUser(user.getId());
+        List<PostView> result = new ArrayList<>();
+
+        for (Post post : posts) {
+            result.add(this.mapPost(post, this.userRepository.findById(post.getUser().getId()).get()));
+        }
+
+        return result;
     }
 }

@@ -1,9 +1,12 @@
 package com.weakennN.weakbook;
 
+import com.weakennN.weakbook.entity.Post;
 import com.weakennN.weakbook.repository.PostRepository;
 import com.weakennN.weakbook.service.CommentService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class DBInit implements CommandLineRunner {
@@ -18,6 +21,8 @@ public class DBInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        List<Post> friends = this.postRepository.findAllByUser(5L);
+        System.out.println();
       //  System.out.println(this.commentService.getCountComments(this.postRepository.findAllByContent("content123").get(0)));
     }
 }
