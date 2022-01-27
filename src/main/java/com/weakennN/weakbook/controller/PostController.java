@@ -29,6 +29,6 @@ public class PostController {
     @GetMapping(value = "/getPosts", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<PostView>> getPosts(@RequestParam("passedPosts") int passedPosts) {
-        return new ResponseEntity<>(this.postService.getPosts(), HttpStatus.OK);
+        return new ResponseEntity<>(this.postService.getPosts(passedPosts), HttpStatus.OK);
     }
 }

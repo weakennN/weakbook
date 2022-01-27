@@ -12,7 +12,7 @@
 <body>
 <div class="container-lg">
     <div class="row d-flex justify-content-md-center">
-        <div class="col-md-6 col-12 p-0 m-0">
+        <div class="col-md-6 col-12 p-0 m-0" id="posts">
             <div class="card post mb-3">
                 <div class="card-body">
                     <div class="d-flex flex-row">
@@ -178,11 +178,11 @@
             </div>
             <div class="modal-body">
                 <textarea class="form-control" rows="3" id="post-content"></textarea>
-                <input class="form-control" type="file" id="testFile" multiple>
+                <input class="form-control" type="file" id="add-post-pictures" multiple>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="post()">Post</button>
+                <button type="button" class="btn btn-primary" onclick="Post.post()">Post</button>
             </div>
         </div>
     </div>
@@ -194,115 +194,7 @@
         crossorigin="anonymous"></script>
 <script src="/static/js/AjaxManager.js"></script>
 <script src="/static/js/Post.js"></script>
-<script>
-    $(document).ready(function () {
-        /*  $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              url: "/",
-              data: JSON.stringify({
-                  postId: 16,
-                  replyTo: 4,
-                  comment: "comment to post"
-              }),
-              dataType: 'json',
-              cache: false,
-              timeout: 600000,
-              success: function (data) {
-                  alert(Object.keys(data));
-              },
-              error: function (e) {
-                  alert(e);
-              }
-          });
-
-         */
-        /*$.ajax({
-            type: "GET",
-            contentType: "application/json",
-            url: "/getPosts",
-            dataType: 'json',
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-                for (const value of data) {
-                    console.log(value)
-                }
-            },
-            error: function (e) {
-                alert(e);
-            }
-        });
-
-         */
-
-        $(window).scroll(function () {
-            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-                console.log($(window).scrollTop() + " " + $(window).height() + " " + $(document).height())
-            }
-        });
-
-        let post = new Post();
-        post.getPosts();
-    })
-
-    function post() {
-        let content = document.getElementById("post-content").value;
-        let data = {
-            base64Images: images,
-            content: content
-        }
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "/savePost",
-            data: JSON.stringify(data),
-            dataType: 'json',
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-                alert(data.userView.firstName)
-            },
-            error: function (e) {
-                alert(e);
-            }
-        });
-    }
-
-    let images = [];
-
-    function readAsBites(file) {
-        return new Promise(function (resolve, reject) {
-            let fr = new FileReader();
-
-            fr.onload = function () {
-                resolve(fr.result);
-            };
-
-            fr.onerror = function () {
-                reject(fr);
-            };
-
-            fr.readAsDataURL(file);
-        });
-    }
-
-    document.getElementById("testFile").addEventListener("change", function (ev) {
-        let files = ev.currentTarget.files;
-        let readers = [];
-
-        if (!files.length) return;
-
-        for (let i = 0; i < files.length; i++) {
-            readers.push(readAsBites(files[i]));
-        }
-
-        Promise.all(readers).then((values) => {
-            for (const value of values) {
-                images.push(value.split(",")[1]);
-            }
-        });
-    }, false);
-</script>
+<script src="/static/js/ImageEncode.js"></script>
+<script src="/static/js/Index.js"></script>
 </body>
 </html>

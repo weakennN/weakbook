@@ -21,8 +21,9 @@ public class DBInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        List<Post> friends = this.postRepository.findAllByUser(5L);
+       /* List<Post> posts = this.postRepository.findAllByUser(5L,5);
         System.out.println();
-      //  System.out.println(this.commentService.getCountComments(this.postRepository.findAllByContent("content123").get(0)));
+        System.out.println(this.commentService.getCountComments(this.postRepository.findAllByContent("content123").get(0)));
+        */
     }
 }

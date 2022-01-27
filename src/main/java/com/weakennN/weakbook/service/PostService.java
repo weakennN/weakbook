@@ -78,10 +78,10 @@ public class PostService {
     }
 
     // TODO: maybe cache views
-    public List<PostView> getPosts() {
+    public List<PostView> getPosts(int passedPosts) {
         ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = this.userRepository.findByEmail(applicationUser.getEmail()).get();
-        List<Post> posts = this.postRepository.findAllByUser(user.getId());
+        List<Post> posts = this.postRepository.findAllByUser(user.getId(), passedPosts);
         List<PostView> result = new ArrayList<>();
 
         for (Post post : posts) {
