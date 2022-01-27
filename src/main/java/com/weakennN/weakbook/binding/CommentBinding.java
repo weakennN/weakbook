@@ -1,10 +1,14 @@
 package com.weakennN.weakbook.binding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommentBinding {
 
     private String comment;
     private Long replyTo;
     private Long postId;
+    private List<String> pictureUrls = new ArrayList<>();
 
     public String getComment() {
         return comment;
@@ -28,5 +32,9 @@ public class CommentBinding {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public List<String> getPictureUrls() {
+        return this.pictureUrls;
     }
 }

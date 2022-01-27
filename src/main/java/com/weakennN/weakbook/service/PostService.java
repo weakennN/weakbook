@@ -11,7 +11,6 @@ import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -77,7 +76,7 @@ public class PostService {
             post.addPicture(postPicture);
         }
     }
-    
+
     // TODO: maybe cache views
     public List<PostView> getPosts() {
         ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

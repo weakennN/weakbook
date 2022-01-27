@@ -1,5 +1,6 @@
 package com.weakennN.weakbook.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommentView {
@@ -7,6 +8,7 @@ public class CommentView {
     private UserView user;
     private String comment;
     private List<CommentView> replies;
+    private List<String> pictureUrls = new ArrayList<>();
 
     public UserView getUser() {
         return user;
@@ -30,5 +32,9 @@ public class CommentView {
 
     public void setReplies(List<CommentView> replies) {
         this.replies = replies;
+    }
+
+    public void addPictureUrl(String pictureUrl) {
+        this.pictureUrls.add(pictureUrl);
     }
 }
