@@ -8,6 +8,7 @@ public class PostView {
     private Long id;
     private UserView user;
     private String content;
+    private List<CommentView> comments = new ArrayList<>();
     private List<String> imagesUrls = new ArrayList<>();
     private int numberLikes;
     private int numberComments;
@@ -68,5 +69,17 @@ public class PostView {
     public PostView setNumberComments(int numberComments) {
         this.numberComments = numberComments;
         return this;
+    }
+
+    public void addComment(CommentView commentView) {
+        this.comments.add(commentView);
+    }
+
+    public List<CommentView> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentView> comments) {
+        this.comments = comments;
     }
 }

@@ -8,9 +8,8 @@ import com.weakennN.weakbook.repository.CommentRepository;
 import com.weakennN.weakbook.repository.PostRepository;
 import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
+import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.CommentView;
-import com.weakennN.weakbook.view.UserView;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -49,17 +48,7 @@ public class CommentService {
             this.commentRepository.addReply(parentComment.getId(), comment.getId());
         }
 
-        return this.mapToCommentView(commentBinding, user);
+        return ViewMapper.mapToCommentView(commentBinding, user);
     }
 
-    private CommentView mapToCommentView(CommentBinding commentBinding, User user) {
-        ModelMapper mapper = new ModelMapper();
-        CommentView commentView = new CommentView();
-        commentView.setComment(commentBinding.getComment());
-        commentView.setUser(mapper.map(user, UserView.class));
-
-        // TODO: add replies mapping
-
-        return commentView;
-    }
 }

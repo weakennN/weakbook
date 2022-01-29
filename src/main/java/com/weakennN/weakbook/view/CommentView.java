@@ -7,7 +7,7 @@ public class CommentView {
 
     private UserView user;
     private String comment;
-    private List<CommentView> replies;
+    private List<CommentView> replies = new ArrayList<>();
     private List<String> pictureUrls = new ArrayList<>();
 
     public UserView getUser() {
@@ -36,5 +36,9 @@ public class CommentView {
 
     public void addPictureUrl(String pictureUrl) {
         this.pictureUrls.add(pictureUrl);
+    }
+
+    public void addReply(CommentView reply) {
+        this.replies.add(reply);
     }
 }

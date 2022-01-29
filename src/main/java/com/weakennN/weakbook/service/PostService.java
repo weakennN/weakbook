@@ -6,6 +6,7 @@ import com.weakennN.weakbook.entity.PostPicture;
 import com.weakennN.weakbook.entity.User;
 import com.weakennN.weakbook.repository.*;
 import com.weakennN.weakbook.security.ApplicationUser;
+import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.PostView;
 import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
@@ -46,26 +47,7 @@ public class PostService {
         this.addPicturesToPost(postBinding, post);
         this.postRepository.save(post);
 
-        return this.mapPost(post, user);
-    }
-
-    // TODO: improve the mapping
-    private PostView mapPost(Post post, User user) {
-        ModelMapper mapper = new ModelMapper();
-        PostView postView = new PostView();
-        postView
-                .setId(post.getId())
-                .setContent(post.getContent())
-                .setNumberComments(this.commentRepository.countCommentByPost(post))
-                .setNumberLikes(this.postLikeRepository.countPostLikeByPost(post))
-                .setUser(mapper.map(user, UserView.class));
-        postView.getUser().setProfilePictureUrl(user.getProfilePicture());
-        for (PostPicture postPicture : post.getPictures()) {
-            // System.out.println(this.dropBoxService.getImageUrl(postPicture.getPath()));
-            postView.addImageUrl(this.dropBoxService.getImageUrl(postPicture.getPath()));
-        }
-
-        return postView;
+        return ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository, user, this.dropBoxService);
     }
 
     private void addPicturesToPost(PostBinding postBinding, Post post) {
@@ -85,9 +67,16 @@ public class PostService {
         List<PostView> result = new ArrayList<>();
 
         for (Post post : posts) {
-            result.add(this.mapPost(post, this.userRepository.findById(post.getUser().getId()).get()));
+            result.add(ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository,
+                    this.userRepository.findById(post.getUser().getId()).get(), this.dropBoxService));
         }
 
         return result;
+    }
+
+    public PostView getPost(Long postId) {
+        Post post = this.postRepository.findById(postId).get();
+        return ViewMapper.mapToPostView(post, this.commentRepository,
+                this.postLikeRepository, post.getUser(), this.dropBoxService);
     }
 }

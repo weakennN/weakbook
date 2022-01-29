@@ -18,8 +18,8 @@ public class Comment extends BaseEntity {
             name = "replies",
             joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "reply_id"))
-    @OneToMany
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> replies = new ArrayList<>();
 
     public String getComment() {
         return comment;
@@ -46,6 +46,10 @@ public class Comment extends BaseEntity {
     }
 
     public void addReply(Comment comment) {
-        this.comments.add(comment);
+        this.replies.add(comment);
+    }
+
+    public List<Comment> getReplies() {
+        return this.replies;
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
@@ -18,4 +20,10 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Transactional
     @Query(value = "INSERT INTO replies (comment_id, reply_id) VALUES (:commentId, :replyId)", nativeQuery = true)
     void addReply(@Param("commentId") Long commentId, @Param("replyId") Long replyId);
+
+    @Query(value = "SELECT * FROM `comments` where `post_id` = :postId limit 10", nativeQuery = true)
+    List<Comment> getCommentsByPostId(@Param("postId") Long postId);
+
+    @Query(value = "SELECT * FROM comments e JOIN replies r ON e.id = r.reply_id WHERE r.comment_id = ?1 LIMIT 5", nativeQuery = true)
+    List<Comment> getReplies(Long comment_id);
 }

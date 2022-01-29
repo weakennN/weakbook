@@ -31,4 +31,10 @@ public class PostController {
     public ResponseEntity<List<PostView>> getPosts(@RequestParam("passedPosts") int passedPosts) {
         return new ResponseEntity<>(this.postService.getPosts(passedPosts), HttpStatus.OK);
     }
+
+    @GetMapping("/post/{postId}")
+    @ResponseBody
+    public ResponseEntity<PostView> getPostView(@PathVariable("postId") Long postId) {
+        return new ResponseEntity<>(this.postService.getPost(postId), HttpStatus.OK);
+    }
 }
