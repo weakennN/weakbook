@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,9 +33,15 @@ public class PostController {
         return new ResponseEntity<>(this.postService.getPosts(passedPosts), HttpStatus.OK);
     }
 
-    @GetMapping("/post/{postId}")
+    @GetMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<PostView> getPostView(@PathVariable("postId") Long postId) {
         return new ResponseEntity<>(this.postService.getPost(postId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/post/{postId}")
+    public String getPostView(@PathVariable Long postId, Model model) {
+        model.addAttribute("post", this.postService.getPost(postId));
+        return "post";
     }
 }

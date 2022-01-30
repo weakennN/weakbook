@@ -7,3 +7,5 @@ $(window).scroll(function () {
 AjaxManager.request("/post/16", {}, "GET", function (data) {
     console.log(data);
 })
+
+window.history.pushState("", "", '/post/16');

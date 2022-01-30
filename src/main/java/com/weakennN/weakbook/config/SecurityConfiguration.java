@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/static/js/**").permitAll()
                 .antMatchers("/register", "/login").anonymous()
-                .antMatchers("/").authenticated()
+              //  .antMatchers("/**").authenticated()
                 .and()
                 .rememberMe().alwaysRemember(true)
                 .rememberMeCookieName("GHHa3Ags")
