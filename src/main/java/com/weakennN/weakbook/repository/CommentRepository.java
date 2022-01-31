@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT * FROM `comments` where `post_id` = :postId limit 10", nativeQuery = true)
     List<Comment> getCommentsByPostId(@Param("postId") Long postId);
 
-    @Query(value = "SELECT * FROM comments e JOIN replies r ON e.id = r.reply_id WHERE r.comment_id = ?1 LIMIT 5", nativeQuery = true)
-    List<Comment> getReplies(Long comment_id);
+    @Query(value = "SELECT * FROM comments e JOIN replies r ON e.id = r.reply_id WHERE r.comment_id = ?1 LIMIT 5 OFFSET ?2", nativeQuery = true)
+    List<Comment> getReplies(Long commentId, int offset);
+
+    @Query(value = "SELECT COUNT(comment_id) FROM replies WHERE comment_id = ?1", nativeQuery = true)
+    Long getCountReplies(Long commentId);
 }

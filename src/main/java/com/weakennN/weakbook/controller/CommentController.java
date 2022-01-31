@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -24,5 +24,11 @@ public class CommentController {
     @ResponseBody
     public ResponseEntity<CommentView> comment(@RequestBody CommentBinding commentBinding) {
         return new ResponseEntity<>(this.commentService.comment(commentBinding), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getComments/{comment_id}")
+    @ResponseBody
+    public ResponseEntity<List<CommentView>> getComments(@PathVariable("comment_id") Long commentId, @RequestParam("offset") int offset) {
+        return new ResponseEntity<>(this.commentService.getComments(commentId, offset), HttpStatus.OK);
     }
 }

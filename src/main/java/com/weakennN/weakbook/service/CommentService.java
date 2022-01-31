@@ -13,6 +13,9 @@ import com.weakennN.weakbook.view.CommentView;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentService {
 
@@ -51,4 +54,14 @@ public class CommentService {
         return ViewMapper.mapToCommentView(commentBinding, user);
     }
 
+    public List<CommentView> getComments(Long commentId, int offset) {
+        List<Comment> comments = this.commentRepository.getReplies(commentId, offset);
+        List<CommentView> result = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            result.add(ViewMapper.mapToCommentView(comment, this.commentRepository));
+        }
+
+        return result;
+    }
 }
