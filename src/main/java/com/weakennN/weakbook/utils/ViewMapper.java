@@ -49,11 +49,17 @@ public class ViewMapper {
 
     public static CommentView mapToCommentView(Comment comment, CommentRepository commentRepository) {
         CommentView commentView = new CommentView();
+        Long countReplies = commentRepository.getCountReplies(comment.getId());
         commentView
                 .setComment(comment.getComment())
                 .setUser(mapper.map(comment.getUser(), UserView.class))
-                .setCountReplies(commentRepository.getCountReplies(comment.getId()))
+                .setCountReplies(countReplies)
                 .setId(comment.getId());
+
+        if (countReplies > 0) {
+            commentView.setHasMoreReplies(true);
+        }
+
      /*  for (Comment reply : commentRepository.getReplies(comment.getId())) {
             commentView.addReply(mapToCommentView(reply, commentRepository));
         }

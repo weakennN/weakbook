@@ -10,6 +10,7 @@ public class CommentView {
     private String comment;
     private List<CommentView> replies = new ArrayList<>();
     private List<String> pictureUrls = new ArrayList<>();
+    private boolean hasMoreReplies;
     private Long countReplies;
 
     public UserView getUser() {
@@ -63,5 +64,22 @@ public class CommentView {
 
     public Long getId() {
         return this.id;
+    }
+
+    public List<String> getPictureUrls() {
+        return pictureUrls;
+    }
+
+    public void setPictureUrls(List<String> pictureUrls) {
+        this.pictureUrls = pictureUrls;
+    }
+
+    public boolean isHasMoreReplies() {
+        return hasMoreReplies;
+    }
+
+    public CommentView setHasMoreReplies(boolean hasMoreReplies) {
+        this.hasMoreReplies = hasMoreReplies;
+        return this;
     }
 }

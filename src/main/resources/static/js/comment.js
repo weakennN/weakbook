@@ -12,6 +12,18 @@ class Comment {
     }
 
     createComment(comment, storeElement = false) {
+        let hasMoreCommentsElement = null;
+        console.log(comment);
+        if (comment.hasMoreReplies) {
+            hasMoreCommentsElement = $("<p>View more comments</p>").get(0);
+            let commentClass = this;
+            console.log(hasMoreCommentsElement);
+            hasMoreCommentsElement.addEventListener("click", function () {
+                AjaxManager.request("/getComments/4?" + "offset=0", {}, "GET", function (comments) {
+                    commentClass.#loadComments(comments);
+                });
+            });
+        }
         let commentElement = $(`<div class="comment" id="comment-${comment.id}">
                     <div class="d-flex flex-row">
                         <img style="width: 60px;height: 60px;border-radius: 50%"
@@ -20,8 +32,13 @@ class Comment {
                         <p class="ms-2">${comment.user.firstName + " " + comment.user.lastName}</p>
                     </div>
                     <p class="mt-2">${comment.comment}</p>
+                 <div class="replies" style="display: none">
+                       
+                </div>
                 </div>`).get(0);
-
+        if (hasMoreCommentsElement != null){
+            commentElement.getElementsByClassName("replies").item(0).appendChild(hasMoreCommentsElement);
+        }
         if (storeElement) {
             this.#commentElement = commentElement;
         }
@@ -40,15 +57,21 @@ class Comment {
         repliesElement.addEventListener("click", function (event) {
             func(event, commentClass);
         })
-        this.#commentElement.appendChild(repliesElement);
+        this.#commentElement.getElementsByClassName("replies").item(0).before(repliesElement);
     }
 
     #replyElementActon(event, commentClass) {
         AjaxManager.request("/getComments/4?" + "offset=0", {}, "GET", function (comments) {
-            for (let comment of comments) {
-                commentClass.#commentElement.appendChild(commentClass.createComment(comment))
-            }
-            commentClass.#currentOffset += comments.length;
+            commentClass.#loadComments(comments);
+            commentClass.#commentElement.getElementsByClassName("replies").item(0).style.display = "block";
         });
+    }
+
+    #loadComments(comments) {
+        for (let comment of comments) {
+            this.#commentElement.getElementsByClassName("replies")
+                .item(0).appendChild(this.createComment(comment))
+        }
+        this.#currentOffset += comments.length;
     }
 }
