@@ -6,6 +6,7 @@ import java.util.List;
 public class CommentView {
 
     private Long id;
+    private Long postId;
     private UserView user;
     private String comment;
     private List<CommentView> replies = new ArrayList<>();
@@ -80,6 +81,15 @@ public class CommentView {
 
     public CommentView setHasMoreReplies(boolean hasMoreReplies) {
         this.hasMoreReplies = hasMoreReplies;
+        return this;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public CommentView setPostId(Long postId) {
+        this.postId = postId;
         return this;
     }
 }

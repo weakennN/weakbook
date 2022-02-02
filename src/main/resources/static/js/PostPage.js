@@ -3,7 +3,7 @@ $(document).ready(function () {
         // $("#comments").append(createComments(data.comments));
         for (let commentData of data.comments) {
             let comment = new Comment(commentData);
-            $("#comments").append(comment.createComment(commentData, true));
+            $("#comments").append(comment.createComment(commentData));
         }
     })
 })

@@ -33,28 +33,31 @@ public class ViewMapper {
         }
 
         for (Comment comment : commentRepository.getCommentsByPostId(post.getId())) {
-            postView.addComment(mapToCommentView(comment, commentRepository));
+            postView.addComment(mapToCommentView(comment, post, commentRepository));
         }
 
         return postView;
     }
 
-    public static CommentView mapToCommentView(CommentBinding commentBinding, User user) {
+    public static CommentView mapToCommentView(CommentBinding commentBinding, Post post, User user) {
         CommentView commentView = new CommentView();
-        commentView.setComment(commentBinding.getComment());
-        commentView.setUser(mapper.map(user, UserView.class));
+        commentView.
+                setComment(commentBinding.getComment())
+                .setUser(mapper.map(user, UserView.class))
+                .setPostId(post.getId());
 
         return commentView;
     }
 
-    public static CommentView mapToCommentView(Comment comment, CommentRepository commentRepository) {
+    public static CommentView mapToCommentView(Comment comment, Post post, CommentRepository commentRepository) {
         CommentView commentView = new CommentView();
         Long countReplies = commentRepository.getCountReplies(comment.getId());
         commentView
                 .setComment(comment.getComment())
                 .setUser(mapper.map(comment.getUser(), UserView.class))
                 .setCountReplies(countReplies)
-                .setId(comment.getId());
+                .setId(comment.getId())
+                .setPostId(post.getId());
 
         if (countReplies > 0) {
             commentView.setHasMoreReplies(true);

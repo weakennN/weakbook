@@ -1,7 +1,6 @@
 package com.weakennN.weakbook.repository;
 
 import com.weakennN.weakbook.entity.Post;
-import com.weakennN.weakbook.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "order by created desc\n" +
             "limit 7 offset :passedPosts", nativeQuery = true)
     List<Post> findAllByUser(@Param("userId") Long userId, @Param("passedPosts") int passedPosts);
+
+    @Query(value = "SELECT * FROM posts p JOIN comments c ON p.id = c.post_id where post_id = 16 LIMIT ?1", nativeQuery = true)
+    Post findByCommentId(Long commentId);
 }
