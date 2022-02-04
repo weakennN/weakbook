@@ -54,12 +54,24 @@ public class CommentService {
         return ViewMapper.mapToCommentView(commentBinding, post, user);
     }
 
-    public List<CommentView> getComments(Long commentId, int offset) {
+    public List<CommentView> getReplies(Long commentId, int offset) {
         List<Comment> comments = this.commentRepository.getReplies(commentId, offset);
         List<CommentView> result = new ArrayList<>();
 
         for (Comment comment : comments) {
             result.add(ViewMapper.mapToCommentView(comment, this.postRepository.findByCommentId(commentId), this.commentRepository));
+        }
+
+        return result;
+    }
+
+    public List<CommentView> getPostComments(Long postId, int offset) {
+        List<Comment> comments = this.commentRepository.getCommentsByPostId(postId, offset);
+        Post post = this.postRepository.findById(postId).get();
+        List<CommentView> result = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            result.add(ViewMapper.mapToCommentView(comment, post, this.commentRepository));
         }
 
         return result;

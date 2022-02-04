@@ -32,7 +32,7 @@ public class ViewMapper {
             postView.addImageUrl(dropBoxService.getImageUrl(postPicture.getPath()));
         }
 
-        for (Comment comment : commentRepository.getCommentsByPostId(post.getId())) {
+        for (Comment comment : commentRepository.getCommentsByPostId(post.getId(), 0)) {
             postView.addComment(mapToCommentView(comment, post, commentRepository));
         }
 
@@ -62,12 +62,6 @@ public class ViewMapper {
         if (countReplies > 0) {
             commentView.setHasMoreReplies(true);
         }
-
-     /*  for (Comment reply : commentRepository.getReplies(comment.getId())) {
-            commentView.addReply(mapToCommentView(reply, commentRepository));
-        }
-
-      */
 
         return commentView;
     }

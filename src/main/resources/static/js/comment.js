@@ -29,7 +29,7 @@ class Comment {
                                             </div>
                                         </div>
                                     </div>`).get(0);
-
+// TODO function thay inits like, likes, and reply buttons
         let replyElement = $("<span>Reply</span>").get(0);
         let replyContainer = this.#repliesElement;
         replyElement.onclick = function () {
@@ -43,7 +43,7 @@ class Comment {
             let hasMoreCommentsElement = $("<p>View more comments</p>").get(0);
             let commentClass = this;
             hasMoreCommentsElement.onclick = function () {
-                AjaxManager.request("/getComments/4?" + "offset=0", {}, "GET", function (comments) {
+                AjaxManager.request("/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
                     commentClass.#loadComments(comments);
                 });
             };
@@ -68,7 +68,7 @@ class Comment {
     }
 
     #replyElementActon(event, commentClass, element) {
-        AjaxManager.request("/getComments/4?" + "offset=0", {}, "GET", function (comments) {
+        AjaxManager.request("/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
             commentClass.#loadComments(comments);
             commentClass.#repliesElement.style.display = "block";
             element.onclick = function () {

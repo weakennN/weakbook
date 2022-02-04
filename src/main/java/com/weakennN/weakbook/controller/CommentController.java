@@ -26,9 +26,17 @@ public class CommentController {
         return new ResponseEntity<>(this.commentService.comment(commentBinding), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getComments/{comment_id}")
+    @GetMapping(value = "/getReplies/{comment_id}")
     @ResponseBody
-    public ResponseEntity<List<CommentView>> getComments(@PathVariable("comment_id") Long commentId, @RequestParam("offset") int offset) {
-        return new ResponseEntity<>(this.commentService.getComments(commentId, offset), HttpStatus.OK);
+    public ResponseEntity<List<CommentView>> getReplies(@PathVariable("comment_id") Long commentId
+            , @RequestParam("offset") int offset) {
+        return new ResponseEntity<>(this.commentService.getReplies(commentId, offset), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getPostComments/{post_id}")
+    @ResponseBody
+    public ResponseEntity<List<CommentView>> getPostComments(@PathVariable("post_id") Long postId
+            , @RequestParam("offset") int offset) {
+        return new ResponseEntity<>(this.commentService.getPostComments(postId, offset), HttpStatus.OK);
     }
 }
