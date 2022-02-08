@@ -17,15 +17,17 @@ public class ChatParticipant extends BaseEntity {
         return chatRoom;
     }
 
-    public void setChatRoom(ChatRoom chatRoom) {
+    public ChatParticipant setChatRoom(ChatRoom chatRoom) {
         this.chatRoom = chatRoom;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public ChatParticipant setUser(User user) {
         this.user = user;
+        return this;
     }
 }

@@ -27,6 +27,7 @@ public class ApplicationUserService implements UserDetailsService {
 
     public static ApplicationUser map(User user) {
         return new ApplicationUser(
+                user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),

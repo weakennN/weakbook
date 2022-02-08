@@ -12,10 +12,10 @@ class AjaxManager {
         , contentType = "application/json") {
         $.ajax({
             type: type,
-            contentType: contentType,
+            contentType: "text/plain",
             url: url,
             data: data,
-            dataType: 'json',
+            dataType: 'text',
             success: function (data) {
                 success(data);
             },
