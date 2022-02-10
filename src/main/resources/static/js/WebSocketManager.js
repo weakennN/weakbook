@@ -12,4 +12,8 @@ class WebSocketManager {
     subscribe(path, subscribeFunction) {
         this.#stompClient.subscribe(path, subscribeFunction)
     }
+
+    send(path, data, headers = {}) {
+        this.#stompClient.send(path, headers, JSON.stringify(data));
+    }
 }

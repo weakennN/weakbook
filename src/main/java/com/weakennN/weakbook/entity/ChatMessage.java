@@ -14,6 +14,15 @@ public class ChatMessage extends BaseEntity {
     @ManyToOne
     private ChatRoom chatRoom;
 
+    public ChatMessage(String message, User user, ChatRoom chatRoom) {
+        this.message = message;
+        this.user = user;
+        this.chatRoom = chatRoom;
+    }
+
+    public ChatMessage() {
+    }
+
     public String getMessage() {
         return message;
     }

@@ -2,6 +2,7 @@ package com.weakennN.weakbook.view;
 
 public class ChatRoomView {
 
+    private Long id;
     private String name;
     private String roomPicturePath;
     private String latestMessage;
@@ -30,6 +31,15 @@ public class ChatRoomView {
 
     public ChatRoomView setLatestMessage(String latestMessage) {
         this.latestMessage = latestMessage;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ChatRoomView setId(Long id) {
+        this.id = id;
         return this;
     }
 }
