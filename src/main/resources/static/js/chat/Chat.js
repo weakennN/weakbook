@@ -1,6 +1,6 @@
 class Chat {
 
-    static #currentChatRoom = new ChatRoom()
+    static #currentChatRoom;
 
     static getChatRooms() {
         AjaxManager.request("/chat/getChatRooms", {}, "GET", function (data) {
