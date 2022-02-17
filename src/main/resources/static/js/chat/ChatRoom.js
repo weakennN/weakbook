@@ -8,8 +8,13 @@ class ChatRoom {
             socket.subscribe("/user/queue/chat", function (message) {
                 console.log(message);
             })
-            socket.send("/app/message", {message: "testMessage", chatRoomId: 4})
+           // socket.send("/app/message", {message: "testMessage", chatRoomId: 4})
         });
+
+
+        AjaxManager.request("/chat/getMessages?chatRoomId=4&offset=0", {}, "GET", function (data) {
+            console.log(data);
+        })
     }
 
     sendMessage() {

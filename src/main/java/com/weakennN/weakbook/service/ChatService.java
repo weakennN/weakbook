@@ -10,6 +10,7 @@ import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.view.ChatRoomView;
 import com.weakennN.weakbook.view.Message;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -60,6 +61,17 @@ public class ChatService {
         this.chatParticipantRepository.save(chatParticipant1);
         this.chatParticipantRepository.save(chatParticipant2);
         return new ChatRoomView();
+    }
+
+    public List<Message> getMessages(Long chatRoomId, int offset) {
+        List<ChatMessage> chatMessages = this.chatMessagesRepository.getChatMessageByChatRoomId(chatRoomId, offset);
+        ModelMapper mapper = new ModelMapper();
+        List<Message> result = new ArrayList<>();
+        for (ChatMessage chatMessage : chatMessages) {
+            result.add(mapper.map(chatMessage, Message.class));
+        }
+
+        return result;
     }
 
     public void sendMessage(Message message, ApplicationUser applicationUser) {
