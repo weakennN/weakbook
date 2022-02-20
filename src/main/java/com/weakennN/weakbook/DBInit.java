@@ -1,22 +1,23 @@
 package com.weakennN.weakbook;
 
-import com.weakennN.weakbook.entity.Post;
+import com.weakennN.weakbook.repository.ChatParticipantRepository;
 import com.weakennN.weakbook.repository.PostRepository;
 import com.weakennN.weakbook.service.CommentService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class DBInit implements CommandLineRunner {
 
     private CommentService commentService;
     private PostRepository postRepository;
+    private ChatParticipantRepository chatParticipantRepository;
 
-    public DBInit(CommentService commentService, PostRepository postRepository) {
+    public DBInit(CommentService commentService, PostRepository postRepository
+            , ChatParticipantRepository chatParticipantRepository) {
         this.commentService = commentService;
         this.postRepository = postRepository;
+        this.chatParticipantRepository = chatParticipantRepository;
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.weakennN.weakbook.binding.CommentBinding;
 import com.weakennN.weakbook.entity.*;
 import com.weakennN.weakbook.repository.CommentRepository;
 import com.weakennN.weakbook.repository.PostLikeRepository;
-import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.service.DropBoxService;
 import com.weakennN.weakbook.view.CommentView;
 import com.weakennN.weakbook.view.Message;
@@ -25,7 +24,7 @@ public class ViewMapper {
                 .setNumberComments(commentRepository.countCommentByPost(post))
                 .setNumberLikes(postLikeRepository.countPostLikeByPost(post))
                 .setUser(mapper.map(user, UserView.class));
-        postView.getUser().setProfilePictureUrl(user.getProfilePicture());
+        postView.getUser().setProfilePicture(user.getProfilePicture());
 
         for (PostPicture postPicture : post.getPictures()) {
             postView.addImageUrl(dropBoxService.getImageUrl(postPicture.getPath()));
@@ -63,5 +62,11 @@ public class ViewMapper {
         }
 
         return commentView;
+    }
+
+    public static Message mapMessage(ChatMessage chatMessage, User user) {
+        Message message = mapper.map(chatMessage, Message.class);
+        message.setUser(mapper.map(user, UserView.class));
+        return message;
     }
 }
