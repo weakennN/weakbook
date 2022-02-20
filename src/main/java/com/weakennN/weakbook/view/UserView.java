@@ -5,7 +5,7 @@ public class UserView {
     private Long id;
     private String firstName;
     private String lastName;
-    private String profilePictureUrl;
+    private String profilePicture;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class UserView {
         this.lastName = lastName;
     }
 
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

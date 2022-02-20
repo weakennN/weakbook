@@ -29,9 +29,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<FriendRequest> friendRequests = new ArrayList<>();
     @Column(name = "profile_picture")
-    private String profilePicture = "";
+    private String profilePicture = "/users/default/default_profile.jpg";
     @Column(name = "banner_picture")
-    private String bannerPicture = "";
+    private String bannerPicture = "/users/default/default_banner.jpg";
 
     public String getFirstName() {
         return firstName;

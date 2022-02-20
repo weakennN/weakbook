@@ -16,4 +16,11 @@ class WebSocketManager {
     send(path, data, headers = {}) {
         this.#stompClient.send(path, headers, JSON.stringify(data));
     }
+
+    close() {
+        this.#socket.close()
+        this.#stompClient.disconnect(function (frame) {
+            console.log(frame);
+        });
+    }
 }

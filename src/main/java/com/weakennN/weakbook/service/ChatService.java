@@ -8,6 +8,7 @@ import com.weakennN.weakbook.repository.ChatParticipantRepository;
 import com.weakennN.weakbook.repository.ChatRoomRepository;
 import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
+import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.ChatRoomView;
 import com.weakennN.weakbook.view.Message;
 import org.modelmapper.ModelMapper;
@@ -65,27 +66,29 @@ public class ChatService {
 
     public List<Message> getMessages(Long chatRoomId, int offset) {
         List<ChatMessage> chatMessages = this.chatMessagesRepository.getChatMessageByChatRoomId(chatRoomId, offset);
-        ModelMapper mapper = new ModelMapper();
         List<Message> result = new ArrayList<>();
         for (ChatMessage chatMessage : chatMessages) {
-            result.add(mapper.map(chatMessage, Message.class));
+            Message message = ViewMapper.mapMessage(chatMessage, chatMessage.getUser());
+            if (AuthService.getCurrentUser().getId().equals(chatMessage.getUser().getId())) {
+                message.setFromCurrentUser(true);
+            }
+            result.add(message);
         }
-
         return result;
     }
 
     public void sendMessage(Message message, ApplicationUser applicationUser) {
-        this.saveMessage(message, applicationUser);
-        this.webSocketService.sendToUsers(message, "/queue/chat",
+        ChatMessage chatMessage = this.saveMessage(message, applicationUser);
+        this.webSocketService.sendToUsers(ViewMapper.mapMessage(chatMessage, chatMessage.getUser()), "/queue/chat",
                 this.chatParticipantRepository.findParticipantsEmailByChatRoom(
                         applicationUser.getId(), message.getChatRoomId())
         );
     }
 
-    private void saveMessage(Message message, ApplicationUser applicationUser) {
+    private ChatMessage saveMessage(Message message, ApplicationUser applicationUser) {
         ChatMessage chatMessage = new ChatMessage(message.getMessage(),
                 this.userRepository.findByEmail(applicationUser.getEmail()).get(),
                 this.chatRoomRepository.findById(message.getChatRoomId()).get());
-        this.chatMessagesRepository.save(chatMessage);
+        return this.chatMessagesRepository.save(chatMessage);
     }
 }

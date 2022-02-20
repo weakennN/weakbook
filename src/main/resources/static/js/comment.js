@@ -29,7 +29,7 @@ class Comment {
                                             </div>
                                         </div>
                                     </div>`).get(0);
-// TODO function thay inits like, likes, and reply buttons
+// TODO function that inits like, likes, and reply buttons
         let replyElement = $("<span>Reply</span>").get(0);
         let replyContainer = this.#repliesElement;
         replyElement.onclick = function () {

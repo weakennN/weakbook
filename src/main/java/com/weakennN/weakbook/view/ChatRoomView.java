@@ -4,7 +4,7 @@ public class ChatRoomView {
 
     private Long id;
     private String name;
-    private String roomPicturePath;
+    private String roomImage;
     private String latestMessage;
 
     public String getName() {
@@ -16,12 +16,12 @@ public class ChatRoomView {
         return this;
     }
 
-    public String getRoomPicturePath() {
-        return roomPicturePath;
+    public String getRoomImage() {
+        return roomImage;
     }
 
-    public ChatRoomView setRoomPicturePath(String roomPicturePath) {
-        this.roomPicturePath = roomPicturePath;
+    public ChatRoomView setRoomImage(String roomImage) {
+        this.roomImage = roomImage;
         return this;
     }
 
