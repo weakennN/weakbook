@@ -9,6 +9,7 @@ class Chat {
 
     static getChatRooms() {
         AjaxManager.request("/chat/getChatRooms", {}, "GET", function (data) {
+            console.log(data);
             Chat.#createChatRooms(data);
         })
     }

@@ -2,14 +2,16 @@ package com.weakennN.weakbook.utils;
 
 import com.weakennN.weakbook.binding.CommentBinding;
 import com.weakennN.weakbook.entity.*;
+import com.weakennN.weakbook.repository.ChatMessagesRepository;
+import com.weakennN.weakbook.repository.ChatParticipantRepository;
 import com.weakennN.weakbook.repository.CommentRepository;
 import com.weakennN.weakbook.repository.PostLikeRepository;
+import com.weakennN.weakbook.service.AuthService;
 import com.weakennN.weakbook.service.DropBoxService;
-import com.weakennN.weakbook.view.CommentView;
-import com.weakennN.weakbook.view.Message;
-import com.weakennN.weakbook.view.PostView;
-import com.weakennN.weakbook.view.UserView;
+import com.weakennN.weakbook.view.*;
 import org.modelmapper.ModelMapper;
+
+import java.util.List;
 
 public class ViewMapper {
 
@@ -62,6 +64,29 @@ public class ViewMapper {
         }
 
         return commentView;
+    }
+
+    public static ChatRoomView mapToChatRoomView(ChatRoom chatRoom
+            , ChatMessagesRepository chatMessagesRepository
+            , ChatParticipantRepository chatParticipantRepository) {
+        ChatMessage chatMessage = chatMessagesRepository.getLatestChatMessage(chatRoom.getId());
+        String latestMessage = chatMessage == null ? "Message" : chatMessage.getMessage();
+        ChatRoomView resultChatRoom = new ChatRoomView(chatRoom.getId(), latestMessage);
+        List<ChatParticipant> chatParticipants = chatParticipantRepository.findAllByChatRoom(chatRoom);
+
+        if (chatParticipants.size() == 2) {
+            if (chatParticipants.get(0).getUser().getId().equals(AuthService.getCurrentUser().getId())) {
+                resultChatRoom.setRoomImage(chatParticipants.get(0).getUser().getProfilePicture());
+                resultChatRoom.setName(chatParticipants.get(1).getUser().getFirstName()
+                        + " " + chatParticipants.get(1).getUser().getLastName());
+            } else {
+                resultChatRoom.setRoomImage(chatParticipants.get(1).getUser().getProfilePicture());
+                resultChatRoom.setName(chatParticipants.get(0).getUser().getFirstName()
+                        + " " + chatParticipants.get(0).getUser().getLastName());
+            }
+        }
+
+        return resultChatRoom;
     }
 
     public static Message mapMessage(ChatMessage chatMessage, User user) {

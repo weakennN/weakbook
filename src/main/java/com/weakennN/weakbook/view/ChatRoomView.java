@@ -11,6 +11,15 @@ public class ChatRoomView {
         return name;
     }
 
+    public ChatRoomView(Long id, String latestMessage) {
+        this.id = id;
+        this.latestMessage = latestMessage;
+    }
+
+    public ChatRoomView() {
+
+    }
+
     public ChatRoomView setName(String name) {
         this.name = name;
         return this;
@@ -20,26 +29,23 @@ public class ChatRoomView {
         return roomImage;
     }
 
-    public ChatRoomView setRoomImage(String roomImage) {
+    public void setRoomImage(String roomImage) {
         this.roomImage = roomImage;
-        return this;
     }
 
     public String getLatestMessage() {
         return latestMessage;
     }
 
-    public ChatRoomView setLatestMessage(String latestMessage) {
+    public void setLatestMessage(String latestMessage) {
         this.latestMessage = latestMessage;
-        return this;
     }
 
     public Long getId() {
         return id;
     }
 
-    public ChatRoomView setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 }

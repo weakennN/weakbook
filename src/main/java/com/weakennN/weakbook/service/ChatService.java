@@ -11,7 +11,6 @@ import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.ChatRoomView;
 import com.weakennN.weakbook.view.Message;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,11 +39,10 @@ public class ChatService {
         List<ChatRoom> chatRooms = this.chatRoomRepository.getAllByUserId(this.userRepository
                 .findByEmail(AuthService.getCurrentUser().getEmail()).get().getId());
         List<ChatRoomView> result = new ArrayList<>();
-        // temporary mapping for testing
+
         for (ChatRoom chatRoom : chatRooms) {
-            ChatRoomView resultChatRoom = new ChatRoomView();
-            resultChatRoom.setName("test " + chatRoom.getId()).setLatestMessage("last message").setId(chatRoom.getId());
-            result.add(resultChatRoom);
+            result.add(ViewMapper.mapToChatRoomView(chatRoom
+                    , this.chatMessagesRepository, this.chatParticipantRepository));
         }
 
         return result;
