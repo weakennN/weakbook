@@ -1,6 +1,7 @@
 class Post {
 
-    static passedPosts = 0;
+    static #passedPosts = 0;
+    static send;
 
     static createPost(post) {
         let postElement = $("<div class='card post mb-3'>\n" +
@@ -36,12 +37,20 @@ class Post {
         $("#posts").append(postElement);
     }
 
+    static #send = true;
+
     static getPosts() {
-        AjaxManager.request("/getPosts", {passedPosts: Post.passedPosts}, "GET", function (data) {
-            for (let post of data) {
-                Post.createPost(post);
-            }
-        });
+        if (Post.#send) {
+            Post.#send = false;
+            AjaxManager.request("/getPosts", {passedPosts: Post.#passedPosts}, "GET", function (data) {
+                for (let post of data) {
+                    Post.createPost(post);
+                }
+                console.log(data);
+                Post.#passedPosts += data.length;
+                Post.#send = true;
+            });
+        }
     }
 
     static post() {
@@ -58,3 +67,12 @@ class Post {
         })
     }
 }
+
+$(document).ready(function () {
+    Post.getPosts();
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
+            Post.getPosts();
+        }
+    });
+})

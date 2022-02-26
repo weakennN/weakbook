@@ -8,7 +8,6 @@ import com.weakennN.weakbook.repository.*;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.PostView;
-import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -59,10 +58,8 @@ public class PostService {
         }
     }
 
-    // TODO: maybe cache views
     public List<PostView> getPosts(int passedPosts) {
-        ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = this.userRepository.findByEmail(applicationUser.getEmail()).get();
+        User user = this.userRepository.findByEmail(AuthService.getCurrentUser().getEmail()).get();
         List<Post> posts = this.postRepository.findAllByUser(user.getId(), passedPosts);
         List<PostView> result = new ArrayList<>();
 
