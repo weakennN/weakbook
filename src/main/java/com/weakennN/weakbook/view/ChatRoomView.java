@@ -1,6 +1,8 @@
 package com.weakennN.weakbook.view;
 
-public class ChatRoomView {
+import com.weakennN.weakbook.utils.hypermedia.RepresentationModel;
+
+public class ChatRoomView extends RepresentationModel {
 
     private Long id;
     private String name;

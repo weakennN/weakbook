@@ -2,12 +2,12 @@ class ChatRoom {
 
     #webSocketManager;
     #passedMessages = 0;
-    #chatRoomId;
+    #chatRoom;
     static #chatBox = document.getElementById("chat-box");
     static #messageBox = document.getElementById("message-box");
 
-    constructor(chatRoomId) {
-        this.#chatRoomId = chatRoomId;
+    constructor(chatRoom) {
+        this.#chatRoom = chatRoom;
         ChatRoom.#chatBox.innerHTML = "";
         let instance = this;
         let socket = this.#webSocketManager = new WebSocketManager("/chat", function () {
@@ -18,11 +18,14 @@ class ChatRoom {
             })
             ChatRoom.#messageBox.onkeypress = function (e) {
                 if (e.key === "Enter") {
-                    socket.send("/app/message", {message: ChatRoom.#messageBox.value, chatRoomId: instance.#chatRoomId})
+                    socket.send("/app/message", {
+                        message: ChatRoom.#messageBox.value,
+                        chatRoomId: instance.#chatRoom.id
+                    })
                 }
             }
         });
-        AjaxManager.request("/chat/getMessages?chatRoomId=" + instance.#chatRoomId + "&offset="
+        AjaxManager.request(instance.#chatRoom.links.messages.link + "?chatRoomId=" + instance.#chatRoom.id + "&offset="
             + instance.#passedMessages, {}, "GET", function (data) {
             console.log(data);
             for (let message of data) {
@@ -59,6 +62,6 @@ class ChatRoom {
     }
 
     getChatRoomId() {
-        return this.#chatRoomId;
+        return this.#chatRoom.id;
     }
 }

@@ -42,7 +42,7 @@ class Chat {
                 if (Chat.#currentChatRoom != null) {
                     Chat.#currentChatRoom.disconnect();
                 }
-                Chat.#currentChatRoom = new ChatRoom(chatRoom.id)
+                Chat.#currentChatRoom = new ChatRoom(chatRoom)
             };
             Chat.#chatRoomsBox.appendChild(chatRoomElement);
         }

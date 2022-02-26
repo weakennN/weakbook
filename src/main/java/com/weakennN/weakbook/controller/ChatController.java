@@ -46,7 +46,7 @@ public class ChatController {
         this.chatService.sendMessage(message, (ApplicationUser) authenticationToken.getPrincipal());
     }
 
-    @GetMapping("getMessages")
+    @GetMapping("/getMessages")
     public ResponseEntity<List<Message>> getMessages(@RequestParam("chatRoomId") Long chatRoomId, @RequestParam("offset") int offset) {
         return new ResponseEntity<>(this.chatService.getMessages(chatRoomId, offset), HttpStatus.OK);
     }

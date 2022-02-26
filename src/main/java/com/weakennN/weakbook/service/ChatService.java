@@ -9,6 +9,7 @@ import com.weakennN.weakbook.repository.ChatRoomRepository;
 import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
+import com.weakennN.weakbook.utils.hypermedia.Link;
 import com.weakennN.weakbook.view.ChatRoomView;
 import com.weakennN.weakbook.view.Message;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,9 @@ public class ChatService {
         List<ChatRoomView> result = new ArrayList<>();
 
         for (ChatRoom chatRoom : chatRooms) {
-            result.add(ViewMapper.mapToChatRoomView(chatRoom
-                    , this.chatMessagesRepository, this.chatParticipantRepository));
+            ChatRoomView chatRoomView = ViewMapper.mapToChatRoomView(chatRoom, this.chatMessagesRepository, this.chatParticipantRepository);
+            chatRoomView.addLink("messages", new Link("/chat/getMessages"));
+            result.add(chatRoomView);
         }
 
         return result;
