@@ -36,6 +36,7 @@ public class ViewMapper {
             postView.addComment(mapToCommentView(comment, post, commentRepository));
         }
 
+        postView.initSelfLinks();
         return postView;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,7 +16,7 @@
     </div>
 </div>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Post
+    PostManager
 </button>
 <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -31,7 +31,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="Post.post()">Post</button>
+                <button type="button" class="btn btn-primary" onclick="PostManager.post()">Post</button>
             </div>
         </div>
     </div>
@@ -42,7 +42,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="/static/js/AjaxManager.js"></script>
-<script src="/static/js/Post.js"></script>
+<script src="/static/js/post/post.js"></script>
+<script src="/static/js/post/PostManager.js"></script>
 <script src="/static/js/ImageEncode.js"></script>
 <script src="/static/js/Index.js"></script>
 </body>

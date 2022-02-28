@@ -14,6 +14,14 @@ public class PostLike extends BaseEntity {
     @OneToOne
     private User user;
 
+    public PostLike() {
+    }
+
+    public PostLike(Post post, User user) {
+        this.post = post;
+        this.user = user;
+    }
+
     public Post getPost() {
         return post;
     }

@@ -21,4 +21,7 @@ public class RepresentationModel {
     public void setLinks(HashMap<String, Link> links) {
         this.links = links;
     }
+
+    public void initSelfLinks() {
+    }
 }

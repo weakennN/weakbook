@@ -15,6 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "FROM posts\n" +
             "where user_id in (select owner_id from friends where owner_id = :userId or friends.user_id = :userId)\n" +
             "   or user_id in (select friends.user_id from friends where owner_id = :userId or friends.user_id = :userId)\n" +
+            "   or user_id in (select user_id from posts where user_id = :userId)\n" +
             "order by created desc\n" +
             "limit 7 offset :passedPosts", nativeQuery = true)
     List<Post> findAllByUser(@Param("userId") Long userId, @Param("passedPosts") int passedPosts);

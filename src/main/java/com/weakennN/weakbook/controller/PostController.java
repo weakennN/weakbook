@@ -42,4 +42,12 @@ public class PostController {
     public String getPostView() {
         return "post";
     }
+
+    @PostMapping(value = "/post/{postId}/like")
+    @ResponseBody
+    public ResponseEntity<?> like(@PathVariable("postId") Long postId) {
+        this.postService.like(postId);
+        System.out.println("liked");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

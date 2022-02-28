@@ -2,6 +2,7 @@ package com.weakennN.weakbook.service;
 
 import com.weakennN.weakbook.binding.PostBinding;
 import com.weakennN.weakbook.entity.Post;
+import com.weakennN.weakbook.entity.PostLike;
 import com.weakennN.weakbook.entity.PostPicture;
 import com.weakennN.weakbook.entity.User;
 import com.weakennN.weakbook.repository.*;
@@ -51,7 +52,7 @@ public class PostService {
 
     private void addPicturesToPost(PostBinding postBinding, Post post) {
         for (int i = 0; i < postBinding.getBase64Images().size(); i++) {
-            String path = this.imageService.generateRandomUrl(30);
+            String path = "/users/user-" + AuthService.getCurrentUser().getId() + "/images" + this.imageService.generateRandomUrl(30);
             this.dropBoxService.upload(path, Base64.getDecoder().decode(postBinding.getBase64Images().get(i)));
             PostPicture postPicture = new PostPicture(post, path);
             post.addPicture(postPicture);
@@ -69,6 +70,12 @@ public class PostService {
         }
 
         return result;
+    }
+
+    public void like(Long postId) {
+        PostLike postLike = new PostLike(this.postRepository.findById(postId).get()
+                , this.userRepository.findById(AuthService.getCurrentUser().getId()).get());
+        this.postLikeRepository.save(postLike);
     }
 
     public PostView getPost(Long postId) {
