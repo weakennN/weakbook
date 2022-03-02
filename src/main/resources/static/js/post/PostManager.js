@@ -25,13 +25,18 @@ class PostManager {
                                  alt='Card image cap'> 
                             <div class='px-3'> 
                                 <div class='d-flex mt-2'> 
-                                    <a class='mb-0 like'>${post.numberLikes} Likes</a> 
+                                    <a class='mb-0'>${post.numberLikes} Likes</a> 
                                     <a href="${post.links.self.link}" class='ms-auto mb-0'>${post.numberComments} Comments</a> 
-                                </div> 
-                                <hr class='mt-2 mb-0'> 
+                                </div>
+                                <hr class='mt-2 mb-0'>
+                                <div class="d-flex flex-row mt-2">
+                                    <i style="font-size: 32px;color: #6060ff" class="${post.liked === true ? "fas" : "far"} fa-thumbs-up like"></i>
+                                    <a href="${post.links.self.link}" class="ms-auto">
+                                        <i style="font-size: 32px;color: #6060ff" class="far fa-comment"></i>
+                                    </a>
+                                </div>
                                 <div class='py-2'> 
-                                    <input placeholder='Write a comment.' style='border-radius: 20px' class='form-control' 
-                                           type='text'> 
+                                    <input placeholder='Write a comment.' style='border-radius: 20px' class='form-control' type='text'> 
                                 </div> 
                             </div> 
                         </div>`).get(0);

@@ -8,6 +8,7 @@ import com.weakennN.weakbook.entity.User;
 import com.weakennN.weakbook.repository.*;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
+import com.weakennN.weakbook.view.PostLikeView;
 import com.weakennN.weakbook.view.PostView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,10 +73,17 @@ public class PostService {
         return result;
     }
 
-    public void like(Long postId) {
-        PostLike postLike = new PostLike(this.postRepository.findById(postId).get()
-                , this.userRepository.findById(AuthService.getCurrentUser().getId()).get());
-        this.postLikeRepository.save(postLike);
+    public PostLikeView like(Long postId) {
+        Long userId = AuthService.getCurrentUser().getId();
+        if (this.postLikeRepository.countPostLikeByPost(this.postRepository.findById(postId).get()) >= 1) {
+            this.postLikeRepository.delete(this.postLikeRepository.findByPostAndUser(postId, userId));
+            return new PostLikeView(false);
+        } else {
+            PostLike postLike = new PostLike(this.postRepository.findById(postId).get()
+                    , this.userRepository.findById(userId).get());
+            this.postLikeRepository.save(postLike);
+            return new PostLikeView(true);
+        }
     }
 
     public PostView getPost(Long postId) {

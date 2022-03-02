@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ViewMapper {
 
-    private static ModelMapper mapper = new ModelMapper();
+    private static final ModelMapper mapper = new ModelMapper();
 
     public static PostView mapToPostView(Post post, CommentRepository commentRepository
             , PostLikeRepository postLikeRepository, User user, DropBoxService dropBoxService) {
@@ -25,7 +25,8 @@ public class ViewMapper {
                 .setContent(post.getContent())
                 .setNumberComments(commentRepository.countCommentByPost(post))
                 .setNumberLikes(postLikeRepository.countPostLikeByPost(post))
-                .setUser(mapper.map(user, UserView.class));
+                .setUser(mapper.map(user, UserView.class))
+                .setIsLiked(postLikeRepository.countPostLikeByPost(post) >= 1);
         postView.getUser().setProfilePicture(user.getProfilePicture());
 
         for (PostPicture postPicture : post.getPictures()) {

@@ -9,6 +9,7 @@ class AjaxManager {
             data: data,
             dataType: 'json',
             success: function (data) {
+                console.log(data);
                 success(data);
             },
             error: error

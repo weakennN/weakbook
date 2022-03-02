@@ -2,6 +2,7 @@ package com.weakennN.weakbook.controller;
 
 import com.weakennN.weakbook.binding.PostBinding;
 import com.weakennN.weakbook.service.PostService;
+import com.weakennN.weakbook.view.PostLikeView;
 import com.weakennN.weakbook.view.PostView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,9 +46,7 @@ public class PostController {
 
     @PostMapping(value = "/post/{postId}/like")
     @ResponseBody
-    public ResponseEntity<?> like(@PathVariable("postId") Long postId) {
-        this.postService.like(postId);
-        System.out.println("liked");
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<PostLikeView> like(@PathVariable("postId") Long postId) {
+        return new ResponseEntity<>(this.postService.like(postId), HttpStatus.OK);
     }
 }

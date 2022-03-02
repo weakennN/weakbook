@@ -15,6 +15,7 @@ public class PostView extends RepresentationModel {
     private List<String> imagesUrls = new ArrayList<>();
     private int numberLikes;
     private int numberComments;
+    private boolean isLiked = false;
 
     public Long getId() {
         return id;
@@ -84,6 +85,15 @@ public class PostView extends RepresentationModel {
 
     public void setComments(List<CommentView> comments) {
         this.comments = comments;
+    }
+
+    public PostView setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+        return this;
+    }
+
+    public boolean isLiked() {
+        return this.isLiked;
     }
 
     @Override
