@@ -23,7 +23,7 @@ class PostManager {
                             <img class='card-img-bottom' 
                                  src="${post.imagesUrls[0]}"
                                  alt='Card image cap'> 
-                            <div class='px-3'> 
+                            <div class='px-3'>
                                 <div class='d-flex mt-2'> 
                                     <a class='mb-0'>${post.numberLikes} Likes</a> 
                                     <a href="${post.links.self.link}" class='ms-auto mb-0'>${post.numberComments} Comments</a> 

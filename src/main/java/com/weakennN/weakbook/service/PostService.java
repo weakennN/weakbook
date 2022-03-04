@@ -27,16 +27,19 @@ public class PostService {
     private ImageService imageService;
     private CommentRepository commentRepository;
     private PostLikeRepository postLikeRepository;
+    private NotificationService notificationService;
 
     public PostService(PostRepository postRepository, UserRepository userRepository
             , DropBoxService dropBoxService, ImageService imageService
-            , CommentRepository commentRepository, PostLikeRepository postLikeRepository) {
+            , CommentRepository commentRepository, PostLikeRepository postLikeRepository
+            , NotificationService notificationService) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.dropBoxService = dropBoxService;
         this.imageService = imageService;
         this.commentRepository = commentRepository;
         this.postLikeRepository = postLikeRepository;
+        this.notificationService = notificationService;
     }
 
     public PostView savePost(PostBinding postBinding) {
@@ -75,13 +78,16 @@ public class PostService {
 
     public PostLikeView like(Long postId) {
         Long userId = AuthService.getCurrentUser().getId();
-        if (this.postLikeRepository.countPostLikeByPost(this.postRepository.findById(postId).get()) >= 1) {
-            this.postLikeRepository.delete(this.postLikeRepository.findByPostAndUser(postId, userId));
+        PostLike postLike = this.postLikeRepository.findByPostAndUser(postId, userId);
+        if (postLike != null) {
+            this.postLikeRepository.delete(postLike);
             return new PostLikeView(false);
         } else {
-            PostLike postLike = new PostLike(this.postRepository.findById(postId).get()
+            PostLike newLike = new PostLike(this.postRepository.findById(postId).get()
                     , this.userRepository.findById(userId).get());
-            this.postLikeRepository.save(postLike);
+            this.postLikeRepository.save(newLike);
+            this.notificationService.sendNotification(AuthService.getCurrentUser().getFirstName() + " " + AuthService.getCurrentUser().getLastName() + "liked your post."
+                    , this.postRepository.findById(postId).get().getUser().getEmail(), "/post/" + postId);
             return new PostLikeView(true);
         }
     }
