@@ -1,13 +1,13 @@
 class AjaxManager {
 
     static request(url, data, type, success = AjaxManager.defaultSuccess, error = AjaxManager.defaultError
-        , contentType = "application/json") {
+        , contentType = "application/json", dataTpe = "json") {
         $.ajax({
             type: type,
             contentType: contentType,
             url: url,
             data: data,
-            dataType: 'json',
+            dataType: dataTpe,
             success: function (data) {
                 console.log(data);
                 success(data);

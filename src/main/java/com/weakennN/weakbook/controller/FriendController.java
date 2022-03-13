@@ -1,7 +1,9 @@
 package com.weakennN.weakbook.controller;
 
 import com.weakennN.weakbook.service.FriendService;
+import com.weakennN.weakbook.view.PostView;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +21,11 @@ public class FriendController {
         this.friendService = friendService;
     }
 
-    @PostMapping("/request")
+    @PostMapping(value = "/request", consumes = MediaType.TEXT_HTML_VALUE, produces = MediaType.TEXT_HTML_VALUE)
     @ResponseBody
-    public ResponseEntity<?> sendFriendRequest(@RequestBody Long receiverId) {
-        this.friendService.sendFriendRequest(receiverId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> sendFriendRequest(@RequestBody String receiverId) {
+        this.friendService.sendFriendRequest(Long.parseLong(receiverId));
+        return new ResponseEntity<>("214124", HttpStatus.OK);
     }
 
     @PostMapping("/accept")

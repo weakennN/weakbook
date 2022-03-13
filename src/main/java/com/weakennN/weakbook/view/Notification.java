@@ -4,6 +4,7 @@ public class Notification {
 
     private String message;
     private String link;
+    private NotificationType type = NotificationType.NORMAL;
 
     public Notification(String message, String link) {
         this.message = message;
@@ -24,5 +25,13 @@ public class Notification {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public NotificationType getType() {
+        return type;
+    }
+
+    public void setType(NotificationType type) {
+        this.type = type;
     }
 }
