@@ -1,1 +1,1 @@
-window.history.pushState("", "", '/post/16');
+//window.history.pushState("", "", '/post/16');

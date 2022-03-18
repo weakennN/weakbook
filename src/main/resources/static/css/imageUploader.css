@@ -1,0 +1,11 @@
+.image-uploader {
+    height: 190px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    background: #f3f3f3;
+}
+
+.image-uploader:hover {
+    cursor: pointer;
+}

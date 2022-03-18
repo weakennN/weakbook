@@ -12,7 +12,7 @@ function readAsBase64(file) {
         let fr = new FileReader();
 
         fr.onload = function () {
-            resolve(fr.result.split(",")[1]);
+            resolve(fr.result);
         };
 
         fr.onerror = function () {

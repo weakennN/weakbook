@@ -77,10 +77,10 @@ class PostManager {
 }
 
 $(document).ready(function () {
-    PostManager.getPosts();
+    //PostManager.getPosts();
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
-            PostManager.getPosts();
+        //    PostManager.getPosts();
         }
     });
 })

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/static/css/post.css">
+    <link rel="stylesheet" href="/static/css/imageUploader.css">
 </head>
 <body>
 <div class="container-lg">
@@ -19,15 +20,22 @@
     PostManager
 </button>
 <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" id="image-drag-over">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" rows="3" id="post-content"></textarea>
-                <input class="form-control" type="file" id="add-post-pictures" multiple>
+                <div class="row" id="post-images"></div>
+                <textarea style="border: none;resize: vertical;" rows="3" class="form-control"
+                          id="post-content"></textarea>
+                <div class="align-self-center d-flex image-uploader" id="file-browser">
+                    <div class="text-center" style="margin: 30px auto 30px auto;">
+                        <i style="font-size: 5.5rem;margin-bottom: 5px;" class="fas fa-cloud-download-alt"></i>
+                        <p style="font-size: 24px;margin-bottom: 0">Drag and drop or browse choose files</p>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -53,5 +61,6 @@
 <script src="/static/js/WebSocketManager.js"></script>
 <script src="/static/js/Notification.js"></script>
 <script src="/static/js/FriendManager.js"></script>
+<script src="/static/js/PostCreator.js"></script>
 </body>
 </html>
