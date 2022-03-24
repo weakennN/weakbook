@@ -1,6 +1,9 @@
 package com.weakennN.weakbook.view;
 
-public class UserView {
+import com.weakennN.weakbook.utils.hypermedia.Link;
+import com.weakennN.weakbook.utils.hypermedia.RepresentationModel;
+
+public class UserView extends RepresentationModel {
 
     private Long id;
     private String firstName;
@@ -37,5 +40,10 @@ public class UserView {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    @Override
+    public void initSelfLinks() {
+        super.addLink("self", new Link("/user/" + this.id));
     }
 }

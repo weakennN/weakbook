@@ -38,7 +38,7 @@ public class ChatService {
 
     public List<ChatRoomView> getUserChatRooms() {
         List<ChatRoom> chatRooms = this.chatRoomRepository.getAllByUserId(this.userRepository
-                .findByEmail(AuthService.getCurrentUser().getEmail()).get().getId());
+                .findByEmail(AuthService.getUser().getEmail()).get().getId());
         List<ChatRoomView> result = new ArrayList<>();
 
         for (ChatRoom chatRoom : chatRooms) {
@@ -51,7 +51,7 @@ public class ChatService {
     }
 
     public ChatRoomView createNewChatRoom(Long userId) {
-        ApplicationUser user = AuthService.getCurrentUser();
+        ApplicationUser user = AuthService.getUser();
         ChatRoom newChatRoom = this.chatRoomRepository.save(new ChatRoom());
 
         ChatParticipant chatParticipant1 = new ChatParticipant();
@@ -69,7 +69,7 @@ public class ChatService {
         List<Message> result = new ArrayList<>();
         for (ChatMessage chatMessage : chatMessages) {
             Message message = ViewMapper.mapMessage(chatMessage, chatMessage.getUser());
-            if (AuthService.getCurrentUser().getId().equals(chatMessage.getUser().getId())) {
+            if (AuthService.getUser().getId().equals(chatMessage.getUser().getId())) {
                 message.setFromCurrentUser(true);
             }
             result.add(message);

@@ -77,7 +77,7 @@ public class ViewMapper {
         List<ChatParticipant> chatParticipants = chatParticipantRepository.findAllByChatRoom(chatRoom);
 
         if (chatParticipants.size() == 2) {
-            if (chatParticipants.get(0).getUser().getId().equals(AuthService.getCurrentUser().getId())) {
+            if (chatParticipants.get(0).getUser().getId().equals(AuthService.getUser().getId())) {
                 resultChatRoom.setRoomImage(chatParticipants.get(0).getUser().getProfilePicture());
                 resultChatRoom.setName(chatParticipants.get(1).getUser().getFirstName()
                         + " " + chatParticipants.get(1).getUser().getLastName());
@@ -95,5 +95,9 @@ public class ViewMapper {
         Message message = mapper.map(chatMessage, Message.class);
         message.setUser(mapper.map(user, UserView.class));
         return message;
+    }
+
+    public static UserView mapUser(User user) {
+        return mapper.map(user, UserView.class);
     }
 }

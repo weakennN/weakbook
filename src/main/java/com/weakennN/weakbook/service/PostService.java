@@ -56,7 +56,7 @@ public class PostService {
 
     private void addPicturesToPost(PostBinding postBinding, Post post) {
         for (int i = 0; i < postBinding.getBase64Images().size(); i++) {
-            String path = "/users/user-" + AuthService.getCurrentUser().getId() + "/images" + this.imageService.generateRandomUrl(30);
+            String path = "/users/user-" + AuthService.getUser().getId() + "/images" + this.imageService.generateRandomUrl(30);
             this.dropBoxService.upload(path, Base64.getDecoder().decode(postBinding.getBase64Images().get(i)));
             PostPicture postPicture = new PostPicture(post, path);
             post.addPicture(postPicture);
@@ -64,7 +64,7 @@ public class PostService {
     }
 
     public List<PostView> getPosts(int passedPosts) {
-        User user = this.userRepository.findByEmail(AuthService.getCurrentUser().getEmail()).get();
+        User user = this.userRepository.findByEmail(AuthService.getUser().getEmail()).get();
         List<Post> posts = this.postRepository.findAllByUser(user.getId(), passedPosts);
         List<PostView> result = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class PostService {
     }
 
     public PostLikeView like(Long postId) {
-        Long userId = AuthService.getCurrentUser().getId();
+        Long userId = AuthService.getUser().getId();
         PostLike postLike = this.postLikeRepository.findByPostAndUser(postId, userId);
         if (postLike != null) {
             this.postLikeRepository.delete(postLike);
@@ -86,7 +86,7 @@ public class PostService {
             PostLike newLike = new PostLike(this.postRepository.findById(postId).get()
                     , this.userRepository.findById(userId).get());
             this.postLikeRepository.save(newLike);
-            this.notificationService.sendNotification(AuthService.getCurrentUser().getFirstName() + " " + AuthService.getCurrentUser().getLastName() + "liked your post."
+            this.notificationService.sendNotification(AuthService.getUser().getFirstName() + " " + AuthService.getUser().getLastName() + "liked your post."
                     , this.postRepository.findById(postId).get().getUser().getEmail(), "/post/" + postId);
             return new PostLikeView(true);
         }

@@ -21,7 +21,7 @@ public class FriendService {
 
     public void sendFriendRequest(Long receiverId) {
         System.out.println(receiverId);
-        this.friendRequestRepository.sendFriendRequest(receiverId, AuthService.getCurrentUser().getId());
+        this.friendRequestRepository.sendFriendRequest(receiverId, AuthService.getUser().getId());
         Notification notification = new Notification("Someone send you a friend request.", "");
         notification.setType(NotificationType.FRIEND);
         this.webSocketService.sendToUsers(notification, "/queue/notifications", List.of("test@abv.bg"));

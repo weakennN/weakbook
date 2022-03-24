@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/static/css/navbar.css">
+<nav class="navbar navbar-expand-md" xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">weakbook</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <a class="nav-link px-3" href="/">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="/chat" class="nav-link px-3">
+                    <i class="fa-solid fa-comment"></i>
+                </a>
+            </ul>
+            <form class="d-flex mx-auto w-50 w-md-100">
+                <input class="form-control me-2" type="search" placeholder="Search...">
+            </form>
+            <a th:href="@{/user/{id}(id=*{user.id})}" class="d-flex flex-row nav-profile me-3">
+                <img th:src="${user.profilePicture}" class="profile-image" alt="">
+                <p th:text="${user.firstName}" class="mb-0 mt-2 ms-2"></p>
+            </a>
+        </div>
+    </div>
+</nav>
+<script src="https://kit.fontawesome.com/241fc97acc.js" crossorigin="anonymous"></script>
