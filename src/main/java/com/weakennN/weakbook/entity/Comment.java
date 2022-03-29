@@ -20,6 +20,8 @@ public class Comment extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "reply_id"))
     @OneToMany(fetch = FetchType.LAZY)
     private List<Comment> replies = new ArrayList<>();
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<CommentLike> likes = new ArrayList<>();
 
     public String getComment() {
         return comment;
@@ -51,5 +53,17 @@ public class Comment extends BaseEntity {
 
     public List<Comment> getReplies() {
         return this.replies;
+    }
+
+    public void setReplies(List<Comment> replies) {
+        this.replies = replies;
+    }
+
+    public List<CommentLike> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<CommentLike> likes) {
+        this.likes = likes;
     }
 }

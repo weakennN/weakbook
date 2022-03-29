@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@Controller()
+@RequestMapping("/comments")
 public class CommentController {
 
     private CommentService commentService;
@@ -38,5 +39,12 @@ public class CommentController {
     public ResponseEntity<List<CommentView>> getPostComments(@PathVariable("post_id") Long postId
             , @RequestParam("offset") int offset) {
         return new ResponseEntity<>(this.commentService.getPostComments(postId, offset), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/like", consumes = MediaType.TEXT_HTML_VALUE, produces = MediaType.TEXT_HTML_VALUE)
+    @ResponseBody
+    public ResponseEntity<String> like(String commentId) {
+        this.commentService.like(Long.parseLong(commentId));
+        return new ResponseEntity<>("temp return", HttpStatus.OK);
     }
 }

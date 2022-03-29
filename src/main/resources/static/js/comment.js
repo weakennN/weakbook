@@ -43,7 +43,7 @@ class Comment {
             let hasMoreCommentsElement = $("<p>View more comments</p>").get(0);
             let commentClass = this;
             hasMoreCommentsElement.onclick = function () {
-                AjaxManager.request("/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
+                AjaxManager.request("/comments/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
                     commentClass.#loadComments(comments);
                 });
             };
@@ -68,7 +68,7 @@ class Comment {
     }
 
     #replyElementActon(event, commentClass, element) {
-        AjaxManager.request("/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
+        AjaxManager.request("/comments/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
             commentClass.#loadComments(comments);
             commentClass.#repliesElement.style.display = "block";
             element.onclick = function () {
@@ -112,7 +112,7 @@ class Comment {
 
     #reply(commentClass, inputElement) {
         let comment = inputElement.value;
-        AjaxManager.request("/comment", JSON.stringify({
+        AjaxManager.request("/comments/comment", JSON.stringify({
             comment: comment,
             replyTo: commentClass.#comment.id,
             postId: commentClass.#comment.postId
@@ -120,5 +120,11 @@ class Comment {
             let comment = new Comment(commentData);
             commentClass.#repliesElement.appendChild(comment.createComment(commentData));
         })
+    }
+
+    #like() {
+        AjaxManager.request("/comments/like", this.#comment.id, "POST", function (data) {
+            console.log(data);
+        }, null, "text/html", "text");
     }
 }

@@ -2,8 +2,10 @@ package com.weakennN.weakbook.service;
 
 import com.weakennN.weakbook.binding.CommentBinding;
 import com.weakennN.weakbook.entity.Comment;
+import com.weakennN.weakbook.entity.CommentLike;
 import com.weakennN.weakbook.entity.Post;
 import com.weakennN.weakbook.entity.User;
+import com.weakennN.weakbook.repository.CommentLikeRepository;
 import com.weakennN.weakbook.repository.CommentRepository;
 import com.weakennN.weakbook.repository.PostRepository;
 import com.weakennN.weakbook.repository.UserRepository;
@@ -22,12 +24,14 @@ public class CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
     private UserRepository userRepository;
+    private CommentLikeRepository commentLikeRepository;
 
     public CommentService(CommentRepository commentRepository, PostRepository postRepository
-            , UserRepository userRepository) {
+            , UserRepository userRepository, CommentLikeRepository commentLikeRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.commentLikeRepository = commentLikeRepository;
     }
 
     public int getCountComments(Post post) {
@@ -75,5 +79,12 @@ public class CommentService {
         }
 
         return result;
+    }
+
+    public void like(Long commentId) {
+        this.commentLikeRepository.save(new CommentLike(
+                this.userRepository.findById(AuthService.getUser().getId()).get(),
+                this.commentRepository.findById(commentId).get()
+        ));
     }
 }
