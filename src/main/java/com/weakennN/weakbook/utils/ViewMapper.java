@@ -100,4 +100,8 @@ public class ViewMapper {
     public static UserView mapUser(User user) {
         return mapper.map(user, UserView.class);
     }
+
+    public static UserProfileView mapToUserProfile(User user) {
+        return mapper.map(user, UserProfileView.class);
+    }
 }

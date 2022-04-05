@@ -37,4 +37,8 @@ public class UserService {
         this.dropBoxService.createFolder("/users/user-" + user.getId());
         this.dropBoxService.createFolder("/users/user-" + user.getId() + "/images");
     }
+
+    public User getUser(Long userId) {
+        return this.userRepository.findById(userId).get();
+    }
 }
