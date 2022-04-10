@@ -1,0 +1,51 @@
+.banner {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    margin-top: -50px;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+.profile-name {
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.edit-profile-btn {
+    height: 40px;
+}
+
+.profile-count-friends {
+    color: #9c9393;
+    font-weight: 500;
+}
+
+@media all and (max-width: 768px) {
+    .profile-holder > * {
+        margin: auto !important;
+    }
+
+    .edit-profile-btn {
+        width: 160px;
+        margin-top: 10px !important;
+    }
+
+    .profile-name {
+        margin-top: 15px !important;
+    }
+
+    .profile-image {
+        margin-top: -50px !important;
+    }
+}

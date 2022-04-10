@@ -31,7 +31,7 @@
                 <input class="form-control me-2" type="search" placeholder="Search...">
             </form>
             <a th:href="@{/user/{id}(id=*{user.id})}" class="d-flex flex-row nav-profile me-3">
-                <img th:src="${user.profilePicture}" class="profile-image" alt="">
+                <img th:src="${user.profilePicture}" class="nav-profile-image" alt="">
                 <p th:text="${user.firstName}" class="mb-0 mt-2 ms-2"></p>
             </a>
         </div>

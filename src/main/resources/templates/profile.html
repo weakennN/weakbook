@@ -1,5 +1,21 @@
 <div th:replace="/fragments/pagetop.html"></div>
 <link rel="stylesheet" href="/static/css/post.css">
+<link rel="stylesheet" href="/static/css/profile.css">
+<div class="row d-flex justify-content-md-center pb-3 mb-3" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="col-xxl-6 col-xl-7 col-lg-9 col-12 p-0 m-0">
+        <img class="img-fluid banner"
+             src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" alt="">
+        <div class="d-flex flex-md-row flex-column profile-holder">
+            <img class="profile-image"
+                 src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="">
+            <div class="d-flex flex-column ms-3 mt-2">
+                <p class="profile-name">Lyuboslav Medarov</p>
+                <p class="profile-count-friends">250 Friends</p>
+            </div>
+            <button class="btn btn-primary me-3 mt-2 ms-auto edit-profile-btn">Edit profile</button>
+        </div>
+    </div>
+</div>
 <div class="container-lg">
     <div class="row d-flex justify-content-md-center">
         <div class="col-md-6 col-12 p-0 m-0" id="posts"></div>
