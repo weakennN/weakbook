@@ -49,4 +49,10 @@ public class PostController {
     public ResponseEntity<PostLikeView> like(@PathVariable("postId") Long postId) {
         return new ResponseEntity<>(this.postService.like(postId), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/getOwnPosts", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<PostView>> getOwnPosts(@RequestParam("passedPosts") int passedPosts) {
+        return new ResponseEntity<>(this.postService.getOwnPosts(passedPosts), HttpStatus.OK);
+    }
 }

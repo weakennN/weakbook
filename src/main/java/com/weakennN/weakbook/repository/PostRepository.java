@@ -22,4 +22,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "SELECT * FROM posts p JOIN comments c ON p.id = c.post_id where post_id = 16 LIMIT ?1", nativeQuery = true)
     Post findByCommentId(Long commentId);
+
+    @Query(value = "select * from posts where user_id = ?1 order by created desc limit 7 offset ?2", nativeQuery = true)
+    List<Post> getOwnPost(Long userId, int offset);
 }

@@ -34,4 +34,5 @@ $(document).ready(function () {
     AjaxManager.request("/getUser/" + tokens[tokens.length - 1], null, "GET", function (data) {
         Profile.init(data);
     })
+    PostManager.init("/getOwnPosts");
 })

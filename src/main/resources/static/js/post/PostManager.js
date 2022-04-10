@@ -1,6 +1,16 @@
 class PostManager {
 
     static #passedPosts = 0;
+    static #url;
+
+    static init(url) {
+        this.#url = url;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
+                PostManager.getPosts(PostManager.#url);
+            }
+        });
+    }
 
     static createPost(post) {
         console.log(post);
@@ -49,7 +59,7 @@ class PostManager {
     static getPosts() {
         if (PostManager.#send) {
             PostManager.#send = false;
-            AjaxManager.request("/getPosts", {passedPosts: PostManager.#passedPosts}, "GET", function (data) {
+            AjaxManager.request(PostManager.#url, {passedPosts: PostManager.#passedPosts}, "GET", function (data) {
                 for (let postData of data) {
                     let postElement = PostManager.createPost(postData);
                     let post = new Post(postData, postElement);
@@ -75,12 +85,3 @@ class PostManager {
         })
     }
 }
-
-$(document).ready(function () {
-    //PostManager.getPosts();
-    $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
-        //    PostManager.getPosts();
-        }
-    });
-})

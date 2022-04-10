@@ -97,4 +97,14 @@ public class PostService {
         return ViewMapper.mapToPostView(post, this.commentRepository,
                 this.postLikeRepository, post.getUser(), this.dropBoxService);
     }
+
+    public List<PostView> getOwnPosts(int passedPosts) {
+        List<Post> posts = this.postRepository.getOwnPost(AuthService.getUser().getId(), passedPosts);
+        List<PostView> result = new ArrayList<>();
+        for (Post post : posts) {
+            result.add(ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository,
+                    this.userRepository.findById(AuthService.getUser().getId()).get(), this.dropBoxService));
+        }
+        return result;
+    }
 }
