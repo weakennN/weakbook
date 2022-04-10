@@ -98,8 +98,8 @@ public class PostService {
                 this.postLikeRepository, post.getUser(), this.dropBoxService);
     }
 
-    public List<PostView> getOwnPosts(int passedPosts) {
-        List<Post> posts = this.postRepository.getOwnPost(AuthService.getUser().getId(), passedPosts);
+    public List<PostView> getUserPosts(Long userId, int passedPosts) {
+        List<Post> posts = this.postRepository.getUserPosts(userId, passedPosts);
         List<PostView> result = new ArrayList<>();
         for (Post post : posts) {
             result.add(ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository,

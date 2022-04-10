@@ -1,6 +1,12 @@
 .nav-link {
     font-weight: 500;
     font-size: 20px;
+    color: #818181;
+    transition: all 0.5s;
+}
+
+.nav-link:hover {
+    color: #585858;
 }
 
 .navbar-brand {
@@ -9,7 +15,7 @@
 }
 
 i {
-    font-size: 1.9rem;
+    font-size: 1.35rem;
     text-decoration: none;
 }
 
@@ -21,6 +27,11 @@ i {
 
 .navbar {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white;
+}
+
+.search-form {
+    width: 50%;
 }
 
 .nav-profile {
@@ -31,4 +42,23 @@ i {
     font-size: 19px;
     color: #181717;
     font-weight: 500;
+}
+
+@media all and (max-width: 768px) {
+    .nav-link {
+        padding-left: 0 !important;
+    }
+
+    .navbar-brand {
+        margin-left: 0 !important;
+    }
+
+    .search-form {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    .nav-profile {
+        margin-top: 15px;
+    }
 }

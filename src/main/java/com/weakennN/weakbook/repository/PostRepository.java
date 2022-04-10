@@ -24,5 +24,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Post findByCommentId(Long commentId);
 
     @Query(value = "select * from posts where user_id = ?1 order by created desc limit 7 offset ?2", nativeQuery = true)
-    List<Post> getOwnPost(Long userId, int offset);
+    List<Post> getUserPosts(Long userId, int offset);
 }
