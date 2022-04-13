@@ -2,6 +2,10 @@ body {
     background-color: #F0F2F5;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .banner {
     height: 400px;
     width: 100%;
@@ -35,6 +39,12 @@ p {
     font-weight: 500;
 }
 
+.see-all-friends {
+    margin-left: auto;
+    font-size: 19px;
+    align-self: center;
+}
+
 @media all and (max-width: 768px) {
     .profile-holder > * {
         margin: auto !important;
@@ -51,5 +61,12 @@ p {
 
     .profile-image {
         margin-top: -50px !important;
+    }
+}
+
+@media all and (max-width: 992px) {
+    .friends {
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 }
