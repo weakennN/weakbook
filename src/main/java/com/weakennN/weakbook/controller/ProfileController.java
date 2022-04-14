@@ -1,6 +1,7 @@
 package com.weakennN.weakbook.controller;
 
 import com.weakennN.weakbook.service.AuthService;
+import com.weakennN.weakbook.service.FriendService;
 import com.weakennN.weakbook.service.UserService;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.UserProfileView;
@@ -16,14 +17,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProfileController {
 
     private UserService userService;
+    private FriendService friendService;
 
-    public ProfileController(UserService userService) {
+    public ProfileController(UserService userService, FriendService friendService) {
         this.userService = userService;
+        this.friendService = friendService;
     }
 
     @GetMapping("/profile/{userId}")
-    public String index(Model model) {
+    public String index(Model model, @PathVariable String userId) {
         model.addAttribute("user", AuthService.getUserView());
+        model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 100));
         return "profile";
     }
 

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/static/css/post.css">
 <link rel="stylesheet" href="/static/css/profile.css">
 <div class="row d-flex justify-content-md-center pb-3 mb-3"
-     style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color: white">
+     style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color: white" xmlns:th="http://www.thymeleaf.org">
     <div class="col-xxl-6 col-xl-7 col-lg-9 col-12 p-0 m-0" id="profile-holder">
         <img id="banner-image" class="img-fluid banner"
              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" alt="">
@@ -28,36 +28,14 @@
                 </div>
                 <p class="mb-0" style="font-size: 20px">254 friends</p>
                 <div class="row mt-2">
-                    <div class="col-xl-3 col-sm-4 col-6">
-                        <a class="me-2" href="#">
+                    <div th:each="friend: ${friends}" class="col-xl-3 col-sm-4 col-6">
+                        <a class="me-2" th:href="@{${friend.links.get('self').link}}">
                             <img class="img-fluid"
-                                 src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg"
+                                 th:src="@{${friend.profilePicture}}"
+                                 style="border-radius: 10px"
                                  alt="">
-                            <p style="color: #1e1c1c;font-weight: 600;">Random user</p>
-                        </a>
-                    </div>
-                    <div class="col-xl-3 col-sm-4 col-6">
-                        <a class="me-2" href="#">
-                            <img class="img-fluid"
-                                 src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg"
-                                 alt="">
-                            <p style="color: #1e1c1c;font-weight: 600;">Random user</p>
-                        </a>
-                    </div>
-                    <div class="col-xl-3 col-sm-4 col-6">
-                        <a class="me-2" href="#">
-                            <img class="img-fluid"
-                                 src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg"
-                                 alt="">
-                            <p style="color: #1e1c1c;font-weight: 600;">Random user</p>
-                        </a>
-                    </div>
-                    <div class="col-xl-3 col-sm-4 col-6">
-                        <a class="me-2" href="#">
-                            <img class="img-fluid"
-                                 src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg"
-                                 alt="">
-                            <p style="color: #1e1c1c;font-weight: 600;">Random user</p>
+                            <p th:text="${friend.firstName + ' ' + friend.lastName}"
+                               style="color: #1e1c1c;font-weight: 600;"></p>
                         </a>
                     </div>
                 </div>

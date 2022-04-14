@@ -44,6 +44,6 @@ public class UserView extends RepresentationModel {
 
     @Override
     public void initSelfLinks() {
-        super.addLink("self", new Link("/user/" + this.id));
+        super.addLink("self", new Link("/profile/" + this.id));
     }
 }

@@ -41,4 +41,6 @@ public class FriendController {
         this.friendService.deleteFriendRequest(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // TODO: get all friends get mapping
 }

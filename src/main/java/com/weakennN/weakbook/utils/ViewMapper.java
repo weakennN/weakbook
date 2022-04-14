@@ -17,7 +17,6 @@ public class ViewMapper {
 
     private static final ModelMapper mapper = new ModelMapper();
 
-    // TODO: refactore
     public static PostView mapToPostView(Post post, CommentRepository commentRepository
             , PostLikeRepository postLikeRepository, User user, DropBoxService dropBoxService) {
         PostView postView = mapper.map(post, PostView.class);
@@ -99,7 +98,9 @@ public class ViewMapper {
     }
 
     public static UserView mapUser(User user) {
-        return mapper.map(user, UserView.class);
+        UserView userView = mapper.map(user, UserView.class);
+        userView.initSelfLinks();
+        return userView;
     }
 
     public static UserProfileView mapToUserProfile(User user) {
