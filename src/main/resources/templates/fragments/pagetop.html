@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/static/css/navbar.css">
+    <link rel="stylesheet" href="/static/css/basic.css">
 </head>
 <nav class="navbar navbar-expand-md" xmlns:th="http://www.thymeleaf.org">
     <div class="container-fluid">
@@ -30,8 +31,31 @@
                     Chat
                 </a>
             </ul>
-            <form class="d-flex m-auto search-form">
-                <input class="form-control me-2" type="search" placeholder="Search...">
+            <form style="position: relative" class="d-flex m-auto search-form">
+                <input style="border-radius: 0.25rem 0 0 0.25rem;" class="form-control" type="search"
+                       placeholder="Search...">
+                <button style="border-radius: 0 0.25rem 0.25rem 0;background: #e3e3e3;" class="btn"><i
+                        class="fas fa-search"></i></button>
+                <div class="search-box-suggestions">
+                    <a class="d-flex flex-row search-box-suggestion">
+                        <img
+                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                                alt="">
+                        <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">Gosho gosho</p>
+                    </a>
+                    <a class="d-flex flex-row search-box-suggestion">
+                        <img
+                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                                alt="">
+                        <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">Gosho goshosafasf</p>
+                    </a>
+                    <a class="d-flex flex-row search-box-suggestion">
+                        <img
+                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                                alt="">
+                        <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">Gosho goshoasfasf</p>
+                    </a>
+                </div>
             </form>
             <a th:href="@{/profile/{id}(id=*{user.id})}" class="d-flex flex-row nav-profile me-3">
                 <img th:src="${user.profilePicture}" class="nav-profile-image" alt="">
