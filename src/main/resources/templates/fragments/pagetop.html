@@ -33,28 +33,11 @@
             </ul>
             <form style="position: relative" class="d-flex m-auto search-form">
                 <input style="border-radius: 0.25rem 0 0 0.25rem;" class="form-control" type="search"
-                       placeholder="Search...">
+                       placeholder="Search..." id="search-input">
                 <button style="border-radius: 0 0.25rem 0.25rem 0;background: #e3e3e3;" class="btn"><i
                         class="fas fa-search"></i></button>
-                <div class="search-box-suggestions">
-                    <a class="d-flex flex-row search-box-suggestion">
-                        <img
-                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-                                alt="">
-                        <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">Gosho gosho</p>
-                    </a>
-                    <a class="d-flex flex-row search-box-suggestion">
-                        <img
-                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-                                alt="">
-                        <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">Gosho goshosafasf</p>
-                    </a>
-                    <a class="d-flex flex-row search-box-suggestion">
-                        <img
-                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-                                alt="">
-                        <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">Gosho goshoasfasf</p>
-                    </a>
+                <div class="search-box-suggestions" id="search-box-suggestions">
+                    <p class='text-center mb-0' style='font-size: 19px;padding: 10px;color: #363535'>No results</p>
                 </div>
             </form>
             <a th:href="@{/profile/{id}(id=*{user.id})}" class="d-flex flex-row nav-profile me-3">
@@ -69,5 +52,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/241fc97acc.js" crossorigin="anonymous"></script>
+<script src="/static/js/PageTop.js"></script>
 </html>
 

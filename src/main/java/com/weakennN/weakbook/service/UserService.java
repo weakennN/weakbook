@@ -5,6 +5,7 @@ import com.weakennN.weakbook.entity.User;
 import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.security.ApplicationUserService;
+import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -14,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -43,5 +46,13 @@ public class UserService {
 
     public User getUser(Long userId) {
         return this.userRepository.findById(userId).get();
+    }
+
+    public List<UserView> getUserLike(String prefix, int limit) {
+        if (prefix.length() == 0)
+            return new ArrayList<>();
+        prefix = "%" + prefix + "%";
+        return this.userRepository.getUserBySearch(prefix, limit, AuthService.getUser().getId())
+                .stream().map(ViewMapper::mapUser).collect(Collectors.toList());
     }
 }

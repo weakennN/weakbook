@@ -54,6 +54,8 @@ i {
     padding: 10px;
     left: 50%;
     transform: translate(-50%, 0);
+    opacity: 0;
+    transition: all 0.3s linear;
 }
 
 .search-box-suggestion {
@@ -92,7 +94,7 @@ i {
         margin-top: 15px;
     }
 
-    .search-box-suggestions{
+    .search-box-suggestions {
         width: 65%;
     }
 }
