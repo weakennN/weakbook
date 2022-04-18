@@ -76,6 +76,21 @@ i {
     background-color: #eeeeee;
 }
 
+.notifications-navbar {
+    padding: 10px;
+    transition: 0.5s;
+    border-radius: 10px;
+}
+
+.notifications-navbar:hover {
+    background-color: #dcdcdc;
+}
+
+.notifications-navbar-holder {
+    display: none;
+    transition: all 0.5s;
+}
+
 @media all and (max-width: 768px) {
     .nav-link {
         padding-left: 0 !important;
@@ -96,5 +111,9 @@ i {
 
     .search-box-suggestions {
         width: 65%;
+    }
+
+    .navbar > .container-fluid {
+        justify-content: normal !important;
     }
 }
