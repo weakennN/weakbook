@@ -17,12 +17,19 @@ class PostPage {
             if (PostPage.#post.numberComments > 7) {
                 PostPage.#createShowMoreCommentsElement();
             }
+            PostPage.#initPostTools(PostPage.#post);
         });
 
         this.#writeCommentInput.onkeypress = function (event) {
             if (event.key === "Enter") {
                 let comment = PostPage.#writeCommentInput.value;
-                // send comment
+                AjaxManager.request("/comments/comment", JSON.stringify({
+                    comment: comment,
+                    replyTo: null,
+                    postId: PostPage.#post.id
+                }), "POST", function (data) {
+                    PostPage.#appendComments([data]);
+                })
             }
         }
     }
@@ -32,6 +39,33 @@ class PostPage {
             let comment = new Comment(commentData);
             PostPage.#commentsSection.appendChild(comment.createComment(commentData));
         }
+    }
+
+    static #initPostTools(post) {
+        let postTools = document.getElementById("post-tools");
+        let like = $(`<i style="font-size: 2rem" class="fas fa-thumbs-up ${post.liked === true ? "liked" : ""}"></i>`).get(0);
+        like.onclick = function () {
+            AjaxManager.request("/post/" + post.id + "/like", null, "POST", function (data) {
+                if (data.liked) {
+                    like.classList.add("liked");
+                } else {
+                    like.classList.remove("liked");
+                }
+            });
+        }
+        let comment = $(`<i style="font-size: 2rem" class="fas fa-comment ms-auto"></i>`).get(0);
+        comment.onclick = function () {
+            PostPage.#writeCommentInput.focus();
+        }
+
+        document.getElementById("number-likes").innerHTML = post.numberLikes;
+        document.getElementById("number-comments").innerHTML = post.numberComments;
+        document.getElementById("post-image").setAttribute("src", post.imagesUrls[0]);
+        document.getElementById("post-owner-image").setAttribute("src", post.user.profilePicture);
+        document.getElementById("post-owner-name").innerHTML = post.user.firstName + " " + post.user.lastName;
+        document.getElementById("post-content").innerHTML = post.content;
+
+        postTools.append(like, comment);
     }
 
     static #createShowMoreCommentsElement() {
@@ -48,5 +82,5 @@ class PostPage {
 }
 
 $(document).ready(function () {
-   // PostPage.init();
+    PostPage.init();
 })

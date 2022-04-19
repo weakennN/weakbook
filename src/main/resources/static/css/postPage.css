@@ -17,3 +17,7 @@ body, html {
     visibility: visible;
 }
 
+.liked {
+    color: #007eff;
+}
+

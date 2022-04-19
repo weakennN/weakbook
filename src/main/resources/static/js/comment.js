@@ -81,24 +81,19 @@ class Comment {
     }
 
     #loadComments(comments) {
-        console.log(comments);
         for (let commentData of comments) {
-            let comment = new Comment(commentData)
-            this.#repliesElement.appendChild(comment.createComment(commentData))
+            let comment = new Comment(commentData);
+            this.#repliesElement.querySelector(".replies").appendChild(comment.createComment(commentData));
         }
         this.#currentOffset += comments.length;
     }
 
     #createRepliesContainerElement() {
-        this.#repliesElement = $(`<div class="replies" style="display: none;margin-left: 35px">
-                            <div class="d-flex flex-row">
-                                <img class="mt-1" style="width: 35px;height: 35px;border-radius: 50%;"
-                                     src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"
-                                     alt="">
-                            </div>
-                            </div>`).get(0);
+        this.#repliesElement = $(`<div class="replies-container" style="display: none;margin-left: 35px">
+                                       <div class="replies"></div>
+                                  </div>`).get(0);
         let replyInput = $('<input class="ms-2 form-control reply-to" type="text">').get(0);
-        this.#repliesElement.children.item(0).appendChild(replyInput);
+        this.#repliesElement.appendChild(replyInput);
         let commentClass = this;
         let func = this.#reply;
         replyInput.onkeypress = function (event) {
