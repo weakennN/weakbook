@@ -48,5 +48,5 @@ class PostPage {
 }
 
 $(document).ready(function () {
-    PostPage.init();
+   // PostPage.init();
 })

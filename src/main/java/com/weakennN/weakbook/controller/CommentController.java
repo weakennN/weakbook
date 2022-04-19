@@ -24,6 +24,7 @@ public class CommentController {
     @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<CommentView> comment(@RequestBody CommentBinding commentBinding) {
+        System.out.println(commentBinding.getComment());
         return new ResponseEntity<>(this.commentService.comment(commentBinding), HttpStatus.OK);
     }
 
