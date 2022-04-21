@@ -16,8 +16,3 @@ body, html {
 .extra-post:hover > .extra-post-content {
     visibility: visible;
 }
-
-.liked {
-    color: #007eff;
-}
-

@@ -6,11 +6,11 @@ class PostManager {
     static init(url) {
         this.#url = url;
         PostManager.getPosts();
-        $(window).scroll(function () {
-            if ($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
-                PostManager.getPosts(PostManager.#url);
+        window.onscroll = function () {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+                PostManager.getPosts();
             }
-        });
+        };
     }
 
     static createPost(post) {
@@ -58,6 +58,7 @@ class PostManager {
     static #send = true;
 
     static getPosts() {
+        console.log(PostManager.#url);
         if (PostManager.#send) {
             PostManager.#send = false;
             AjaxManager.request(PostManager.#url, {passedPosts: PostManager.#passedPosts}, "GET", function (data) {

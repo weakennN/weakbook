@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/static/css/post.css">
 <link rel="stylesheet" href="/static/css/imageUploader.css">
+<link rel="stylesheet" href="/static/css/postModal.css">
 <body>
 <div th:replace="/fragments/pagetop.html"></div>
 <div class="container-lg">
@@ -7,119 +8,39 @@
         <div class="col-md-6 col-12 p-0 m-0" id="posts"></div>
     </div>
 </div>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-    Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+<div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="post-modal" aria-modal="true"
      role="dialog">
-    <div class="modal-dialog modal-xl" style="max-width: 100%;height: 100%;max-height: 100%;">
-        <div class="modal-content" style="width: 100%;max-width: 100%;height: 100%;border:none">
+    <div class="modal-dialog modal-dialog-centered post-modal-dialog modal-xl">
+        <div class="modal-content">
             <div class="modal-body">
-                <div class="row" style="height: 100%;">
+                <div class="row">
                     <div class="col-lg-8 col-12 d-flex justify-content-center" style="background: black;">
-                        <img style="object-fit: contain;height: 100%;" class="img-fluid"
+                        <img id="post-image" style="object-fit: contain;height: 100%;" class="img-fluid"
                              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" alt="">
                     </div>
                     <div class="col-lg-4 col-12">
                         <div class="d-flex flex-row">
-                            <img style="width: 50px;height: 50px;border-radius: 50%"
+                            <img id="post-owner-image" style="width: 50px;height: 50px;border-radius: 50%"
                                  src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"
                                  alt="">
-                            <p class="mb-0 ms-2">Lyuboslav Medarov</p>
+                            <p id="post-owner-name" class="mb-0 ms-2">Lyuboslav Medarov</p>
                         </div>
                         <div class="d-flex flex-column mt-2">
-                            <p>gdjsidjhgerqiojgbhndfkeabhjreiqhg</p>
+                            <p id="post-content">gdjsidjhgerqiojgbhndfkeabhjreiqhg</p>
                         </div>
                         <div class="mt-4 d-flex flex-row">
-                            <span>100 Likes</span>
-                            <span class="ms-auto">120 Comments</span>
+                            <p class="mb-0"><span id="number-likes"></span> Likes</p>
+                            <p class="ms-auto mb-0"><span id="number-comments"></span> Comments</p>
                         </div>
                         <hr>
-                        <div class="d-flex flex-row px-2">
-                            <i style="font-size: 2rem" class="far fa-thumbs-up"></i>
-                            <i style="font-size: 2rem" class="far fa-comment ms-auto"></i>
+                        <div id="post-tools" class="d-flex flex-row px-2">
+                            <i id="like" style="font-size: 2rem" class="fas fa-thumbs-up"></i>
+                            <i id="comment" style="font-size: 2rem" class="fas fa-comment ms-auto"></i>
                         </div>
                         <hr>
                         <div class="comments-holder">
-                            <div class="comments" id="comments">
-                                <div class="comment" id="comment-4">
-                                    <div class="d-flex flex-row">
-                                        <img style="width: 45px;height: 45px;border-radius: 50%;"
-                                             src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"
-                                             alt="">
-                                        <div class="d-flex flex-column ms-2">
-                                            <div style="padding: 10px;border-radius: 10px;background: #f5f4f4">
-                                                <p class="mb-0" style="font-weight: 620;">Lyuboslav Medarov</p>
-                                                <p class="mb-0">comment to post</p>
-                                            </div>
-                                            <div class="d-flex flex-row">
-                                                <span class="me-3">Like</span>
-                                                <span>Reply</span>
-                                                <span class="ms-auto">Likes</span>
-                                            </div>
-                                            <p>Replies</p>
-                                        </div>
-                                    </div>
-                                    <div class="replies" style="display: block;margin-left: 35px">
-                                        <div class="comment" id="comment-5">
-                                            <div class="d-flex flex-row">
-                                                <img style="width: 45px;height: 45px;border-radius: 50%;"
-                                                     src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"
-                                                     alt="">
-                                                <div class="d-flex flex-column ms-2">
-                                                    <div style="padding: 10px;border-radius: 10px;background: #f5f4f4">
-                                                        <p class="mb-0" style="font-weight: 620;">Lyuboslav Medarov</p>
-                                                        <p class="mb-0">comment to post</p>
-                                                    </div>
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-3">Like</span>
-                                                        <span>Reply</span>
-                                                        <span class="ms-auto">Likes</span>
-                                                    </div>
-                                                    <p>Replies</p>
-                                                </div>
-                                            </div>
-                                            <div class="replies" style="display: block;margin-left: 35px">
-                                                <div class="comment" id="comment-6">
-                                                    <div class="d-flex flex-row">
-                                                        <img style="width: 45px;height: 45px;border-radius: 50%;"
-                                                             src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"
-                                                             alt="">
-                                                        <div class="d-flex flex-column ms-2">
-                                                            <div style="padding: 10px;border-radius: 10px;background: #f5f4f4">
-                                                                <p class="mb-0" style="font-weight: 620;">Lyuboslav
-                                                                    Medarov</p>
-                                                                <p class="mb-0">comment to post</p>
-                                                            </div>
-                                                            <div class="d-flex flex-row">
-                                                                <span class="me-3">Like</span>
-                                                                <span>Reply</span>
-                                                                <span class="ms-auto">Likes</span>
-                                                            </div>
-                                                            <p>Replies</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="replies" style="display: block;margin-left: 35px">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row">
-                                            <img class="mt-1" style="width: 35px;height: 35px;border-radius: 50%;"
-                                                 src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"
-                                                 alt="">
-                                            <input placeholder="Reply to someone" class="ms-2 form-control reply-to"
-                                                   type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="view-more-comments">
-
-                            </div>
+                            <div class="comments" id="comments"></div>
+                            <div id="view-more-comments"></div>
                             <input id="write-comment" class="form-control" type="text">
                         </div>
                     </div>
@@ -128,7 +49,6 @@
         </div>
 
     </div>
-</div>
 </div>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     PostManager
@@ -143,7 +63,7 @@
             <div class="modal-body">
                 <div class="row" id="post-images"></div>
                 <textarea style="border: none;resize: vertical;" rows="3" class="form-control"
-                          id="post-content"></textarea>
+                          id="post-create-content"></textarea>
                 <div class="align-self-center d-flex image-uploader" id="file-browser">
                     <div class="text-center" style="margin: 30px auto 30px auto;">
                         <i style="font-size: 5.5rem;margin-bottom: 5px;" class="fas fa-cloud-download-alt"></i>
@@ -172,5 +92,13 @@
 <script src="/static/js/Notification.js"></script>
 <script src="/static/js/FriendManager.js"></script>
 <script src="/static/js/PostCreator.js"></script>
+<script src="/static/js/comment.js"></script>
+<script src="/static/js/post/AdvancedPostView.js"></script>
+<script src="/static/js/post/PostModal.js"></script>
+<script>
+    $(document).ready(function () {
+        PostManager.init("/getPosts");
+    })
+</script>
 </body>
 </html>

@@ -10,6 +10,12 @@ class Post {
         this.#postElement.querySelector(".like").onclick = function () {
             instance.#like();
         }
+        this.#postElement.querySelector(".card-img-bottom").onclick = function () {
+            AdvancedPostView.init();
+            AdvancedPostView.getPost(instance.#post.links.self.link, function () {
+                PostModal.open();
+            });
+        }
     }
 
     #like() {

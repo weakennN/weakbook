@@ -33,8 +33,6 @@
                     <p class="ms-auto mb-0"><span id="number-comments"></span> Comments</p>
                 </div>
                 <hr>
-                <div class="d-flex flex-row px-2" id="post-tools"></div>
-                <hr>
                 <div class="comments-holder">
                     <div class="comments" id="comments"></div>
                     <div id="view-more-comments"></div>
@@ -104,6 +102,12 @@
         crossorigin="anonymous"></script>
 <script src="/static/js/AjaxManager.js"></script>
 <script src="/static/js/comment.js"></script>
-<script src="/static/js/post/PostPage.js"></script>
+<script src="/static/js/post/AdvancedPostView.js"></script>
+<script>
+    $(document).ready(function () {
+        AdvancedPostView.init();
+        AdvancedPostView.getPost(window.location.pathname);
+    });
+</script>
 </body>
 </html>
