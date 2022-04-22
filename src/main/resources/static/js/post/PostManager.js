@@ -36,7 +36,7 @@ class PostManager {
                                  alt='Card image cap'> 
                             <div class='px-3'>
                                 <div class='d-flex mt-2'> 
-                                    <a class='mb-0'>${post.numberLikes} Likes</a> 
+                                    <p class='mb-0 likes'>${post.numberLikes} Likes</p> 
                                     <a href="${post.links.self.link}" class='ms-auto mb-0'>${post.numberComments} Comments</a> 
                                 </div>
                                 <hr class='mt-2 mb-0'>

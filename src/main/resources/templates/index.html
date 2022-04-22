@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/static/css/postModal.css">
 <body>
 <div th:replace="/fragments/pagetop.html"></div>
+<div th:replace="/modals/likemodal.html"></div>
 <div class="container-lg">
     <div class="row d-flex justify-content-md-center">
         <div class="col-md-6 col-12 p-0 m-0" id="posts"></div>
@@ -47,7 +48,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -97,7 +97,7 @@
 <script src="/static/js/post/PostModal.js"></script>
 <script>
     $(document).ready(function () {
-        PostManager.init("/getPosts");
+       PostManager.init("/getPosts");
     })
 </script>
 </body>

@@ -16,6 +16,10 @@ class Post {
                 PostModal.open();
             });
         }
+        console.log(instance.#post.links.likes.link);
+        this.#postElement.querySelector(".likes").onclick = function () {
+            LikesModal.open(instance.#post.links.likes.link);
+        }
     }
 
     #like() {

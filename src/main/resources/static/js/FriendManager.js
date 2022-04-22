@@ -7,6 +7,8 @@ class FriendManager {
     }
 }
 
-$(document).ready(function () {
+/*$(document).ready(function () {
     FriendManager.sendFriendRequest();
 })
+
+ */

@@ -10,6 +10,7 @@ import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.PostLikeView;
 import com.weakennN.weakbook.view.PostView;
+import com.weakennN.weakbook.view.UserView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -86,8 +88,10 @@ public class PostService {
             PostLike newLike = new PostLike(this.postRepository.findById(postId).get()
                     , this.userRepository.findById(userId).get());
             this.postLikeRepository.save(newLike);
-            this.notificationService.sendNotification(AuthService.getUser().getFirstName() + " " + AuthService.getUser().getLastName() + "liked your post."
-                    , this.postRepository.findById(postId).get().getUser().getEmail(), "/post/" + postId);
+            if (!AuthService.getUser().getId().equals(this.postRepository.findById(postId).get().getUser().getId())) {
+                this.notificationService.sendNotification(AuthService.getUser().getFirstName() + " " + AuthService.getUser().getLastName() + "liked your post."
+                        , this.postRepository.findById(postId).get().getUser().getEmail(), "/post/" + postId);
+            }
             return new PostLikeView(true);
         }
     }
@@ -106,5 +110,9 @@ public class PostService {
                     this.userRepository.findById(AuthService.getUser().getId()).get(), this.dropBoxService));
         }
         return result;
+    }
+
+    public List<UserView> getPostLikes(Long postId) {
+        return this.postLikeRepository.getPostLikes(postId).stream().map(pl -> ViewMapper.mapUser(pl.getUser())).collect(Collectors.toList());
     }
 }

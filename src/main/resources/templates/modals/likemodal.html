@@ -1,0 +1,50 @@
+<style>
+    .liked-user-holder {
+        transition: 0.5s;
+    }
+
+    .liked-user-holder:hover {
+        background-color: #f5f5f5;
+    }
+
+    .likes-modal-body {
+        padding: 0 !important;
+        height: 400px;
+        overflow-y: auto;
+    }
+</style>
+
+<div class="modal fade" id="like-modal" tabindex="-1" aria-labelledby="like-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body likes-modal-body" id="likes-modal-body"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    class LikesModal {
+        static open(url) {
+            AjaxManager.request(url, null, "GET", function (data) {
+                LikesModal.#append(data);
+                bootstrap.Modal.getOrCreateInstance(document.querySelector('#like-modal')).show();
+            })
+        }
+
+        static #append(users) {
+            for (let user of users) {
+                document.getElementById("likes-modal-body").appendChild($(`<a href="${user.links.self.link}">
+                    <div class="d-flex flex-row liked-user-holder" style="padding: 10px">
+                        <img style="border-radius: 50%;width: 40px;height: 40px"
+                             src="${user.profilePicture}"
+                             alt="">
+                        <p style="align-self: center;margin-bottom: 0 !important;margin-left: 10px;">${user.firstName + " " + user.lastName}</p>
+                    </div>
+                </a>`).get(0));
+            }
+        }
+    }
+</script>

@@ -5,6 +5,7 @@ import com.weakennN.weakbook.service.AuthService;
 import com.weakennN.weakbook.service.PostService;
 import com.weakennN.weakbook.view.PostLikeView;
 import com.weakennN.weakbook.view.PostView;
+import com.weakennN.weakbook.view.UserView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +58,11 @@ public class PostController {
     @ResponseBody
     public ResponseEntity<List<PostView>> getOwnPosts(@PathVariable String userId, @RequestParam("passedPosts") int passedPosts) {
         return new ResponseEntity<>(this.postService.getUserPosts(Long.parseLong(userId), passedPosts), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/post/{postId}/likes")
+    @ResponseBody
+    public ResponseEntity<List<UserView>> getPostLikes(@PathVariable String postId) {
+        return new ResponseEntity<>(this.postService.getPostLikes(Long.parseLong(postId)), HttpStatus.OK);
     }
 }

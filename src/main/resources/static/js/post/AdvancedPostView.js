@@ -60,12 +60,12 @@ class AdvancedPostView {
                 }
             });
         }
-        document.getElementById("number-likes").innerHTML = post.numberLikes;
-        document.getElementById("number-comments").innerHTML = post.numberComments;
-        document.getElementById("post-image").setAttribute("src", post.imagesUrls[0]);
-        document.getElementById("post-owner-image").setAttribute("src", post.user.profilePicture);
-        document.getElementById("post-owner-name").innerHTML = post.user.firstName + " " + post.user.lastName;
-        document.getElementById("post-content").innerHTML = post.content;
+        this.numberLikes.innerHTML = post.numberLikes;
+        this.numberComments.innerHTML = post.numberComments;
+        this.postImage.setAttribute("src", post.imagesUrls[0]);
+        this.ownerImage.setAttribute("src", post.user.profilePicture);
+        this.owner.innerHTML = post.user.firstName + " " + post.user.lastName;
+        this.content.innerHTML = post.content;
     }
 
     static #createShowMoreCommentsElement() {
