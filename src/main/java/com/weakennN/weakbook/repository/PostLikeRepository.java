@@ -17,6 +17,6 @@ public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
     @Query(value = "select * from post_likes where post_id = :postId and user_id = :userId limit 1", nativeQuery = true)
     PostLike findByPostAndUser(@Param("postId") Long postId, @Param("userId") Long userId);
 
-    @Query(value = "select * from post_likes where post_id = ?1", nativeQuery = true)
-    List<PostLike> getPostLikes(Long postId);
+    @Query(value = "select * from post_likes where post_id = ?1 limit 10 offset ?2", nativeQuery = true)
+    List<PostLike> getPostLikes(Long postId, int passedLikes);
 }

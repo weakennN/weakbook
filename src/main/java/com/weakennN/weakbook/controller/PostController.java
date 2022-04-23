@@ -62,7 +62,7 @@ public class PostController {
 
     @GetMapping(value = "/post/{postId}/likes")
     @ResponseBody
-    public ResponseEntity<List<UserView>> getPostLikes(@PathVariable String postId) {
-        return new ResponseEntity<>(this.postService.getPostLikes(Long.parseLong(postId)), HttpStatus.OK);
+    public ResponseEntity<List<UserView>> getPostLikes(@PathVariable String postId, @RequestParam("passedLikes") int passedLikes) {
+        return new ResponseEntity<>(this.postService.getPostLikes(Long.parseLong(postId), passedLikes), HttpStatus.OK);
     }
 }

@@ -27,11 +27,26 @@
 
 <script>
     class LikesModal {
+
+        static #passed = 0;
+
         static open(url) {
-            AjaxManager.request(url, null, "GET", function (data) {
+            this.#clear();
+            AjaxManager.request(url + "?passedLikes=0", null, "GET", function (data) {
+                LikesModal.#passed += data.length;
                 LikesModal.#append(data);
                 bootstrap.Modal.getOrCreateInstance(document.querySelector('#like-modal')).show();
             })
+
+            document.getElementById("likes-modal-body").onscroll = function () {
+                let likesModalBody = document.getElementById("likes-modal-body");
+                if (likesModalBody.offsetHeight + likesModalBody.scrollTop >= likesModalBody.scrollHeight - 50) {
+                    AjaxManager.request(url + "?passedLikes=" + LikesModal.#passed, null, "GET", function (data) {
+                        LikesModal.#passed += data.length;
+                        LikesModal.#append(data);
+                    })
+                }
+            }
         }
 
         static #append(users) {
@@ -45,6 +60,10 @@
                     </div>
                 </a>`).get(0));
             }
+        }
+
+        static #clear() {
+            document.getElementById("likes-modal-body").innerHTML = "";
         }
     }
 </script>

@@ -32,7 +32,7 @@ class AdvancedPostView {
         this.writeCommentInput.onkeypress = function (event) {
             if (event.key === "Enter") {
                 let comment = AdvancedPostView.writeCommentInput.value;
-                AjaxManager.request("/comments/comment", JSON.stringify({
+                AjaxManager.request(AdvancedPostView.post.links.comment.link, JSON.stringify({
                     comment: comment,
                     replyTo: null,
                     postId: AdvancedPostView.post.id
@@ -52,7 +52,7 @@ class AdvancedPostView {
 
     static #initPostTop(post) {
         this.like.onclick = function () {
-            AjaxManager.request("/post/" + post.id + "/like", null, "POST", function (data) {
+            AjaxManager.request(AdvancedPostView.post.links.like.link, null, "POST", function (data) {
                 if (data.liked) {
                     like.style.color = "#007eff";
                 } else {
@@ -71,7 +71,7 @@ class AdvancedPostView {
     static #createShowMoreCommentsElement() {
         let element = $("<p class='show-more-comments'>Show more comments</p>").get(0);
         element.onclick = function () {
-            AjaxManager.request("/getPostComments/16?offset=" + AdvancedPostView.commentsCount, {}, "GET", function (comments) {
+            AjaxManager.request(AdvancedPostView.post.links.comments.link + "?offset=" + AdvancedPostView.commentsCount, {}, "GET", function (comments) {
                 AdvancedPostView.#appendComments(comments);
                 console.log(comments);
                 AdvancedPostView.commentsCount += comments.length;

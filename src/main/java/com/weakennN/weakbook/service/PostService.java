@@ -112,7 +112,7 @@ public class PostService {
         return result;
     }
 
-    public List<UserView> getPostLikes(Long postId) {
-        return this.postLikeRepository.getPostLikes(postId).stream().map(pl -> ViewMapper.mapUser(pl.getUser())).collect(Collectors.toList());
+    public List<UserView> getPostLikes(Long postId, int passedLikes) {
+        return this.postLikeRepository.getPostLikes(postId, passedLikes).stream().map(pl -> ViewMapper.mapUser(pl.getUser())).collect(Collectors.toList());
     }
 }
