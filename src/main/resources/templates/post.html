@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/static/css/postPage.css">
+    <link rel="stylesheet" href="/static/css/comments.css">
 </head>
 <body>
 <div th:replace="/fragments/pagetop.html"></div>
@@ -18,7 +19,7 @@
                  src="" alt="">
         </div>
         <div class="col-lg-4 col-12 mt-lg-0 mt-2">
-            <div style="max-height: 500px;overflow: auto;">
+            <div style="max-height: 598px;overflow-y: auto;overflow-x: hidden;">
                 <div class="d-flex flex-row">
                     <img id="post-owner-image" style="width: 50px;height: 50px;border-radius: 50%"
                          src=""
@@ -34,8 +35,8 @@
                 </div>
                 <hr>
                 <div id="post-tools" class="d-flex flex-row px-2">
-                    <i id="like" style="font-size: 2rem" class="fas fa-thumbs-up" aria-hidden="true"></i>
-                    <i id="comment" style="font-size: 2rem" class="fas fa-comment ms-auto" aria-hidden="true"></i>
+                    <i id="like" style="font-size: 2rem;color: #818181" class="fas fa-thumbs-up" aria-hidden="true"></i>
+                    <i id="comment" style="font-size: 2rem;color: #818181" class="fas fa-comment ms-auto" aria-hidden="true"></i>
                 </div>
                 <hr>
                 <div class="comments-holder">

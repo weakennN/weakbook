@@ -2,9 +2,33 @@
     max-width: 80% !important;
 }
 
+.post-modal-content {
+    height: 850px;
+}
+
+.comments-col {
+    height: 776px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 @media all and (max-width: 1200px) {
     .post-modal-dialog {
         max-width: 100% !important;
         margin: 30px 10px 0 10px !important;
+    }
+}
+
+@media all and (max-width: 992px) {
+    .post-modal-content {
+        height: 1000px;
+    }
+
+    .comments-col {
+        height: 530px;
+    }
+
+    .write-comment-holder {
+        padding: 5px;
     }
 }

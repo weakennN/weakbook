@@ -1,0 +1,47 @@
+<div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="post-modal" aria-modal="true"
+     role="dialog">
+    <div class="modal-dialog modal-dialog-centered post-modal-dialog modal-xl">
+        <div class="modal-content post-modal-content">
+            <div class="modal-body">
+                <div class="row" style="height: 100%">
+                    <div class="col-lg-8 col-12 d-flex justify-content-center" style="background: black;">
+                        <img id="post-image" style="object-fit: contain;height: 100%;" class="img-fluid"
+                             src="" alt="">
+                    </div>
+                    <div class="col-lg-4 col-12 mt-lg-0 mt-2 ">
+                        <div class="comments-col">
+                            <div class="d-flex flex-row">
+                                <img id="post-owner-image" style="width: 50px;height: 50px;border-radius: 50%"
+                                     src=""
+                                     alt="">
+                                <p id="post-owner-name" class="mb-0 ms-2"></p>
+                            </div>
+                            <div class="d-flex flex-column mt-2">
+                                <p id="post-content"></p>
+                            </div>
+                            <div class="mt-4 d-flex flex-row">
+                                <p class="mb-0"><span id="number-likes"></span> Likes</p>
+                                <p class="ms-auto mb-0"><span id="number-comments"></span> Comments</p>
+                            </div>
+                            <hr>
+                            <div id="post-tools" class="d-flex flex-row px-2">
+                                <i id="like" style="font-size: 2rem;color: #818181" class="fas fa-thumbs-up"></i>
+                                <i id="comment" style="font-size: 2rem;color: #818181"
+                                   class="fas fa-comment ms-auto"></i>
+                            </div>
+                            <hr>
+                            <div class="comments-holder">
+                                <div class="comments" id="comments"></div>
+                                <div id="view-more-comments"></div>
+                            </div>
+                        </div>
+                        <div class="write-comment-holder">
+                            <input id="write-comment" placeholder="Write a comment..."
+                                   class="form-control write-comment" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

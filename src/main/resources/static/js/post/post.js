@@ -12,6 +12,7 @@ class Post {
         }
         this.#postElement.querySelector(".card-img-bottom").onclick = function () {
             AdvancedPostView.init();
+            PostModal.clear();
             AdvancedPostView.getPost(instance.#post.links.self.link, function () {
                 PostModal.open();
             });

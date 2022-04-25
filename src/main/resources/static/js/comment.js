@@ -25,7 +25,7 @@ class Comment {
                                                 </div>
                                                 <div class="d-flex flex-row">
                                                     <span class="me-3 like-comment">Like</span>
-                                                    <span class="ms-auto likes">Likes</span>
+                                                    <span class="ms-auto comment-likes">Likes</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -33,14 +33,14 @@ class Comment {
         this.#commentElement.querySelector(".like-comment").onclick = function () {
             this.like();
         }.bind(this);
-        let replyElement = $("<span>Reply</span>").get(0);
+        let replyElement = $("<span class='comment-reply'>Reply</span>").get(0);
         let replyContainer = this.#repliesElement;
         replyElement.onclick = function () {
             replyContainer.style.display = "block";
         }
 
         this.#commentElement.appendChild(this.#repliesElement);
-        this.#commentElement.getElementsByClassName("likes").item(0).before(replyElement)
+        this.#commentElement.getElementsByClassName("comment-likes").item(0).before(replyElement)
 
         if (comment.hasMoreReplies) {
             let hasMoreCommentsElement = $("<p>View more comments</p>").get(0);
@@ -62,7 +62,7 @@ class Comment {
 
     #createRepliesElement() {
         let func = this.#replyElementActon;
-        let repliesElement = $(`<span class="mb-2">Replies ${this.#comment.countReplies}</span>`).get(0);
+        let repliesElement = $(`<span class="mb-2 count-replies">Replies ${this.#comment.countReplies}</span>`).get(0);
         let commentClass = this;
         repliesElement.onclick = function (event) {
             func(event, commentClass, repliesElement);
@@ -93,16 +93,16 @@ class Comment {
     }
 
     #createRepliesContainerElement() {
-        this.#repliesElement = $(`<div class="replies-container" style="display: none;margin-left: 35px">
+        this.#repliesElement = $(`<div class="replies-container mt-2" style="display: none;margin-left: 35px">
                                        <div class="replies"></div>
                                   </div>`).get(0);
-        let replyInput = $('<input class="ms-2 form-control reply-to" type="text">').get(0);
+        let replyInput = $('<input placeholder="Write a comment..." class="ms-2 form-control reply-to write-comment" type="text">').get(0);
         this.#repliesElement.appendChild(replyInput);
         let commentClass = this;
         let func = this.#reply;
         replyInput.onkeypress = function (event) {
-            replyInput.value = "";
             if (event.key === "Enter") {
+                replyInput.value = "";
                 func(commentClass, replyInput);
             }
         }

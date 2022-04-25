@@ -56,14 +56,14 @@ class AdvancedPostView {
                 if (data.liked) {
                     like.style.color = "#007eff";
                 } else {
-                    like.style.color = "black";
+                    like.style.color = "#818181";
                 }
             });
         }
         if (this.post.liked)
             this.like.style.color = "#007eff";
         else
-            this.like.style.color = "black";
+            this.like.style.color = "#818181";
         this.numberLikes.innerHTML = post.numberLikes;
         this.numberComments.innerHTML = post.numberComments;
         this.postImage.setAttribute("src", post.imagesUrls[0]);
