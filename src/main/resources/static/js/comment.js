@@ -8,6 +8,7 @@ class Comment {
 
     constructor(commentData) {
         this.#comment = commentData;
+        console.log(this.#comment);
         this.#countReplies = this.#comment.countReplies;
         this.#currentOffset = 0;
         this.#createRepliesContainerElement();
@@ -23,12 +24,15 @@ class Comment {
                                                     <p class="mb-0">${comment.comment}</p>
                                                 </div>
                                                 <div class="d-flex flex-row">
-                                                    <span class="me-3">Like</span>
+                                                    <span class="me-3 like-comment">Like</span>
                                                     <span class="ms-auto likes">Likes</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>`).get(0);
+        this.#commentElement.querySelector(".like-comment").onclick = function () {
+            this.like();
+        }.bind(this);
         let replyElement = $("<span>Reply</span>").get(0);
         let replyContainer = this.#repliesElement;
         replyElement.onclick = function () {
@@ -97,7 +101,7 @@ class Comment {
         let commentClass = this;
         let func = this.#reply;
         replyInput.onkeypress = function (event) {
-            console.log(event);
+            replyInput.value = "";
             if (event.key === "Enter") {
                 func(commentClass, replyInput);
             }
@@ -112,13 +116,13 @@ class Comment {
             postId: commentClass.#comment.postId
         }), "POST", function (commentData) {
             let comment = new Comment(commentData);
-            commentClass.#repliesElement.appendChild(comment.createComment(commentData));
+            commentClass.#repliesElement.querySelector(".replies").appendChild(comment.createComment(commentData));
         })
     }
 
-    #like() {
-        AjaxManager.request("/comments/like", this.#comment.id, "POST", function (data) {
+    like() {
+        AjaxManager.request("/comments/like", this.#comment.id + "", "POST", function (data) {
             console.log(data);
-        }, null, "text/html", "text");
+        }, null, "text/plain", "text");
     }
 }

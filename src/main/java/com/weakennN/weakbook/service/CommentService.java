@@ -12,6 +12,7 @@ import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.CommentView;
+import com.weakennN.weakbook.view.LikeView;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -81,10 +82,14 @@ public class CommentService {
         return result;
     }
 
-    public void like(Long commentId) {
-        this.commentLikeRepository.save(new CommentLike(
-                this.userRepository.findById(AuthService.getUser().getId()).get(),
-                this.commentRepository.findById(commentId).get()
-        ));
+    public LikeView like(Long commentId) {
+        Comment comment = this.commentRepository.findById(commentId).get();
+        User user = this.userRepository.findById(AuthService.getUser().getId()).get();
+        if (this.commentLikeRepository.existsByComment(comment)) {
+            this.commentLikeRepository.delete(this.commentLikeRepository.findByCommentAndUser(comment, user));
+            return new LikeView(false);
+        }
+        this.commentLikeRepository.save(new CommentLike(user, comment));
+        return new LikeView(true);
     }
 }

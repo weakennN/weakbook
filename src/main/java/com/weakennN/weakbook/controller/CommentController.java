@@ -3,12 +3,14 @@ package com.weakennN.weakbook.controller;
 import com.weakennN.weakbook.binding.CommentBinding;
 import com.weakennN.weakbook.service.CommentService;
 import com.weakennN.weakbook.view.CommentView;
+import com.weakennN.weakbook.view.LikeView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller()
@@ -42,10 +44,9 @@ public class CommentController {
         return new ResponseEntity<>(this.commentService.getPostComments(postId, offset), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/like", consumes = MediaType.TEXT_HTML_VALUE, produces = MediaType.TEXT_HTML_VALUE)
+    @PostMapping(value = "/like", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> like(String commentId) {
-        this.commentService.like(Long.parseLong(commentId));
-        return new ResponseEntity<>("temp return", HttpStatus.OK);
+    public ResponseEntity<LikeView> like(@RequestBody String commentId) {
+        return new ResponseEntity<>(this.commentService.like(Long.parseLong(commentId)), HttpStatus.OK);
     }
 }

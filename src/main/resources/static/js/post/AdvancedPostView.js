@@ -60,6 +60,10 @@ class AdvancedPostView {
                 }
             });
         }
+        if (this.post.liked)
+            this.like.style.color = "#007eff";
+        else
+            this.like.style.color = "black";
         this.numberLikes.innerHTML = post.numberLikes;
         this.numberComments.innerHTML = post.numberComments;
         this.postImage.setAttribute("src", post.imagesUrls[0]);
