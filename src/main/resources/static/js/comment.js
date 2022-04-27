@@ -6,6 +6,7 @@ class Comment {
     #currentOffset;
     #repliesElement;
 
+    // TODO: fix bug with replying
     constructor(commentData) {
         this.#comment = commentData;
         console.log(this.#comment);
@@ -17,10 +18,10 @@ class Comment {
     createComment(comment) {
         this.#commentElement = $(`<div class="comment mb-2" id="comment-6">
                                         <div class="d-flex flex-row">
-                                            <img style="width: 45px;height: 45px;border-radius: 50%;" src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif" alt="">
+                                            <img style="width: 45px;height: 45px;border-radius: 50%;" src="${comment.user.profilePicture}"" alt="">
                                             <div class="d-flex flex-column ms-2 comment-body">
                                                 <div style="padding: 10px;border-radius: 10px;background: #f5f4f4">
-                                                    <p class="mb-0" style="font-weight: 620;">Lyuboslav Medarov</p>
+                                                    <p class="mb-0" style="font-weight: 620;">${comment.user.firstName + " " + comment.user.lastName}</p>
                                                     <p class="mb-0">${comment.comment}</p>
                                                 </div>
                                                 <div class="d-flex flex-row">
@@ -46,10 +47,10 @@ class Comment {
             let hasMoreCommentsElement = $("<p>View more comments</p>").get(0);
             let commentClass = this;
             hasMoreCommentsElement.onclick = function () {
-                AjaxManager.request("/comments/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
+                AjaxManager.request("/comments/getReplies/" + commentClass.#comment.id + "?" + "offset=0", {}, "GET", function (comments) {
                     commentClass.#loadComments(comments);
                 });
-            };
+            }.bind(this);
             this.#repliesElement.appendChild(hasMoreCommentsElement);
         }
 
@@ -71,7 +72,7 @@ class Comment {
     }
 
     #replyElementActon(event, commentClass, element) {
-        AjaxManager.request("/comments/getReplies/4?" + "offset=0", {}, "GET", function (comments) {
+        AjaxManager.request("/comments/getReplies/" + commentClass.#comment.id + "?" + "offset=0", {}, "GET", function (comments) {
             commentClass.#loadComments(comments);
             commentClass.#repliesElement.style.display = "block";
             element.onclick = function () {
@@ -96,20 +97,21 @@ class Comment {
         this.#repliesElement = $(`<div class="replies-container mt-2" style="display: none;margin-left: 35px">
                                        <div class="replies"></div>
                                   </div>`).get(0);
-        let replyInput = $('<input placeholder="Write a comment..." class="ms-2 form-control reply-to write-comment" type="text">').get(0);
+        let replyInput = $('<input placeholder="Write a comment..." class="form-control reply-to write-comment" type="text">').get(0);
         this.#repliesElement.appendChild(replyInput);
         let commentClass = this;
         let func = this.#reply;
         replyInput.onkeypress = function (event) {
             if (event.key === "Enter") {
-                replyInput.value = "";
                 func(commentClass, replyInput);
+                replyInput.value = "";
             }
         }
     }
 
     #reply(commentClass, inputElement) {
         let comment = inputElement.value;
+        console.log(commentClass);
         AjaxManager.request("/comments/comment", JSON.stringify({
             comment: comment,
             replyTo: commentClass.#comment.id,

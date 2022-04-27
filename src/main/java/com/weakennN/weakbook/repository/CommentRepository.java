@@ -21,7 +21,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "INSERT INTO replies (comment_id, reply_id) VALUES (:commentId, :replyId)", nativeQuery = true)
     void addReply(@Param("commentId") Long commentId, @Param("replyId") Long replyId);
 
-    @Query(value = "SELECT * FROM `comments` where `post_id` = :postId limit 10 offset :offset", nativeQuery = true)
+    @Query(value = "SELECT * FROM `comments` c WHERE `post_id` = :postId AND c.id NOT IN (SELECT reply_id FROM replies) LIMIT 10 OFFSET :offset", nativeQuery = true)
     List<Comment> getCommentsByPostId(@Param("postId") Long postId, @Param("offset") int offset);
 
     @Query(value = "SELECT * FROM comments e JOIN replies r ON e.id = r.reply_id WHERE r.comment_id = ?1 LIMIT 5 OFFSET ?2", nativeQuery = true)

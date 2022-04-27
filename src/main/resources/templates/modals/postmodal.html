@@ -45,3 +45,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        document.getElementById("post-modal").addEventListener('hidden.bs.modal', function () {
+            window.history.replaceState(postState, "", "/");
+        });
+    })
+</script>

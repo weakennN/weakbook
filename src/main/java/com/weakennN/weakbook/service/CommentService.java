@@ -49,14 +49,13 @@ public class CommentService {
         comment.setUser(user);
         comment.setPost(post);
         comment = this.commentRepository.save(comment);
-
         if (commentBinding.getReplyTo() != null) {
             Comment parentComment = this.commentRepository.findById(commentBinding.getReplyTo())
                     .orElseThrow(IllegalArgumentException::new);
             this.commentRepository.addReply(parentComment.getId(), comment.getId());
         }
 
-        return ViewMapper.mapToCommentView(commentBinding, post, user);
+        return ViewMapper.mapToCommentView(comment, post, user);
     }
 
     public List<CommentView> getReplies(Long commentId, int offset) {

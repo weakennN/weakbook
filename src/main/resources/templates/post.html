@@ -109,10 +109,14 @@
 <script src="/static/js/AjaxManager.js"></script>
 <script src="/static/js/comment.js"></script>
 <script src="/static/js/post/AdvancedPostView.js"></script>
+<script src="/static/js/HistoryStateEvents.js"></script>
 <script>
     $(document).ready(function () {
         AdvancedPostView.init();
         AdvancedPostView.getPost(window.location.pathname);
+        window.addEventListener('popstate', function (event) {
+            console.log("helooooo");
+        });
     });
 </script>
 </body>

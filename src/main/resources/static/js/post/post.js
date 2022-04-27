@@ -15,8 +15,9 @@ class Post {
             PostModal.clear();
             AdvancedPostView.getPost(instance.#post.links.self.link, function () {
                 PostModal.open();
-            });
-        }
+                window.history.pushState(postState, "", this.#post.links.self.link);
+            }.bind(this));
+        }.bind(this);
         console.log(instance.#post.links.likes.link);
         this.#postElement.querySelector(".likes").onclick = function () {
             LikesModal.open(instance.#post.links.likes.link);
@@ -26,11 +27,12 @@ class Post {
     #like() {
         let instance = this;
         AjaxManager.request(this.#post.links.like.link, null, "POST", function (data) {
-            if (data.liked) {
+            if (data.liked)
                 instance.#postElement.querySelector(".like").classList.replace("far", "fas");
-            } else {
+            else
                 instance.#postElement.querySelector(".like").classList.replace("fas", "far");
-            }
         })
     }
 }
+
+let postState = [];

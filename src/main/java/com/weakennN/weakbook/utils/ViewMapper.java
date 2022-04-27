@@ -1,6 +1,5 @@
 package com.weakennN.weakbook.utils;
 
-import com.weakennN.weakbook.binding.CommentBinding;
 import com.weakennN.weakbook.entity.*;
 import com.weakennN.weakbook.repository.ChatMessagesRepository;
 import com.weakennN.weakbook.repository.ChatParticipantRepository;
@@ -41,10 +40,11 @@ public class ViewMapper {
         return postView;
     }
 
-    public static CommentView mapToCommentView(CommentBinding commentBinding, Post post, User user) {
+    public static CommentView mapToCommentView(Comment comment, Post post, User user) {
         CommentView commentView = new CommentView();
-        commentView.
-                setComment(commentBinding.getComment())
+        commentView
+                .setId(comment.getId())
+                .setComment(comment.getComment())
                 .setUser(mapper.map(user, UserView.class))
                 .setPostId(post.getId());
 
@@ -61,9 +61,8 @@ public class ViewMapper {
                 .setId(comment.getId())
                 .setPostId(post.getId());
 
-        if (countReplies > 0) {
+        if (countReplies > 10)
             commentView.setHasMoreReplies(true);
-        }
 
         return commentView;
     }

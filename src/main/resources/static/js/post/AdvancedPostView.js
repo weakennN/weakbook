@@ -3,7 +3,7 @@ class AdvancedPostView {
     static commentsSection;
     static post;
     static writeCommentInput;
-    static commentsCount = 0;
+    static commentsCount;
     static numberLikes;
     static numberComments;
     static like;
@@ -24,6 +24,7 @@ class AdvancedPostView {
         this.content = document.getElementById("post-content");
         this.like = document.getElementById("like");
         this.comment = document.getElementById("comment");
+        this.commentsCount = 0;
 
         this.comment.onclick = function () {
             AdvancedPostView.writeCommentInput.focus();
