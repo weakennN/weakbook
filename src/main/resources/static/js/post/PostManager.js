@@ -61,7 +61,7 @@ class PostManager {
         console.log(PostManager.#url);
         if (PostManager.#send) {
             PostManager.#send = false;
-            AjaxManager.request(PostManager.#url, {passedPosts: PostManager.#passedPosts}, "GET", function (data) {
+            AjaxManager.request(PostManager.#url + "?passedPosts=" + PostManager.#passedPosts, null, "GET", function (data) {
                 for (let postData of data) {
                     let postElement = PostManager.createPost(postData);
                     let post = new Post(postData, postElement);

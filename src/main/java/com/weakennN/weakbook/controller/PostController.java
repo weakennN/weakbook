@@ -31,7 +31,7 @@ public class PostController {
         return new ResponseEntity<>(this.postService.savePost(postBinding), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getPosts", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getPosts", consumes = MediaType.ALL_VALUE)
     @ResponseBody
     public ResponseEntity<List<PostView>> getPosts(@RequestParam("passedPosts") int passedPosts) {
         return new ResponseEntity<>(this.postService.getPosts(passedPosts), HttpStatus.OK);
@@ -55,9 +55,10 @@ public class PostController {
         return new ResponseEntity<>(this.postService.like(postId), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getPosts/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getPosts/{userId}", consumes = MediaType.ALL_VALUE)
     @ResponseBody
     public ResponseEntity<List<PostView>> getOwnPosts(@PathVariable String userId, @RequestParam("passedPosts") int passedPosts) {
+        System.out.println(passedPosts);
         return new ResponseEntity<>(this.postService.getUserPosts(Long.parseLong(userId), passedPosts), HttpStatus.OK);
     }
 
