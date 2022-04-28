@@ -36,7 +36,7 @@ public class ViewMapper {
             postView.addComment(mapToCommentView(comment, post, commentRepository));
         }
 
-        postView.initSelfLinks();
+        postView.initLinks();
         return postView;
     }
 
@@ -47,6 +47,7 @@ public class ViewMapper {
                 .setComment(comment.getComment())
                 .setUser(mapper.map(user, UserView.class))
                 .setPostId(post.getId());
+        commentView.initLinks();
 
         return commentView;
     }
@@ -63,6 +64,7 @@ public class ViewMapper {
 
         if (countReplies > 10)
             commentView.setHasMoreReplies(true);
+        commentView.initLinks();
 
         return commentView;
     }
@@ -98,7 +100,7 @@ public class ViewMapper {
 
     public static UserView mapUser(User user) {
         UserView userView = mapper.map(user, UserView.class);
-        userView.initSelfLinks();
+        userView.initLinks();
         return userView;
     }
 

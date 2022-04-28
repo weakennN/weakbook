@@ -25,19 +25,20 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping(value = "/savePost", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/posts", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<PostView> savePost(@RequestBody PostBinding postBinding) {
         return new ResponseEntity<>(this.postService.savePost(postBinding), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getPosts", consumes = MediaType.ALL_VALUE)
+    @GetMapping(value = "/posts", consumes = MediaType.ALL_VALUE)
     @ResponseBody
-    public ResponseEntity<List<PostView>> getPosts(@RequestParam("passedPosts") int passedPosts) {
-        return new ResponseEntity<>(this.postService.getPosts(passedPosts), HttpStatus.OK);
+    public ResponseEntity<List<PostView>> getPosts(@RequestParam(name = "passedPosts", defaultValue = "0") int passedPosts,
+                                                   @RequestParam(name = "limit", defaultValue = "7") int limit) {
+        return new ResponseEntity<>(this.postService.getPosts(passedPosts, limit), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/post/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/posts/{postId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<PostView> getPostView(@PathVariable("postId") Long postId) {
         return new ResponseEntity<>(this.postService.getPost(postId), HttpStatus.OK);
@@ -49,20 +50,21 @@ public class PostController {
         return "post";
     }
 
-    @PostMapping(value = "/post/{postId}/like")
+    @PostMapping(value = "/posts/{postId}/like")
     @ResponseBody
     public ResponseEntity<PostLikeView> like(@PathVariable("postId") Long postId) {
         return new ResponseEntity<>(this.postService.like(postId), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getPosts/{userId}", consumes = MediaType.ALL_VALUE)
+    @GetMapping(value = "/posts/user/{userId}", consumes = MediaType.ALL_VALUE)
     @ResponseBody
     public ResponseEntity<List<PostView>> getOwnPosts(@PathVariable String userId, @RequestParam("passedPosts") int passedPosts) {
+        System.out.println("here");
         System.out.println(passedPosts);
         return new ResponseEntity<>(this.postService.getUserPosts(Long.parseLong(userId), passedPosts), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/post/{postId}/likes")
+    @GetMapping(value = "/posts/{postId}/likes")
     @ResponseBody
     public ResponseEntity<List<UserView>> getPostLikes(@PathVariable String postId, @RequestParam("passedLikes") int passedLikes) {
         return new ResponseEntity<>(this.postService.getPostLikes(Long.parseLong(postId), passedLikes), HttpStatus.OK);

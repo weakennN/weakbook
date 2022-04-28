@@ -22,6 +22,6 @@ public class RepresentationModel {
         this.links = links;
     }
 
-    public void initSelfLinks() {
+    public void initLinks() {
     }
 }

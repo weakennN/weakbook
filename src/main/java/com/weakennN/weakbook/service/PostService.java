@@ -65,9 +65,9 @@ public class PostService {
         }
     }
 
-    public List<PostView> getPosts(int passedPosts) {
+    public List<PostView> getPosts(int passedPosts, int limit) {
         User user = this.userRepository.findByEmail(AuthService.getUser().getEmail()).get();
-        List<Post> posts = this.postRepository.findAllByUser(user.getId(), passedPosts);
+        List<Post> posts = this.postRepository.findAllByUser(user.getId(), passedPosts, limit);
         List<PostView> result = new ArrayList<>();
 
         for (Post post : posts) {

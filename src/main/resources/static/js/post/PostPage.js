@@ -1,7 +1,10 @@
 $(document).ready(function () {
     AdvancedPostView.init();
-    AdvancedPostView.getPost(window.location.pathname, function () {
-        AjaxManager.request("/getPosts/" + AdvancedPostView.post.user.id + "?passedPosts=0", null, "GET", function (data) {
+    let tokens = window.location.pathname.split("/");
+    AdvancedPostView.getPost("/posts/" + tokens[tokens.length - 1], function () {
+        AjaxManager.request("/posts/user/" + AdvancedPostView.post.user.id + "?passedPosts=0", null, "GET", function (data) {
+            console.log("log");
+            console.log(data);
             for (let post of data) {
                 document.getElementById("more-posts").appendChild($(`<a href="${post.links.self.link}" style="position: relative;justify-content: center"
                                                                                  class="col-lg-4 col-md-6 col-12 mb-2 d-flex extra-post">

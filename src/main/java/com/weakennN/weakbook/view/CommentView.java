@@ -1,9 +1,12 @@
 package com.weakennN.weakbook.view;
 
+import com.weakennN.weakbook.utils.hypermedia.Link;
+import com.weakennN.weakbook.utils.hypermedia.RepresentationModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentView {
+public class CommentView extends RepresentationModel {
 
     private Long id;
     private Long postId;
@@ -91,5 +94,12 @@ public class CommentView {
     public CommentView setPostId(Long postId) {
         this.postId = postId;
         return this;
+    }
+
+    @Override
+    public void initLinks() {
+        super.addLink("comment", new Link("/comments/"));
+        super.addLink("replies", new Link("/comments/replies/" + this.id));
+        super.addLink("like", new Link("/comments/like/" + this.id));
     }
 }

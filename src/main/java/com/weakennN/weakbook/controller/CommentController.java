@@ -23,14 +23,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<CommentView> comment(@RequestBody CommentBinding commentBinding) {
         System.out.println(commentBinding.getComment());
         return new ResponseEntity<>(this.commentService.comment(commentBinding), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getReplies/{comment_id}")
+    @GetMapping(value = "/replies/{comment_id}")
     @ResponseBody
     public ResponseEntity<List<CommentView>> getReplies(@PathVariable("comment_id") Long commentId
             , @RequestParam("offset") int offset) {
@@ -44,9 +44,9 @@ public class CommentController {
         return new ResponseEntity<>(this.commentService.getPostComments(postId, offset), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/like", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/like/{commentId}", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LikeView> like(@RequestBody String commentId) {
-        return new ResponseEntity<>(this.commentService.like(Long.parseLong(commentId)), HttpStatus.OK);
+    public ResponseEntity<LikeView> like(@PathVariable("commentId") Long commentId) {
+        return new ResponseEntity<>(this.commentService.like(commentId), HttpStatus.OK);
     }
 }
