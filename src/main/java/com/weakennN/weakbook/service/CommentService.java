@@ -35,10 +35,6 @@ public class CommentService {
         this.commentLikeRepository = commentLikeRepository;
     }
 
-    public int getCountComments(Post post) {
-        return this.commentRepository.countCommentByPost(post);
-    }
-
     public CommentView comment(CommentBinding commentBinding) {
         Post post = this.postRepository.findById(commentBinding.getPostId()).orElseThrow(IllegalArgumentException::new);
         ApplicationUser applicationUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

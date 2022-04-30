@@ -14,7 +14,8 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    int countCommentByPost(Post post);
+    @Query(value = "select count(c.id) from comments c where post_id = ?1 and c.id not in (select r.reply_id from replies r)", nativeQuery = true)
+    int countCommentByPostId(Long id);
 
     @Modifying
     @Transactional

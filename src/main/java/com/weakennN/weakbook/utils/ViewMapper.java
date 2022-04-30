@@ -22,7 +22,7 @@ public class ViewMapper {
         postView
                 .setId(post.getId())
                 .setContent(post.getContent())
-                .setNumberComments(commentRepository.countCommentByPost(post))
+                .setNumberComments(commentRepository.countCommentByPostId(post.getId()))
                 .setNumberLikes(postLikeRepository.countPostLikeByPost(post))
                 .setUser(mapper.map(user, UserView.class))
                 .setIsLiked(postLikeRepository.countPostLikeByPost(post) >= 1);
