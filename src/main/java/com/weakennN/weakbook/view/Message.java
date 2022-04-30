@@ -24,14 +24,6 @@ public class Message {
         this.chatRoomId = chatRoomId;
     }
 
-    public UserView getUserId() {
-        return this.user;
-    }
-
-    public void setUserId(UserView user) {
-        this.user = user;
-    }
-
     public UserView getUser() {
         return user;
     }
@@ -46,16 +38,5 @@ public class Message {
 
     public void setFromCurrentUser(boolean fromCurrentUser) {
         this.fromCurrentUser = fromCurrentUser;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "message='" + message + '\'' +
-                ", chatRoomId=" + chatRoomId +
-                ", user=" + user +
-                ", fromCurrentUser=" + fromCurrentUser +
-                ", infoMessage=" + infoMessage +
-                '}';
     }
 }

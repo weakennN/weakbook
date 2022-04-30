@@ -79,22 +79,23 @@ public class ViewMapper {
 
         if (chatParticipants.size() == 2) {
             if (chatParticipants.get(0).getUser().getId().equals(AuthService.getUser().getId())) {
-                resultChatRoom.setRoomImage(chatParticipants.get(0).getUser().getProfilePicture());
+                resultChatRoom.setRoomImage(chatParticipants.get(1).getUser().getProfilePicture());
                 resultChatRoom.setName(chatParticipants.get(1).getUser().getFirstName()
                         + " " + chatParticipants.get(1).getUser().getLastName());
             } else {
-                resultChatRoom.setRoomImage(chatParticipants.get(1).getUser().getProfilePicture());
+                resultChatRoom.setRoomImage(chatParticipants.get(0).getUser().getProfilePicture());
                 resultChatRoom.setName(chatParticipants.get(0).getUser().getFirstName()
                         + " " + chatParticipants.get(0).getUser().getLastName());
             }
         }
+        resultChatRoom.initLinks();
 
         return resultChatRoom;
     }
 
     public static Message mapMessage(ChatMessage chatMessage, User user) {
         Message message = mapper.map(chatMessage, Message.class);
-        message.setUser(mapper.map(user, UserView.class));
+        message.setUser(mapUser(user));
         return message;
     }
 

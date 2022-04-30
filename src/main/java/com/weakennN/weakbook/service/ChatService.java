@@ -43,7 +43,6 @@ public class ChatService {
 
         for (ChatRoom chatRoom : chatRooms) {
             ChatRoomView chatRoomView = ViewMapper.mapToChatRoomView(chatRoom, this.chatMessagesRepository, this.chatParticipantRepository);
-            chatRoomView.addLink("messages", new Link("/chat/getMessages"));
             result.add(chatRoomView);
         }
 

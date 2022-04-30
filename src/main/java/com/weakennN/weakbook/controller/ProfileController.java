@@ -27,7 +27,7 @@ public class ProfileController {
     @GetMapping("/profile/{userId}")
     public String index(Model model, @PathVariable String userId) {
         model.addAttribute("user", AuthService.getUserView());
-        model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 100));
+        model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 10));
         return "profile";
     }
 

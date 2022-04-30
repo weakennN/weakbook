@@ -1,5 +1,6 @@
 package com.weakennN.weakbook.view;
 
+import com.weakennN.weakbook.utils.hypermedia.Link;
 import com.weakennN.weakbook.utils.hypermedia.RepresentationModel;
 
 public class ChatRoomView extends RepresentationModel {
@@ -13,13 +14,12 @@ public class ChatRoomView extends RepresentationModel {
         return name;
     }
 
+    public ChatRoomView() {
+    }
+
     public ChatRoomView(Long id, String latestMessage) {
         this.id = id;
         this.latestMessage = latestMessage;
-    }
-
-    public ChatRoomView() {
-
     }
 
     public ChatRoomView setName(String name) {
@@ -49,5 +49,12 @@ public class ChatRoomView extends RepresentationModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public void initLinks() {
+        super.addLink("messages", new Link("/chat/chatRooms/messages/" + this.id));
+        super.addLink("connect", new Link("/chat"));
+        super.addLink("subscribe", new Link("/user/queue/chat"));
     }
 }

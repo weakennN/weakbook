@@ -8,20 +8,16 @@ class Chat {
     }
 
     static getChatRooms() {
-        AjaxManager.request("/chat/getChatRooms", {}, "GET", function (data) {
+        AjaxManager.request("/chat/chatRooms", {}, "GET", function (data) {
             console.log(data);
             Chat.#createChatRooms(data);
         })
     }
 
     static createNewChatRoom() {
-        AjaxManager.request("/chat/createChatRoom", "8", "POST", function (data) {
+        AjaxManager.request("/chat/chatRooms", "8", "POST", function (data) {
 
         })
-    }
-
-    static sendMessage() {
-        this.#currentChatRoom.sendMessage();
     }
 
     static #createChatRooms(chatRooms) {

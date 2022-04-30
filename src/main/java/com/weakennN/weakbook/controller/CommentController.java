@@ -37,7 +37,7 @@ public class CommentController {
         return new ResponseEntity<>(this.commentService.getReplies(commentId, offset), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getPostComments/{post_id}")
+    @GetMapping(value = "/{post_id}")
     @ResponseBody
     public ResponseEntity<List<CommentView>> getPostComments(@PathVariable("post_id") Long postId
             , @RequestParam("offset") int offset) {

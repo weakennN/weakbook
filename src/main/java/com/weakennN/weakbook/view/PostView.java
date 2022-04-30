@@ -99,10 +99,11 @@ public class PostView extends RepresentationModel {
     @Override
     public void initLinks() {
         super.addLink("self", new Link("/posts/" + this.id));
+        super.addLink("view", new Link("/post/" + this.id));
         super.addLink("likes", new Link("/posts/" + this.id + "/likes"));
         super.addLink("like", new Link("/posts/" + this.id + "/like"));
         super.addLink("user", new Link("/user/" + this.user.getId()));
-        super.addLink("comments", new Link("/comments/getPostComments/" + this.id));
+        super.addLink("comments", new Link("/comments/" + this.id));
         super.addLink("comment", new Link("/comments/"));
     }
 }

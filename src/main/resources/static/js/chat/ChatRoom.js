@@ -1,44 +1,42 @@
 class ChatRoom {
 
-    #webSocketManager;
-    #passedMessages = 0;
-    #chatRoom;
-    static #chatBox = document.getElementById("chat-box");
-    static #messageBox = document.getElementById("message-box");
+    webSocketManager;
+    passedMessages = 0;
+    chatRoom;
+    static chatBox = document.getElementById("chat-box");
+    static messageBox = document.getElementById("message-box");
 
     constructor(chatRoom) {
-        this.#chatRoom = chatRoom;
-        ChatRoom.#chatBox.innerHTML = "";
-        let instance = this;
-        let socket = this.#webSocketManager = new WebSocketManager("/chat", function () {
+        this.chatRoom = chatRoom;
+        ChatRoom.chatBox.innerHTML = "";
+        let socket = this.webSocketManager = new WebSocketManager(this.chatRoom.links.connect.link, function () {
             console.log(socket);
-            socket.subscribe("/user/queue/chat", function (data) {
+            socket.subscribe(this.chatRoom.links.subscribe.link, function (data) {
                 console.log(JSON.parse(data.body));
-                ChatRoom.#createMessage(JSON.parse(data.body));
+                ChatRoom.createMessage(JSON.parse(data.body));
             })
-            ChatRoom.#messageBox.onkeypress = function (e) {
+            ChatRoom.messageBox.onkeypress = function (e) {
                 if (e.key === "Enter") {
                     socket.send("/app/message", {
-                        message: ChatRoom.#messageBox.value,
-                        chatRoomId: instance.#chatRoom.id
+                        message: ChatRoom.messageBox.value,
+                        chatRoomId: this.chatRoom.id
                     })
                 }
-            }
-        });
-        AjaxManager.request(instance.#chatRoom.links.messages.link + "?chatRoomId=" + instance.#chatRoom.id + "&offset="
-            + instance.#passedMessages, {}, "GET", function (data) {
+            }.bind(this);
+        }.bind(this));
+        AjaxManager.request(this.chatRoom.links.messages.link + "?offset=" + this.passedMessages, {}, "GET", function (data) {
             console.log(data);
             for (let message of data) {
-                ChatRoom.#createMessage(message);
+                ChatRoom.createMessage(message);
             }
         })
     }
 
     sendMessage() {
-        this.#webSocketManager.send("/app/message", {message: "testMessage"});
+        this.webSocketManager.send("/app/message", {message: "testMessage"});
     }
 
-    static #createMessage(message) {
+    static createMessage(message) {
         let messageElement;
         if (message.infoMessage) {
 
@@ -54,14 +52,14 @@ class ChatRoom {
                     </div>
                     </div>`).get(0);
         }
-        this.#chatBox.appendChild(messageElement);
+        this.chatBox.appendChild(messageElement);
     }
 
     disconnect() {
-        this.#webSocketManager.close();
+        this.webSocketManager.close();
     }
 
     getChatRoomId() {
-        return this.#chatRoom.id;
+        return this.chatRoom.id;
     }
 }

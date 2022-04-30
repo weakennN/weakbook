@@ -29,13 +29,13 @@ public class ChatController {
         return "chat";
     }
 
-    @GetMapping("/getChatRooms")
+    @GetMapping("/chatRooms")
     @ResponseBody
     public ResponseEntity<List<ChatRoomView>> getChatRooms() {
         return new ResponseEntity<>(this.chatService.getUserChatRooms(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createChatRoom", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/chatRooms", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<ChatRoomView> createChatRoom(@RequestBody String userId) {
         return new ResponseEntity<>(this.chatService.createNewChatRoom(Long.parseLong(userId)), HttpStatus.OK);
@@ -46,8 +46,8 @@ public class ChatController {
         this.chatService.sendMessage(message, (ApplicationUser) authenticationToken.getPrincipal());
     }
 
-    @GetMapping("/getMessages")
-    public ResponseEntity<List<Message>> getMessages(@RequestParam("chatRoomId") Long chatRoomId, @RequestParam("offset") int offset) {
+    @GetMapping("/chatRooms/messages/{chatRoomId}")
+    public ResponseEntity<List<Message>> getMessages(@PathVariable("chatRoomId") Long chatRoomId, @RequestParam("offset") int offset) {
         return new ResponseEntity<>(this.chatService.getMessages(chatRoomId, offset), HttpStatus.OK);
     }
 }

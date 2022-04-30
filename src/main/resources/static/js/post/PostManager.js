@@ -37,12 +37,12 @@ class PostManager {
                             <div class='px-3'>
                                 <div class='d-flex mt-2'> 
                                     <p class='mb-0 likes'>${post.numberLikes} Likes</p> 
-                                    <a href="${post.links.self.link}" class='ms-auto mb-0'>${post.numberComments} Comments</a> 
+                                    <a href="${post.links.view.link}" class='ms-auto mb-0'>${post.numberComments} Comments</a> 
                                 </div>
                                 <hr class='mt-2 mb-0'>
                                 <div class="d-flex flex-row mt-2">
                                     <i style="font-size: 32px;color: #6060ff" class="${post.liked === true ? "fas" : "far"} fa-thumbs-up like"></i>
-                                    <a href="${post.links.self.link}" class="ms-auto">
+                                    <a href="${post.links.view.link}" class="ms-auto">
                                         <i style="font-size: 32px;color: #6060ff" class="far fa-comment"></i>
                                     </a>
                                 </div>
