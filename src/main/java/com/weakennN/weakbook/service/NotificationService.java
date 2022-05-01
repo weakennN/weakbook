@@ -30,16 +30,22 @@ public class NotificationService {
         if (user.getId().equals(receiverId))
             return;
         if (notificationType.equals(NotificationType.POST_LIKE))
-            this.sendNotification(user.getFirstName() + " " + user.getLastName() + "liked your post.", receiver.getEmail(), "/post/" + entityId);
-
+            this.sendNotification(user.getFirstName() + " " + user.getLastName() + " liked your post.", receiver.getEmail()
+                    , "/post/" + entityId, NotificationType.POST_LIKE);
+        else if (notificationType.equals(NotificationType.COMMENT_LIKE))
+            this.sendNotification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", receiver.getEmail()
+                    , "/post/" + entityId, NotificationType.COMMENT_LIKE);
+        else if (notificationType.equals(NotificationType.FRIEND_REQUEST))
+            this.sendNotification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", receiver.getEmail()
+                    , "", NotificationType.FRIEND_REQUEST);
         this.notificationRepository.insert(notificationType.getId(), entityId, user.getId(), receiverId);
     }
 
-    private void sendNotification(String message, String username, String link) {
-        this.webSocketService.sendToUsers(this.createNotification(message, link), "/queue/notifications", List.of(username));
+    private void sendNotification(String message, String username, String link, NotificationType notificationType) {
+        this.webSocketService.sendToUsers(this.createNotification(message, link, notificationType), "/queue/notifications", List.of(username));
     }
 
-    private Notification createNotification(String message, String link) {
-        return new Notification(message, link);
+    private Notification createNotification(String message, String link, NotificationType notificationType) {
+        return new Notification(message, link, notificationType);
     }
 }

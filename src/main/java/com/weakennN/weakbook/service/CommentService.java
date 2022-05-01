@@ -1,10 +1,7 @@
 package com.weakennN.weakbook.service;
 
 import com.weakennN.weakbook.binding.CommentBinding;
-import com.weakennN.weakbook.entity.Comment;
-import com.weakennN.weakbook.entity.CommentLike;
-import com.weakennN.weakbook.entity.Post;
-import com.weakennN.weakbook.entity.User;
+import com.weakennN.weakbook.entity.*;
 import com.weakennN.weakbook.repository.CommentLikeRepository;
 import com.weakennN.weakbook.repository.CommentRepository;
 import com.weakennN.weakbook.repository.PostRepository;
@@ -26,13 +23,16 @@ public class CommentService {
     private PostRepository postRepository;
     private UserRepository userRepository;
     private CommentLikeRepository commentLikeRepository;
+    private NotificationService notificationService;
 
     public CommentService(CommentRepository commentRepository, PostRepository postRepository
-            , UserRepository userRepository, CommentLikeRepository commentLikeRepository) {
+            , UserRepository userRepository, CommentLikeRepository commentLikeRepository,
+                          NotificationService notificationService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.commentLikeRepository = commentLikeRepository;
+        this.notificationService = notificationService;
     }
 
     public CommentView comment(CommentBinding commentBinding) {
@@ -85,6 +85,7 @@ public class CommentService {
             return new LikeView(false);
         }
         this.commentLikeRepository.save(new CommentLike(user, comment));
+        this.notificationService.saveNotification(NotificationType.COMMENT_LIKE, comment.getUser().getId(), comment.getId());
         return new LikeView(true);
     }
 }

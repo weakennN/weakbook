@@ -1,14 +1,17 @@
 package com.weakennN.weakbook.view;
 
+import com.weakennN.weakbook.entity.NotificationType;
+
 public class Notification {
 
     private String message;
     private String link;
-    private NotificationType type = NotificationType.NORMAL;
+    private NotificationType type;
 
-    public Notification(String message, String link) {
+    public Notification(String message, String link, NotificationType notificationType) {
         this.message = message;
         this.link = link;
+        this.type = notificationType;
     }
 
     public String getMessage() {

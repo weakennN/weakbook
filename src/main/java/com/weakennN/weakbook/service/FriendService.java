@@ -1,11 +1,10 @@
 package com.weakennN.weakbook.service;
 
 import com.weakennN.weakbook.entity.Friend;
+import com.weakennN.weakbook.entity.NotificationType;
 import com.weakennN.weakbook.repository.FriendRepository;
 import com.weakennN.weakbook.repository.FriendRequestRepository;
 import com.weakennN.weakbook.utils.ViewMapper;
-import com.weakennN.weakbook.view.Notification;
-import com.weakennN.weakbook.view.NotificationType;
 import com.weakennN.weakbook.view.UserView;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +16,23 @@ public class FriendService {
 
     private FriendRequestRepository friendRequestRepository;
     private FriendRepository friendRepository;
-    private WebSocketService webSocketService;
+    private NotificationService notificationService;
 
     public FriendService(FriendRequestRepository friendRequestRepository,
-                         WebSocketService webSocketService, FriendRepository friendRepository) {
+                         NotificationService notificationService, FriendRepository friendRepository) {
         this.friendRequestRepository = friendRequestRepository;
-        this.webSocketService = webSocketService;
         this.friendRepository = friendRepository;
+        this.notificationService = notificationService;
     }
 
     public void sendFriendRequest(Long receiverId) {
-        System.out.println(receiverId);
         this.friendRequestRepository.sendFriendRequest(receiverId, AuthService.getUser().getId());
-        Notification notification = new Notification("Someone send you a friend request.", "");
-        notification.setType(NotificationType.FRIEND);
-        this.webSocketService.sendToUsers(notification, "/queue/notifications", List.of("test@abv.bg"));
+        this.notificationService.saveNotification(NotificationType.FRIEND_REQUEST, receiverId,
+                this.friendRequestRepository.findByReceiverIdAndSenderId(receiverId, AuthService.getUser().getId()).getId());
     }
 
     public void acceptFriendRequest(Long id) {
         this.friendRequestRepository.accept(id);
-        // TODO: send notification
     }
 
     public void deleteFriendRequest(Long id) {
