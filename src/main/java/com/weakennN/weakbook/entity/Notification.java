@@ -10,10 +10,15 @@ public class Notification extends BaseEntity {
     private Integer entityId;
     @ManyToOne
     private User sender;
+    @ManyToOne
+    private User receiver;
     @Column(name = "seen")
     private boolean seen;
     @Enumerated(EnumType.ORDINAL)
     private NotificationType notificationType;
+
+    public Notification() {
+    }
 
     public Integer getEntityId() {
         return entityId;
@@ -37,6 +42,14 @@ public class Notification extends BaseEntity {
 
     public void setSeen(boolean seen) {
         this.seen = seen;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public NotificationType getNotificationType() {

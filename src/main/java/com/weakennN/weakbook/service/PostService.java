@@ -1,10 +1,7 @@
 package com.weakennN.weakbook.service;
 
 import com.weakennN.weakbook.binding.PostBinding;
-import com.weakennN.weakbook.entity.Post;
-import com.weakennN.weakbook.entity.PostLike;
-import com.weakennN.weakbook.entity.PostPicture;
-import com.weakennN.weakbook.entity.User;
+import com.weakennN.weakbook.entity.*;
 import com.weakennN.weakbook.repository.*;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
@@ -85,12 +82,11 @@ public class PostService {
             this.postLikeRepository.delete(postLike);
             return new PostLikeView(false);
         } else {
-            PostLike newLike = new PostLike(this.postRepository.findById(postId).get()
-                    , this.userRepository.findById(userId).get());
+            Post post = this.postRepository.findById(postId).get();
+            PostLike newLike = new PostLike(post, this.userRepository.findById(userId).get());
             this.postLikeRepository.save(newLike);
-            if (!AuthService.getUser().getId().equals(this.postRepository.findById(postId).get().getUser().getId())) {
-                this.notificationService.sendNotification(AuthService.getUser().getFirstName() + " " + AuthService.getUser().getLastName() + "liked your post."
-                        , this.postRepository.findById(postId).get().getUser().getEmail(), "/post/" + postId);
+            if (!AuthService.getUser().getId().equals(post.getUser().getId())) {
+                this.notificationService.saveNotification(NotificationType.POST_LIKE, post.getUser().getId(), post.getId());
             }
             return new PostLikeView(true);
         }
