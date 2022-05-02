@@ -26,6 +26,18 @@ class Notification {
     }
 }
 
+class NavbarNotifications {
+
+    static init() {
+        console.log("hwllo")
+        AjaxManager.request("/notifications", null, "GET", function (data) {
+            console.log(data);
+        });
+    }
+}
+
 $(document).ready(function () {
     Notification.connect();
+    console.log("hwllo")
+    NavbarNotifications.init();
 })

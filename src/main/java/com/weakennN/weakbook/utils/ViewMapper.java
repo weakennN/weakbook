@@ -1,6 +1,7 @@
 package com.weakennN.weakbook.utils;
 
 import com.weakennN.weakbook.entity.*;
+import com.weakennN.weakbook.entity.Notification;
 import com.weakennN.weakbook.repository.ChatMessagesRepository;
 import com.weakennN.weakbook.repository.ChatParticipantRepository;
 import com.weakennN.weakbook.repository.CommentRepository;
@@ -103,6 +104,10 @@ public class ViewMapper {
         UserView userView = mapper.map(user, UserView.class);
         userView.initLinks();
         return userView;
+    }
+
+    public static com.weakennN.weakbook.view.Notification mapNotification(Notification notification) {
+        return mapper.map(notification, com.weakennN.weakbook.view.Notification.class);
     }
 
     public static UserProfileView mapToUserProfile(User user) {

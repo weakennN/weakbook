@@ -5,9 +5,11 @@ import com.weakennN.weakbook.entity.User;
 import com.weakennN.weakbook.repository.NotificationRepository;
 import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
+import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.Notification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +19,7 @@ public class NotificationService {
     private NotificationRepository notificationRepository;
     private UserRepository userRepository;
 
-    public NotificationService(WebSocketService webSocketService, NotificationRepository notificationRepository,
-                               UserRepository userRepository) {
+    public NotificationService(WebSocketService webSocketService, NotificationRepository notificationRepository, UserRepository userRepository) {
         this.webSocketService = webSocketService;
         this.notificationRepository = notificationRepository;
         this.userRepository = userRepository;
@@ -29,23 +30,27 @@ public class NotificationService {
         User receiver = this.userRepository.findById(receiverId).get();
         if (user.getId().equals(receiverId))
             return;
-        if (notificationType.equals(NotificationType.POST_LIKE))
-            this.sendNotification(user.getFirstName() + " " + user.getLastName() + " liked your post.", receiver.getEmail()
-                    , "/post/" + entityId, NotificationType.POST_LIKE);
-        else if (notificationType.equals(NotificationType.COMMENT_LIKE))
-            this.sendNotification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", receiver.getEmail()
-                    , "/post/" + entityId, NotificationType.COMMENT_LIKE);
-        else if (notificationType.equals(NotificationType.FRIEND_REQUEST))
-            this.sendNotification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", receiver.getEmail()
-                    , "", NotificationType.FRIEND_REQUEST);
+        this.sendNotification(createNotification(notificationType, user, entityId), receiver.getEmail());
         this.notificationRepository.insert(notificationType.getId(), entityId, user.getId(), receiverId);
     }
 
-    private void sendNotification(String message, String username, String link, NotificationType notificationType) {
-        this.webSocketService.sendToUsers(this.createNotification(message, link, notificationType), "/queue/notifications", List.of(username));
+    public List<Notification> getUserNotifications() {
+        List<com.weakennN.weakbook.entity.Notification> notifications = this.notificationRepository.findByReceiver(AuthService.getUser().getId());
+        List<Notification> result = new ArrayList<>();
+        for (int i = 0; i < notifications.size(); i++)
+            result.add(ViewMapper.mapNotification(notifications.get(i)));
+        return result;
     }
 
-    private Notification createNotification(String message, String link, NotificationType notificationType) {
-        return new Notification(message, link, notificationType);
+    private void sendNotification(Notification notification, String username) {
+        this.webSocketService.sendToUsers(notification, "/queue/notifications", List.of(username));
+    }
+
+    public Notification createNotification(NotificationType notificationType, ApplicationUser user, Long entityId) {
+        if (notificationType.equals(NotificationType.POST_LIKE))
+            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked your post.", "/post/" + entityId, notificationType);
+        else if (notificationType.equals(NotificationType.COMMENT_LIKE))
+            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", "/post/" + entityId, notificationType);
+        return new Notification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", "", notificationType);
     }
 }
