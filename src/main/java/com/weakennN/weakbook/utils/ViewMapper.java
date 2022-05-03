@@ -106,10 +106,6 @@ public class ViewMapper {
         return userView;
     }
 
-    public static com.weakennN.weakbook.view.Notification mapNotification(Notification notification) {
-        return mapper.map(notification, com.weakennN.weakbook.view.Notification.class);
-    }
-
     public static UserProfileView mapToUserProfile(User user) {
         return mapper.map(user, UserProfileView.class);
     }

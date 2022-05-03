@@ -7,7 +7,10 @@ public class Notification {
     private String message;
     private String link;
     private NotificationType type;
-    private UserView userView;
+    private UserView sender;
+
+    public Notification() {
+    }
 
     public Notification(String message, String link, NotificationType notificationType) {
         this.message = message;
@@ -39,11 +42,11 @@ public class Notification {
         this.type = type;
     }
 
-    public UserView getUserView() {
-        return userView;
+    public UserView getSender() {
+        return sender;
     }
 
-    public void setUserView(UserView userView) {
-        this.userView = userView;
+    public void setSender(UserView sender) {
+        this.sender = sender;
     }
 }

@@ -92,6 +92,16 @@ i {
     transition: all 0.5s;
 }
 
+.navbar-notifications {
+    position: absolute;
+    width: 350px;
+    right: 1%;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 15px;
+    display: block;
+}
+
 @media all and (max-width: 768px) {
     .nav-link {
         padding-left: 0 !important;
