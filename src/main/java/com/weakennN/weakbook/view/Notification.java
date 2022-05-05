@@ -12,10 +12,11 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(String message, String link, NotificationType notificationType) {
+    public Notification(String message, String link, NotificationType notificationType, UserView sender) {
         this.message = message;
         this.link = link;
         this.type = notificationType;
+        this.sender = sender;
     }
 
     public String getMessage() {

@@ -7,6 +7,7 @@ import com.weakennN.weakbook.repository.UserRepository;
 import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.Notification;
+import com.weakennN.weakbook.view.UserView;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class NotificationService {
         User receiver = this.userRepository.findById(receiverId).get();
         if (user.getId().equals(receiverId))
             return;
-        this.sendNotification(createNotification(notificationType, user, entityId), receiver.getEmail());
+        this.sendNotification(createNotification(notificationType, user, entityId, AuthService.getUserView()), receiver.getEmail());
         this.notificationRepository.insert(notificationType.getId(), entityId, user.getId(), receiverId);
     }
 
@@ -39,8 +40,7 @@ public class NotificationService {
         List<Notification> result = new ArrayList<>();
         for (int i = 0; i < notifications.size(); i++) {
             Notification notification = this.createNotification(notifications.get(i).getNotificationType()
-                    , AuthService.getUser(), notifications.get(i).getEntityId());
-            notification.setSender(ViewMapper.mapUser(notifications.get(i).getSender()));
+                    , AuthService.getUser(), notifications.get(i).getEntityId(), ViewMapper.mapUser(notifications.get(i).getSender()));
             result.add(notification);
         }
         return result;
@@ -50,12 +50,12 @@ public class NotificationService {
         this.webSocketService.sendToUsers(notification, "/queue/notifications", List.of(username));
     }
 
-    public Notification createNotification(NotificationType notificationType, ApplicationUser user, Long entityId) {
+    public Notification createNotification(NotificationType notificationType, ApplicationUser user, Long entityId, UserView sender) {
         if (notificationType.equals(NotificationType.POST_LIKE))
-            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked your post.", "/post/" + entityId, notificationType);
+            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked your post.", "/post/" + entityId, notificationType, sender);
         else if (notificationType.equals(NotificationType.COMMENT_LIKE))
-            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", "/post/" + entityId, notificationType);
-        return new Notification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", "", notificationType);
+            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", "/post/" + entityId, notificationType, sender);
+        return new Notification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", "", notificationType, sender);
     }
 
     public void seeNotifications() {

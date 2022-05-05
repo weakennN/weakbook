@@ -6,7 +6,10 @@ class Notification {
         let notificationWS = new WebSocketManager("/notifications", function (data) {
             notificationWS.subscribe("/user/queue/notifications", function (data) {
                 console.log(data);
-                Notification.#createNotification(JSON.parse(data.body));
+                let notification = JSON.parse(data.body);
+                console.log(notification);
+                Notification.#createNotification(notification);
+                NavbarNotifications.createNotifications([notification]);
             });
         });
     }
@@ -28,23 +31,15 @@ class Notification {
 
 class NavbarNotifications {
 
-    static #loaded = false;
-
     static init() {
+        AjaxManager.request("/notifications", null, "GET", function (data) {
+            NavbarNotifications.createNotifications(data);
+        }.bind(this));
         document.getElementById("navbar-notifications-btn").onclick = function () {
-            if (!NavbarNotifications.#loaded) {
-                AjaxManager.request("/notifications", null, "GET", function (data) {
-                    NavbarNotifications.#loaded = true;
-                    for (let notification of data) {
-                        document.getElementById("navbar-notifications")
-                            .appendChild(NavbarNotifications.#createNotification(notification));
-                    }
-                }.bind(this));
-                AjaxManager.request("/notifications/see", null, "PATCH", function (data) {
-                    console.log("notifications seen")
-                    console.log(data);
-                })
-            }
+            AjaxManager.request("/notifications/see", null, "PATCH", function (data) {
+                console.log("notifications seen")
+                console.log(data);
+            })
             document.getElementById("navbar-notifications").style.display = "block";
             setTimeout(function () {
                 document.onclick = function () {
@@ -55,11 +50,13 @@ class NavbarNotifications {
         }.bind(this);
     }
 
-    static #createNotification(notification) {
-        if (notification.type === "FRIEND_REQUEST") {
+    static createNotifications(notifications) {
+        for (let notification of notifications) {
+            let notificationElement = null;
+            if (notification.type === "FRIEND_REQUEST") {
 
-        } else {
-            return $(`<a href="${notification.link}" class="d-flex flex-row" style="padding: 10px 15px">
+            } else {
+                notificationElement = $(`<a href="${notification.link}" class="d-flex flex-row" style="padding: 10px 15px">
                         <img style="width: 50px;height: 50px;border-radius: 50%;margin-top: 5px"
                              src="${notification.sender.profilePicture}"
                              alt="">
@@ -67,7 +64,15 @@ class NavbarNotifications {
                             <p class="mb-0">${notification.message}</p>
                         </div> 
                     </a>`).get(0);
+            }
+            document.getElementById("navbar-notifications").appendChild(notificationElement);
         }
+        NavbarNotifications.updateNotificationCount(notifications.length)
+    }
+
+    static updateNotificationCount(count) {
+        document.getElementById("navbar-notifications-count").innerHTML =
+            parseInt(document.getElementById("navbar-notifications-count").innerHTML) + count;
     }
 }
 
