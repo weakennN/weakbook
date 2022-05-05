@@ -57,4 +57,8 @@ public class NotificationService {
             return new Notification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", "/post/" + entityId, notificationType);
         return new Notification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", "", notificationType);
     }
+
+    public void seeNotifications() {
+        this.notificationRepository.seeNotifications(AuthService.getUser().getId());
+    }
 }

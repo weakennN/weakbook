@@ -34,18 +34,20 @@ class NavbarNotifications {
         document.getElementById("navbar-notifications-btn").onclick = function () {
             if (!NavbarNotifications.#loaded) {
                 AjaxManager.request("/notifications", null, "GET", function (data) {
-                    console.log(data);
                     NavbarNotifications.#loaded = true;
                     for (let notification of data) {
                         document.getElementById("navbar-notifications")
                             .appendChild(NavbarNotifications.#createNotification(notification));
                     }
                 }.bind(this));
+                AjaxManager.request("/notifications/see", null, "PATCH", function (data) {
+                    console.log("notifications seen")
+                    console.log(data);
+                })
             }
             document.getElementById("navbar-notifications").style.display = "block";
             setTimeout(function () {
                 document.onclick = function () {
-                    console.log("yo")
                     document.getElementById("navbar-notifications").style.display = "none";
                     document.onclick = null;
                 }
