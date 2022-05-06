@@ -29,7 +29,8 @@ public class NotificationService {
     public void saveNotification(NotificationType notificationType, Long receiverId, Long entityId) {
         ApplicationUser user = AuthService.getUser();
         User receiver = this.userRepository.findById(receiverId).get();
-        if (user.getId().equals(receiverId))
+        if (user.getId().equals(receiverId)
+                || this.notificationRepository.findBySenderIdAndReceiverIdAndTypeAndEntityId(user.getId(), receiverId, notificationType.getId(), entityId) != null)
             return;
         this.sendNotification(createNotification(notificationType, user, entityId, AuthService.getUserView()), receiver.getEmail());
         this.notificationRepository.insert(notificationType.getId(), entityId, user.getId(), receiverId);

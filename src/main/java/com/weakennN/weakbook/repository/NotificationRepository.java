@@ -24,4 +24,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Transactional
     @Query(value = "update notifications set seen = true where receiver_id = ?1", nativeQuery = true)
     void seeNotifications(Long receiverId);
+
+    @Query(value = "select * from notifications where sender_id = ?1 and receiver_id = ?2 and notification_type = ?3 and entity_id = ?4", nativeQuery = true)
+    Notification findBySenderIdAndReceiverIdAndTypeAndEntityId(Long senderId, Long receiverId, int notificationType, Long entityId);
 }
