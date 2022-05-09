@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+}
+
+.form-control {
+    height: 45px;
+    font-size: 20px;
+}
+
+.btn {
+    height: 45px;
+    font-size: 19px;
+    font-weight: 500;
+    box-shadow: none !important;
+}

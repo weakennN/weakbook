@@ -3,25 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/register.css">
 </head>
 <body>
-<form class="form-group" th:action="@{/register/registerUser}" th:method="post" th:object="${userRegisterBinding}">
-    <input class="form-control" th:field="*{firstName}" type="text">
-    <input class="form-control" th:field="*{lastName}" type="text">
-    <input class="form-control" th:field="*{email}" type="text">
-    <input class="form-control" th:field="*{password}" type="text">
-    <input class="form-control" th:field="*{confirmPassword}" type="text">
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <div th:if="${#fields.hasAnyErrors()}">
-        <ul>
-            <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
-        </ul>
+<div style="height: 100%" class="d-flex container-fluid">
+    <div class="m-auto px-3 py-4 d-flex"
+         style=" box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;border-radius: 15px;width: 450px">
+        <form class="my-auto w-100" th:action="@{/register/registerUser}" th:method="post"
+              th:object="${userRegisterBinding}">
+            <h2 class="text-center mb-3">Register</h2>
+            <hr>
+            <input class="form-control" th:field="*{firstName}" placeholder="First name" type="text">
+            <input class="form-control my-2" th:field="*{lastName}" placeholder="Last name" type="text">
+            <input class="form-control" th:field="*{email}" placeholder="Email" type="text">
+            <input class="form-control my-2" th:field="*{password}" placeholder="Password" type="password">
+            <input class="form-control" th:field="*{confirmPassword}" placeholder="Confirm password" type="password">
+            <button class="btn btn-primary w-100 mt-3" type="submit">Register</button>
+            <div class="mt-2" style="width: 100%;text-align: center">
+                <a href="/login">Already have an account?</a>
+            </div>
+            <div th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </form>
     </div>
-</form>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
 </html>

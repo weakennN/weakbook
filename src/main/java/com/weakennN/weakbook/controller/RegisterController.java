@@ -37,7 +37,7 @@ public class RegisterController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBinding", bindingResult);
             redirectAttributes.addFlashAttribute("userRegisterBinding", userRegisterBinding);
-            return "redirect:/register/";
+            return "redirect:/register";
         }
 
         this.userService.registerUser(userRegisterBinding);
