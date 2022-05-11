@@ -6,7 +6,7 @@ $(document).ready(function () {
             console.log("log");
             console.log(data);
             for (let post of data) {
-                document.getElementById("more-posts").appendChild($(`<a href="${post.links.self.link}" style="position: relative;justify-content: center"
+                document.getElementById("more-posts").appendChild($(`<a href="${post.links.view.link}" style="position: relative;justify-content: center"
                                                                                  class="col-lg-4 col-md-6 col-12 mb-2 d-flex extra-post">
                                                                                 <img style="position: relative" class="img-fluid extra-post-image"
                                                                                      src="${post.imagesUrls[0]}" alt="">

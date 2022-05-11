@@ -1,9 +1,11 @@
 $(document).ready(function () {
     document.getElementById("search-input").addEventListener("focusin", function () {
         document.getElementById("search-box-suggestions").style.opacity = "1";
+        document.getElementById("search-box-suggestions").style.display = "block";
     });
     document.getElementById("search-input").addEventListener("focusout", function () {
         document.getElementById("search-box-suggestions").style.opacity = "0";
+        document.getElementById("search-box-suggestions").style.display = "none";
     });
     document.getElementById("search-input").oninput = function () {
         AjaxManager.request("/search?query=" + document.getElementById("search-input").value + "&limit=7"

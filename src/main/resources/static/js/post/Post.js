@@ -18,7 +18,6 @@ class Post {
                 window.history.pushState(postState, "", this.#post.links.self.link);
             }.bind(this));
         }.bind(this);
-        console.log(instance.#post.links.likes.link);
         this.#postElement.querySelector(".likes").onclick = function () {
             LikesModal.open(instance.#post.links.likes.link);
         }

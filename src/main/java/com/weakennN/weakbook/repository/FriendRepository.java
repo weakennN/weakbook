@@ -16,4 +16,7 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
             "  and (f.user_id = ?1\n" +
             "    or f.owner_id = ?1);", nativeQuery = true)
     List<Friend> getFriendsByUserId(Long userId, int limit);
+
+    @Query(value = "select count(id) from friends where owner_id = ?1 or user_id = ?1", nativeQuery = true)
+    int countByUserId(Long userId);
 }

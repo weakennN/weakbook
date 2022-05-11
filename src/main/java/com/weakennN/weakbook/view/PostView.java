@@ -102,7 +102,7 @@ public class PostView extends RepresentationModel {
         super.addLink("view", new Link("/post/" + this.id));
         super.addLink("likes", new Link("/posts/" + this.id + "/likes"));
         super.addLink("like", new Link("/posts/" + this.id + "/like"));
-        super.addLink("user", new Link("/user/" + this.user.getId()));
+        super.addLink("user", new Link("/profile/" + this.user.getId()));
         super.addLink("comments", new Link("/comments/" + this.id));
         super.addLink("comment", new Link("/comments/"));
     }

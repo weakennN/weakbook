@@ -25,7 +25,7 @@ class PostManager {
                                     </a>
                                     </div> 
                                     <div class='ms-2'> 
-                                        <a href='${post.links.user.link}' class='card-title mb-0 post-user-name'>Lyuboslav</a> 
+                                        <a href='${post.links.user.link}' class='card-title mb-0 post-user-name'>${post.user.firstName + " " + post.user.lastName}</a> 
                                         <p class='post-time mb-0'>10h</p> 
                                     </div> 
                                 </div> 
@@ -59,6 +59,7 @@ class PostManager {
 
     static getPosts() {
         console.log(PostManager.#url);
+        console.log(PostManager.#passedPosts);
         if (PostManager.#send) {
             PostManager.#send = false;
             AjaxManager.request(PostManager.#url + "?passedPosts=" + PostManager.#passedPosts, null, "GET", function (data) {

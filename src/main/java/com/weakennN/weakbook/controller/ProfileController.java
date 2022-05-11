@@ -28,6 +28,7 @@ public class ProfileController {
     public String index(Model model, @PathVariable String userId) {
         model.addAttribute("user", AuthService.getUserView());
         model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 10));
+        model.addAttribute("countFriends", this.friendService.getCountFriends(Long.parseLong(userId)));
         return "profile";
     }
 

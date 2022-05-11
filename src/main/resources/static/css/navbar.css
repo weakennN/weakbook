@@ -55,6 +55,7 @@ i {
     left: 50%;
     transform: translate(-50%, 0);
     opacity: 0;
+    display: none;
     transition: all 0.3s linear;
     z-index: 1300;
 }

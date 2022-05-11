@@ -46,4 +46,8 @@ public class FriendService {
         }
         return result;
     }
+
+    public int getCountFriends(Long userId) {
+        return this.friendRepository.countByUserId(userId);
+    }
 }
