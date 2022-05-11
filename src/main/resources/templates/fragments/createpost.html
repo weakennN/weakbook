@@ -1,0 +1,57 @@
+<style>
+    .create-post-input {
+        font-size: 21px;
+        cursor: pointer;
+    }
+
+    .create-post-input-holder {
+        width: 600px;
+        box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
+        border-radius: 10px;
+    }
+
+    @media all and (max-width: 768px) {
+        .create-post-input-holder {
+            width: 100%;
+        }
+
+        .create-post-input {
+            font-size: 19px;
+        }
+    }
+</style>
+
+<div class="mt-4">
+    <div class="p-5 mx-auto create-post-input-holder">
+        <input class="form-control create-post-input mx-auto" data-bs-toggle="modal" data-bs-target="#create-post-modal"
+               id="post-input"
+               type="text"
+               value="Whats on your mind?">
+    </div>
+</div>
+
+<div class="modal fade" id="create-post-modal" aria-labelledby="create-post-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="image-drag-over">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="post-images"></div>
+                <textarea style="border: none;resize: vertical;" rows="3" class="form-control"
+                          id="post-create-content"></textarea>
+                <div class="align-self-center d-flex image-uploader" id="file-browser">
+                    <div class="text-center" style="margin: 30px auto 30px auto;">
+                        <i style="font-size: 5.5rem;margin-bottom: 5px;" class="fas fa-cloud-download-alt"></i>
+                        <p style="font-size: 24px;margin-bottom: 0">Drag and drop or browse choose files</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="PostManager.post()">Post</button>
+            </div>
+        </div>
+    </div>
+</div>

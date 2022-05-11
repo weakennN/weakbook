@@ -5,40 +5,13 @@
 <body>
 <div th:replace="/fragments/pagetop.html"></div>
 <div th:replace="/modals/likemodal.html"></div>
+<div th:replace="/fragments/createpost.html"></div>
 <div class="container-lg mt-4">
     <div class="row d-flex justify-content-md-center">
         <div class="col-md-6 col-12 p-0 m-0" id="posts"></div>
     </div>
 </div>
 <div th:replace="/modals/postmodal.html"></div>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    PostManager
-</button>
-<div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" id="image-drag-over">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row" id="post-images"></div>
-                <textarea style="border: none;resize: vertical;" rows="3" class="form-control"
-                          id="post-create-content"></textarea>
-                <div class="align-self-center d-flex image-uploader" id="file-browser">
-                    <div class="text-center" style="margin: 30px auto 30px auto;">
-                        <i style="font-size: 5.5rem;margin-bottom: 5px;" class="fas fa-cloud-download-alt"></i>
-                        <p style="font-size: 24px;margin-bottom: 0">Drag and drop or browse choose files</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="PostManager.post()">Post</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="toast-container toast-container position-absolute p-3 top-0 end-0" id="notifications"></div>
 <script src="/static/js/AjaxManager.js"></script>
 <script src="/static/js/post/Post.js"></script>
