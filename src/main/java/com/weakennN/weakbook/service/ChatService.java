@@ -76,11 +76,17 @@ public class ChatService {
         return result;
     }
 
-    public void sendMessage(Message message, ApplicationUser applicationUser) {
-        ChatMessage chatMessage = this.saveMessage(message, applicationUser);
-        this.webSocketService.sendToUsers(ViewMapper.mapMessage(chatMessage, chatMessage.getUser()), "/queue/chat",
-                this.chatParticipantRepository.findParticipantsEmailByChatRoom(
-                        applicationUser.getId(), message.getChatRoomId())
+    public void sendMessage(Message message, Long chatRoomId) {
+        ApplicationUser user = AuthService.getUser();
+        this.chatParticipantRepository.findParticipantsEmailByChatRoom(user.getId(), chatRoomId).forEach(System.out::println);
+        ChatMessage chatMessage = this.saveMessage(message, user);
+        Message resultMessage = ViewMapper.mapMessage(chatMessage, chatMessage.getUser());
+        if (AuthService.getUser().getId().equals(chatMessage.getUser().getId()))
+            resultMessage.setFromCurrentUser(false);
+        else
+            resultMessage.setFromCurrentUser(true);
+        this.webSocketService.sendToUsers(resultMessage, "/queue/chat",
+                this.chatParticipantRepository.findParticipantsEmailByChatRoom(user.getId(), chatRoomId)
         );
     }
 

@@ -17,10 +17,14 @@ class ChatRoom {
             })
             ChatRoom.messageBox.onkeypress = function (e) {
                 if (e.key === "Enter") {
-                    socket.send("/app/message", {
+                    let message = {
                         message: ChatRoom.messageBox.value,
                         chatRoomId: this.chatRoom.id
-                    })
+                    };
+                    AjaxManager.request(this.chatRoom.links.message.link, JSON.stringify(message), "POST");
+                    message.fromCurrentUser = true;
+                    ChatRoom.createMessage(message);
+                    ChatRoom.messageBox.value = "";
                 }
             }.bind(this);
         }.bind(this));
@@ -32,11 +36,9 @@ class ChatRoom {
         })
     }
 
-    sendMessage() {
-        this.webSocketManager.send("/app/message", {message: "testMessage"});
-    }
-
     static createMessage(message) {
+        console.log(message);
+        console.log(this.chatBox);
         let messageElement;
         if (message.infoMessage) {
 

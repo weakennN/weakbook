@@ -56,5 +56,6 @@ public class ChatRoomView extends RepresentationModel {
         super.addLink("messages", new Link("/chat/chatRooms/messages/" + this.id));
         super.addLink("connect", new Link("/chat"));
         super.addLink("subscribe", new Link("/user/queue/chat"));
+        super.addLink("message", new Link("/chat/message/" + this.id));
     }
 }

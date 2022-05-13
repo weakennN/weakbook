@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ChatMessagesRepository extends JpaRepository<ChatMessage, Long> {
 
-    @Query(value = "SELECT * FROM chat_messages WHERE chat_room_id = :chatRoomId ORDER BY created DESC LIMIT 20 OFFSET :offset", nativeQuery = true)
+    @Query(value = "SELECT * FROM chat_messages WHERE chat_room_id = :chatRoomId ORDER BY created LIMIT 20 OFFSET :offset", nativeQuery = true)
     List<ChatMessage> getChatMessageByChatRoomId(@Param("chatRoomId") Long chatRoomId, @Param("offset") int offset);
 
     @Query(value = "SELECT * FROM chat_messages WHERE chat_room_id = ?1 ORDER BY created DESC LIMIT 1", nativeQuery = true)

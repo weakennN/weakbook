@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/static/css/general.css">
 </head>
 <body>
+<div th:replace="/fragments/pagetop.html"></div>
+<div class="toast-container toast-container position-absolute p-3 top-0 end-0" id="notifications"></div>
 <div class="container-md my-3"
      style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding-left: 15px;padding-right: 15px;border-radius: 10px;height: 100%">
     <div class="row" style="height: 100%">
@@ -40,8 +42,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"
         integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/static/js/AjaxManager.js"></script>
-<script src="/static/js/WebSocketManager.js"></script>
 <script src="/static/js/chat/ChatRoom.js"></script>
 <script src="/static/js/chat/Chat.js"></script>
 </body>

@@ -1,17 +1,17 @@
 package com.weakennN.weakbook.controller;
 
-import com.weakennN.weakbook.security.ApplicationUser;
+import com.weakennN.weakbook.service.AuthService;
 import com.weakennN.weakbook.service.ChatService;
 import com.weakennN.weakbook.view.ChatRoomView;
 import com.weakennN.weakbook.view.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller()
@@ -25,7 +25,8 @@ public class ChatController {
     }
 
     @GetMapping({"/", ""})
-    public String getChatView() {
+    public String getChatView(Model model) {
+        model.addAttribute("user", AuthService.getUserView());
         return "chat";
     }
 
@@ -41,9 +42,11 @@ public class ChatController {
         return new ResponseEntity<>(this.chatService.createNewChatRoom(Long.parseLong(userId)), HttpStatus.OK);
     }
 
-    @MessageMapping("/message")
-    public void message(@RequestBody Message message, UsernamePasswordAuthenticationToken authenticationToken) {
-        this.chatService.sendMessage(message, (ApplicationUser) authenticationToken.getPrincipal());
+    @PostMapping(value = "/message/{chatRoomId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> message(@RequestBody Message message, @PathVariable Long chatRoomId) {
+        this.chatService.sendMessage(message, chatRoomId);
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 
     @GetMapping("/chatRooms/messages/{chatRoomId}")
