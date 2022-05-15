@@ -7,6 +7,7 @@ class ChatRoom {
     static messageBox = document.getElementById("message-box");
 
     constructor(chatRoom) {
+        this.initScrollAction();
         this.chatRoom = chatRoom;
         ChatRoom.chatBox.innerHTML = "";
         let socket = this.webSocketManager = new WebSocketManager(this.chatRoom.links.connect.link, function () {
@@ -33,10 +34,12 @@ class ChatRoom {
             for (let message of data) {
                 ChatRoom.createMessage(message);
             }
-        })
+            this.passedMessages += data.length;
+            ChatRoom.chatBox.scrollTop = ChatRoom.chatBox.scrollHeight;
+        }.bind(this))
     }
 
-    static createMessage(message) {
+    static createMessage(message, insertFirst = false) {
         console.log(message);
         console.log(this.chatBox);
         let messageElement;
@@ -54,7 +57,10 @@ class ChatRoom {
                     </div>
                     </div>`).get(0);
         }
-        this.chatBox.appendChild(messageElement);
+        if (insertFirst)
+            this.chatBox.insertBefore(messageElement, this.chatBox.children[0])
+        else
+            this.chatBox.appendChild(messageElement);
     }
 
     disconnect() {
@@ -63,5 +69,24 @@ class ChatRoom {
 
     getChatRoomId() {
         return this.chatRoom.id;
+    }
+
+    initScrollAction() {
+        let send = true;
+        ChatRoom.chatBox.onscroll = function () {
+            console.log();
+            if (ChatRoom.chatBox.scrollTop <= 100) {
+                if (send) {
+                    send = false;
+                    AjaxManager.request(this.chatRoom.links.messages.link + "?offset=" + this.passedMessages, {}, "GET", function (data) {
+                        for (let message of data) {
+                            ChatRoom.createMessage(message, true);
+                        }
+                        send = true;
+                        this.passedMessages += data.length;
+                    }.bind(this));
+                }
+            }
+        }.bind(this);
     }
 }
