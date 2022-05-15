@@ -15,24 +15,27 @@ class ChatRoom {
             socket.subscribe(this.chatRoom.links.subscribe.link, function (data) {
                 console.log(JSON.parse(data.body));
                 ChatRoom.createMessage(JSON.parse(data.body));
-            })
+                this.passedMessages += 1;
+            }.bind(this))
             ChatRoom.messageBox.onkeypress = function (e) {
                 if (e.key === "Enter") {
                     let message = {
                         message: ChatRoom.messageBox.value,
                         chatRoomId: this.chatRoom.id
                     };
-                    AjaxManager.request(this.chatRoom.links.message.link, JSON.stringify(message), "POST");
+                    AjaxManager.request(this.chatRoom.links.message.link, JSON.stringify(message), "POST", function () {
+                    });
                     message.fromCurrentUser = true;
                     ChatRoom.createMessage(message);
                     ChatRoom.messageBox.value = "";
+                    this.passedMessages += 1;
                 }
             }.bind(this);
         }.bind(this));
         AjaxManager.request(this.chatRoom.links.messages.link + "?offset=" + this.passedMessages, {}, "GET", function (data) {
             console.log(data);
-            for (let message of data) {
-                ChatRoom.createMessage(message);
+            for (let i = 0; i < data.length; i++) {
+                ChatRoom.createMessage(data[data.length - 1 - i]);
             }
             this.passedMessages += data.length;
             ChatRoom.chatBox.scrollTop = ChatRoom.chatBox.scrollHeight;
@@ -48,10 +51,10 @@ class ChatRoom {
         } else if (message.fromCurrentUser) {
             messageElement = $(`<p class='own-message message'>${message.message}</p>`).get(0);
         } else {
-            messageElement = $(`<div class='d-flex flex-row'>
-                        <div class='d-flex'>
+            messageElement = $(`<div class='d-flex mt-2 flex-row'>
+                        <a href="${message.user.links.self.link}" class='d-flex'>
                             <img class='align-self-center' style='width: 30px;height: 30px;border-radius: 50%' src='${message.user.profilePicture}' alt=''>
-                        </div>
+                        </a>
                         <p class='message other-message align-self-center mb-0'>
                             ${message.message}</p>
                     </div>
@@ -79,8 +82,8 @@ class ChatRoom {
                 if (send) {
                     send = false;
                     AjaxManager.request(this.chatRoom.links.messages.link + "?offset=" + this.passedMessages, {}, "GET", function (data) {
-                        for (let message of data) {
-                            ChatRoom.createMessage(message, true);
+                        for (let i = 0; i < data.length; i++) {
+                            ChatRoom.createMessage(data[data.length - 1 - i], true);
                         }
                         send = true;
                         this.passedMessages += data.length;
