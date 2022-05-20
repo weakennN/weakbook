@@ -31,9 +31,10 @@ class PostManager {
                                 </div> 
                                 <p class='card-text'>${post.content}</p> 
                             </div> 
-                            <img class='card-img-bottom' 
-                                 src="${post.imagesUrls[0]}"
-                                 alt='Card image cap'> 
+                            <div id="images-${post.id}" class="carousel slide" data-bs-ride="carousel">
+                                  <div class="carousel-inner"></div>
+                                  <div class="navigation-buttons"></div>
+                                </div>
                             <div class='px-3'>
                                 <div class='d-flex mt-2'> 
                                     <p class='mb-0 likes'>${post.numberLikes} Likes</p> 
@@ -51,6 +52,22 @@ class PostManager {
                                 </div> 
                             </div> 
                         </div>`).get(0);
+        for (let imageUrl of post.imagesUrls) {
+            postElement.querySelector(".carousel-inner").appendChild($(`<div class="carousel-item">
+                                                                          <img src="${imageUrl}" class="d-block w-100" alt="...">
+                                                                        </div>`).get(0));
+        }
+        if (post.imagesUrls.length > 1) {
+            postElement.querySelector(".navigational-button").appendChild($(` <button class="carousel-control-prev" type="button" data-bs-target="#images-${post.id}" data-bs-slide="prev">
+                                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                <span class="visually-hidden">Previous</span>
+                                                                              </button>
+                                                                              <button class="carousel-control-next" type="button" data-bs-target="#images-${post.id}" data-bs-slide="next">
+                                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                <span class="visually-hidden">Next</span>
+                                                                              </button>`).get(0));
+        }
+        postElement.querySelector(".carousel-inner").children[0].classList.add("active");
         $("#posts").append(postElement);
         return postElement;
     }
