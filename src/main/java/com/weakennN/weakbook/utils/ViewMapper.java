@@ -26,7 +26,7 @@ public class ViewMapper {
                 .setNumberComments(commentRepository.countCommentByPostId(post.getId()))
                 .setNumberLikes(postLikeRepository.countPostLikeByPost(post))
                 .setUser(mapper.map(user, UserView.class))
-                .setIsLiked(postLikeRepository.countPostLikeByPost(post) >= 1);
+                .setIsLiked(postLikeRepository.isLiked(AuthService.getUser().getId(), post.getId()) != null);
         postView.getUser().setProfilePicture(user.getProfilePicture());
 
         for (PostPicture postPicture : post.getPictures()) {
