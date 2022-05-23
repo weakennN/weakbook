@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -31,6 +32,6 @@ public class NotificationController {
     @ResponseBody
     public ResponseEntity<?> seeNotifications() {
         this.notificationService.seeNotifications();
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 }

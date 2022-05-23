@@ -42,9 +42,9 @@ class NavbarNotifications {
             })
             document.getElementById("navbar-notifications").style.display = "block";
             setTimeout(function () {
-                document.onclick = function () {
+                document.body.onclick = function () {
                     document.getElementById("navbar-notifications").style.display = "none";
-                    document.onclick = null;
+                    document.body.onclick = null;
                 }
             }, 100);
         }.bind(this);
@@ -54,7 +54,8 @@ class NavbarNotifications {
         for (let notification of notifications) {
             let notificationElement = null;
             if (notification.type === "FRIEND_REQUEST") {
-
+                let friendRequest = new FriendRequest(notification.sender, 1);
+                notificationElement = friendRequest.createElement();
             } else {
                 notificationElement = $(`<a href="${notification.link}" class="d-flex flex-row" style="padding: 10px 15px">
                         <img style="width: 50px;height: 50px;border-radius: 50%;margin-top: 5px"

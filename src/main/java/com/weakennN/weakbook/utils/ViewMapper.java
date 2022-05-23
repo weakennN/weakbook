@@ -1,7 +1,6 @@
 package com.weakennN.weakbook.utils;
 
 import com.weakennN.weakbook.entity.*;
-import com.weakennN.weakbook.entity.Notification;
 import com.weakennN.weakbook.repository.ChatMessagesRepository;
 import com.weakennN.weakbook.repository.ChatParticipantRepository;
 import com.weakennN.weakbook.repository.CommentRepository;
