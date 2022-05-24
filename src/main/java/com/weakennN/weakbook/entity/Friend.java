@@ -16,6 +16,14 @@ public class Friend extends BaseEntity {
     @ManyToOne
     private User user;
 
+    public Friend(){
+    }
+
+    public Friend(User owner, User user){
+        this.owner = owner;
+        this.user = user;
+    }
+
     public boolean isBlocked() {
         return isBlocked;
     }

@@ -53,10 +53,13 @@ public class NotificationService {
 
     public Notification createNotification(NotificationType notificationType, ApplicationUser user, Long entityId, UserView sender) {
         if (notificationType.equals(NotificationType.POST_LIKE))
-            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked your post.", "/post/" + entityId, notificationType, sender);
+            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked your post.", "/post/" + entityId
+                    , notificationType, sender, entityId);
         else if (notificationType.equals(NotificationType.COMMENT_LIKE))
-            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", "/post/" + entityId, notificationType, sender);
-        return new Notification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", "", notificationType, sender);
+            return new Notification(user.getFirstName() + " " + user.getLastName() + " liked you comment.", "/post/" + entityId
+                    , notificationType, sender, entityId);
+        return new Notification(user.getFirstName() + " " + user.getLastName() + " sent you a friend request.", "",
+                notificationType, sender, entityId);
     }
 
     public void seeNotifications() {

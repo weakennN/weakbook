@@ -2,7 +2,9 @@ package com.weakennN.weakbook.repository;
 
 import com.weakennN.weakbook.entity.Friend;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,4 +21,9 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
     @Query(value = "select count(id) from friends where owner_id = ?1 or user_id = ?1", nativeQuery = true)
     int countByUserId(Long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into `friends` (owner_id, user_id, is_blocked) values (1?, 2?, false)", nativeQuery = true)
+    void insert(Long ownerId, Long userId);
 }

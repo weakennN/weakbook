@@ -54,7 +54,8 @@ class NavbarNotifications {
         for (let notification of notifications) {
             let notificationElement = null;
             if (notification.type === "FRIEND_REQUEST") {
-                let friendRequest = new FriendRequest(notification.sender, 1);
+                console.log(notification);
+                let friendRequest = new FriendRequest(notification.sender, notification.entityId);
                 notificationElement = friendRequest.createElement();
             } else {
                 notificationElement = $(`<a href="${notification.link}" class="d-flex flex-row" style="padding: 10px 15px">

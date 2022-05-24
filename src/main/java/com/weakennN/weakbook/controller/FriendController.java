@@ -6,10 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("/friend")
@@ -28,19 +27,17 @@ public class FriendController {
         return new ResponseEntity<>("214124", HttpStatus.OK);
     }
 
-    @PostMapping("/accept")
+    @PostMapping(value = "/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> acceptFriendRequest(@RequestBody Long id) {
+    public ResponseEntity<?> acceptFriendRequest(@PathVariable Long id) {
         this.friendService.acceptFriendRequest(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 
-    @PostMapping("/delete")
+    @PostMapping(value = "/decline/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> deleteFriendRequest(@RequestBody Long id) {
+    public ResponseEntity<?> deleteFriendRequest(@PathVariable Long id) {
         this.friendService.deleteFriendRequest(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
-
-    // TODO: get all friends get mapping
 }

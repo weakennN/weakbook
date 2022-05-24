@@ -23,11 +23,15 @@ class FriendRequest {
                         </div>
                     </div>`).get(0);
         element.querySelector(".accept").onclick = function () {
-            console.log("accepting");
-        }
+            AjaxManager.request("/friend/accept/" + this.#id, null, "POST", function () {
+                console.log("success");
+            });
+        }.bind(this);
         element.querySelector(".decline").onclick = function () {
-            console.log("decline");
-        }
+            AjaxManager.request("/friend/decline/" + this.#id, null, "POST", function () {
+                console.log("success");
+            });
+        }.bind(this);
         return element;
     }
 }

@@ -1,6 +1,7 @@
 package com.weakennN.weakbook.service;
 
 import com.weakennN.weakbook.entity.Friend;
+import com.weakennN.weakbook.entity.FriendRequest;
 import com.weakennN.weakbook.entity.NotificationType;
 import com.weakennN.weakbook.repository.FriendRepository;
 import com.weakennN.weakbook.repository.FriendRequestRepository;
@@ -33,6 +34,8 @@ public class FriendService {
 
     public void acceptFriendRequest(Long id) {
         this.friendRequestRepository.accept(id);
+        FriendRequest friendRequest = this.friendRequestRepository.findById(id).get();
+        this.friendRepository.save(new Friend(friendRequest.getSender(), friendRequest.getReceiver()));
     }
 
     public void deleteFriendRequest(Long id) {

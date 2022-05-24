@@ -14,9 +14,13 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, Lo
     @Query(value = "INSERT INTO friend_requests (accepted, receiver_id, sender_id) VALUES (false, :receiverId, :senderId)", nativeQuery = true)
     void sendFriendRequest(@Param("receiverId") Long receiverId, @Param("senderId") Long senderId);
 
+    @Modifying
+    @Transactional
     @Query(value = "DELETE FROM friend_requests where id = ?1", nativeQuery = true)
     void delete(Long id);
 
+    @Modifying
+    @Transactional
     @Query(value = "UPDATE friend_requests SET accepted = true where id = ?1", nativeQuery = true)
     void accept(Long id);
 
