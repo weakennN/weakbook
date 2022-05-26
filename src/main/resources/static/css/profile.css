@@ -43,6 +43,8 @@ p {
     margin-left: auto;
     font-size: 19px;
     align-self: center;
+    text-decoration: underline !important;
+    color: #006bef;
 }
 
 @media all and (max-width: 768px) {

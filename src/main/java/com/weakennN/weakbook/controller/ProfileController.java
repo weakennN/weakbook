@@ -26,6 +26,7 @@ public class ProfileController {
 
     @GetMapping("/profile/{userId}")
     public String index(Model model, @PathVariable String userId) {
+        System.out.println(userId);
         model.addAttribute("user", AuthService.getUserView());
         model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 10));
         model.addAttribute("countFriends", this.friendService.getCountFriends(Long.parseLong(userId)));
@@ -39,5 +40,11 @@ public class ProfileController {
         if (userId.equals(AuthService.getUser().getId()))
             userProfileView.setOwner(true);
         return new ResponseEntity<>(userProfileView, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile/friends/{userId}")
+    public String getFriendsView(Model model, @PathVariable String userId) {
+        model.addAttribute("userId", userId);
+        return "friends";
     }
 }

@@ -12,7 +12,7 @@
                  alt="">
             <div class="d-flex flex-column ms-3 mt-2">
                 <p id="profile-name" class="profile-name"></p>
-                <p id="count-friends" class="profile-count-friends">250 Friends</p>
+                <p id="count-friends" class="profile-count-friends"></p>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
                  style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;background-color: white;border-radius: 4px">
                 <div class="d-flex flex-row">
                     <h2 class="me-2">Friends</h2>
-                    <a class="see-all-friends" href="#">See all friends</a>
+                    <a class="see-all-friends" th:href="@{/profile/friends/{id}(id = ${user.id})}">See all friends</a>
                 </div>
                 <p class="mb-0" th:text="${countFriends + ' friends'}" style="font-size: 20px"></p>
                 <div class="row mt-2">
@@ -44,10 +44,7 @@
         <div class="col-lg-6 col-12 p-0 m-0" id="posts"></div>
     </div>
 </div>
-<script src="/static/js/AjaxManager.js"></script>
 <script src="/static/js/post/PostManager.js"></script>
 <script src="/static/js/Profile.js"></script>
 <script src="/static/js/post/Post.js"></script>
 <script src="/static/js/HistoryStateEvents.js"></script>
-<script src="/static/js/WebSocketManager.js"></script>
-<script src="/static/js/Notification.js"></script>
