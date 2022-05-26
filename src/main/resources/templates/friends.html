@@ -1,5 +1,9 @@
 <div th:replace="/fragments/pagetop.html"></div>
+<div class="container">
+    <h2 class="mt-5 mb-2">Friends: <span id="count-friends"></span></h2>
+    <div class="row" id="friends-row"></div>
+</div>
 <script th:inline="javascript">
-  let test = [[${userId}]];
-  console.log(test)
+    let userId = [[${userId}]];
 </script>
+<script src="/static/js/FriendsPage.js"></script>

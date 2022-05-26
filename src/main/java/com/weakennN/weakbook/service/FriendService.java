@@ -5,6 +5,7 @@ import com.weakennN.weakbook.entity.FriendRequest;
 import com.weakennN.weakbook.entity.NotificationType;
 import com.weakennN.weakbook.repository.FriendRepository;
 import com.weakennN.weakbook.repository.FriendRequestRepository;
+import com.weakennN.weakbook.security.ApplicationUser;
 import com.weakennN.weakbook.utils.ViewMapper;
 import com.weakennN.weakbook.view.UserView;
 import org.springframework.stereotype.Service;
@@ -45,9 +46,9 @@ public class FriendService {
         this.friendRequestRepository.delete(friendRequest);
     }
 
-    public List<UserView> getFriends(Long userId, int limit) {
+    public List<UserView> getFriends(Long userId, int limit, int offset) {
         List<UserView> result = new ArrayList<>();
-        for (Friend friend : this.friendRepository.getFriendsByUserId(userId, limit)) {
+        for (Friend friend : this.friendRepository.getFriendsByUserId(userId, limit, offset)) {
             result.add(ViewMapper.mapUser(friend.getOwner().getId().equals(userId) ? friend.getUser() : friend.getOwner()));
         }
         return result;

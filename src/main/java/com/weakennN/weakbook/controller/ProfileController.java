@@ -28,7 +28,7 @@ public class ProfileController {
     public String index(Model model, @PathVariable String userId) {
         System.out.println(userId);
         model.addAttribute("user", AuthService.getUserView());
-        model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 10));
+        model.addAttribute("friends", this.friendService.getFriends(Long.parseLong(userId), 10, 0));
         model.addAttribute("countFriends", this.friendService.getCountFriends(Long.parseLong(userId)));
         return "profile";
     }
@@ -44,6 +44,7 @@ public class ProfileController {
 
     @GetMapping("/profile/friends/{userId}")
     public String getFriendsView(Model model, @PathVariable String userId) {
+        model.addAttribute("user", AuthService.getUserView());
         model.addAttribute("userId", userId);
         return "friends";
     }
