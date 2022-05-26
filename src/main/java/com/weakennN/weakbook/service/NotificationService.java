@@ -65,4 +65,8 @@ public class NotificationService {
     public void seeNotifications() {
         this.notificationRepository.seeNotifications(AuthService.getUser().getId());
     }
+
+    public void deleteNotification(Long entityId, int notificationType) {
+        this.notificationRepository.deleteByEntityIdAndNotificationType(entityId, notificationType);
+    }
 }

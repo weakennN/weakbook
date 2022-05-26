@@ -36,10 +36,13 @@ public class FriendService {
         this.friendRequestRepository.accept(id);
         FriendRequest friendRequest = this.friendRequestRepository.findById(id).get();
         this.friendRepository.save(new Friend(friendRequest.getSender(), friendRequest.getReceiver()));
+        this.notificationService.deleteNotification(friendRequest.getId(), NotificationType.FRIEND_REQUEST.getId());
     }
 
     public void deleteFriendRequest(Long id) {
-        this.friendRequestRepository.delete(id);
+        FriendRequest friendRequest = this.friendRequestRepository.findById(id).get();
+        this.notificationService.deleteNotification(friendRequest.getId(), NotificationType.FRIEND_REQUEST.getId());
+        this.friendRequestRepository.delete(friendRequest);
     }
 
     public List<UserView> getFriends(Long userId, int limit) {
