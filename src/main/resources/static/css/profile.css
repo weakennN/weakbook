@@ -34,6 +34,10 @@ p {
     height: 40px;
 }
 
+.friend-request-btn {
+    height: 40px;
+}
+
 .profile-count-friends {
     color: #9c9393;
     font-weight: 500;
@@ -53,6 +57,11 @@ p {
     }
 
     .edit-profile-btn {
+        width: 160px;
+        margin-top: 10px !important;
+    }
+
+    .friend-request-btn {
         width: 160px;
         margin-top: 10px !important;
     }

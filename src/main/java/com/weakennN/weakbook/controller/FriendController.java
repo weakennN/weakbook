@@ -22,11 +22,11 @@ public class FriendController {
         this.friendService = friendService;
     }
 
-    @PostMapping(value = "/request", consumes = MediaType.TEXT_HTML_VALUE, produces = MediaType.TEXT_HTML_VALUE)
+    @PostMapping(value = "/request/{userId}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> sendFriendRequest(@RequestBody String receiverId) {
-        this.friendService.sendFriendRequest(Long.parseLong(receiverId));
-        return new ResponseEntity<>("214124", HttpStatus.OK);
+    public ResponseEntity<?> sendFriendRequest(@PathVariable Long userId) {
+        this.friendService.sendFriendRequest(userId);
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,5 +50,12 @@ public class FriendController {
         result.put("count", this.friendService.getCountFriends(Long.parseLong(userId)));
         result.put("friends", this.friendService.getFriends(Long.parseLong(userId), 70, offset));
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/remove/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> removeFriend(@PathVariable Long userId) {
+        this.friendService.removeFriend(userId);
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 }

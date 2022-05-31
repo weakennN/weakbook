@@ -57,4 +57,12 @@ public class FriendService {
     public int getCountFriends(Long userId) {
         return this.friendRepository.countByUserId(userId);
     }
+
+    public boolean areFriends(Long friendId) {
+        return this.friendRepository.areFriends(AuthService.getUser().getId(), friendId) != null;
+    }
+
+    public void removeFriend(Long userId) {
+        this.friendRepository.removeFriend(AuthService.getUser().getId(), userId);
+    }
 }

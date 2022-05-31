@@ -26,4 +26,12 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
     @Transactional
     @Query(value = "insert into `friends` (owner_id, user_id, is_blocked) values (1?, 2?, false)", nativeQuery = true)
     void insert(Long ownerId, Long userId);
+
+    @Query(value = "select * from friends where owner_id = ?1 and user_id = ?2 or owner_id = ?2 and user_id = ?1", nativeQuery = true)
+    Friend areFriends(Long userId, Long friendId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete * from friends where owner_id = ?1 and user_id = ?2 or owner_id = ?2 and user_id = ?1", nativeQuery = true)
+    void removeFriend(Long friendId, Long userId);
 }

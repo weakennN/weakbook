@@ -1,6 +1,7 @@
 class Profile {
 
     static init(user) {
+        console.log(user)
         ProfileBuilder.build(user);
     }
 }
@@ -13,6 +14,21 @@ class ProfileBuilder {
         document.getElementById("banner-image").setAttribute("src", user.bannerPicture);
         if (user.owner)
             document.getElementById("profile-holder").querySelector("div").appendChild(this.#createEditProfileButton());
+        let button;
+        if (!user.owner){
+            if (user.areFriends) {
+                button = $(`<button class="btn btn-danger friend-request-btn mt-2">Remove friend</button>`).get(0);
+                button.onclick = function () {
+                    FriendManager.removeFriend(user.id);
+                }
+            } else {
+                button = $(`<button class="btn btn-success friend-request-btn mt-2">Add friend</button>`).get(0);
+                button.onclick = function () {
+                    FriendManager.sendFriendRequest(user.id);
+                }
+            }
+        }
+        document.getElementById("profile-holder").querySelector("div").appendChild(button);
     }
 
     static #createEditProfileButton() {
@@ -23,6 +39,7 @@ class ProfileBuilder {
 
 $(document).ready(function () {
     let tokens = window.location.href.split("/");
+    console.log("hi")
     AjaxManager.request("/getUser/" + tokens[tokens.length - 1], null, "GET", function (data) {
         Profile.init(data);
     })

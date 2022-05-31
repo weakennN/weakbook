@@ -1,14 +1,14 @@
 class FriendManager {
 
-    static sendFriendRequest() {
-        AjaxManager.request("/friend/request", "9", "POST", function (data) {
+    static sendFriendRequest(receiverId) {
+        AjaxManager.request("/friend/request/" + receiverId, null, "POST", function (data) {
             console.log(data);
-        }, null, "text/html", "text");
+        });
+    }
+
+    static removeFriend(friendId) {
+        AjaxManager.request("/friend/remove/" + friendId, null, "DELETE", function (data){
+            console.log(data);
+        })
     }
 }
-
-/*$(document).ready(function () {
-    FriendManager.sendFriendRequest();
-})
-
- */

@@ -35,10 +35,11 @@ public class ProfileController {
 
     @GetMapping("/getUser/{userId}")
     public ResponseEntity<UserView> getUserData(@PathVariable("userId") String stringUserId) {
+        System.out.println("hwello");
         Long userId = Long.parseLong(stringUserId);
         UserProfileView userProfileView = ViewMapper.mapToUserProfile(this.userService.getUser(userId));
-        if (userId.equals(AuthService.getUser().getId()))
-            userProfileView.setOwner(true);
+        userProfileView.setOwner(userId.equals(AuthService.getUser().getId()));
+        userProfileView.setAreFriends(this.friendService.areFriends(userId));
         return new ResponseEntity<>(userProfileView, HttpStatus.OK);
     }
 
