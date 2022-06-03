@@ -37,7 +37,7 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(userRegisterBinding.getPassword()));
         user = this.userRepository.save(user);
         ApplicationUser applicationUser = ApplicationUserService.map(user);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(applicationUser, applicationUser.getAuthorities());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(applicationUser, applicationUser.getAuthorities(), null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         this.dropBoxService.createFolder("/users/user-" + user.getId());

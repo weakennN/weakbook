@@ -42,6 +42,6 @@ public class RegisterController {
 
         this.userService.registerUser(userRegisterBinding);
 
-        return "redirect:/index";
+        return "redirect:/";
     }
 }
