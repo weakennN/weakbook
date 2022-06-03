@@ -21,7 +21,7 @@ class PostCreator {
 
     static #upload(images) {
         for (let image of images) {
-            PostCreator.#postImages.push(image);
+            PostCreator.#postImages.push(image.split(",")[1]);
             PostCreator.#postImageElement.appendChild(PostCreator.#createImageElement(image))
         }
         console.log(PostCreator.#postImages)
@@ -47,6 +47,10 @@ class PostCreator {
         return $(`<div class="col-6">
                         <img class="img-fluid" style="border-radius: 15px;object-fit: cover;height: 100%" src="${imageSrc}" alt="">
                     </div>`).get(0);
+    }
+
+    static getImages() {
+        return this.#postImages;
     }
 }
 

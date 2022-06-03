@@ -58,7 +58,7 @@ class PostManager {
                                                                         </div>`).get(0));
         }
         if (post.imagesUrls.length > 1) {
-            postElement.querySelector(".navigational-button").appendChild($(` <button class="carousel-control-prev" type="button" data-bs-target="#images-${post.id}" data-bs-slide="prev">
+            postElement.querySelector(".navigation-buttons").appendChild($(` <button class="carousel-control-prev" type="button" data-bs-target="#images-${post.id}" data-bs-slide="prev">
                                                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                                                 <span class="visually-hidden">Previous</span>
                                                                               </button>
@@ -92,16 +92,13 @@ class PostManager {
     }
 
     static post() {
-        let pictureFiles = document.getElementById("add-post-pictures").files;
-        let promises = encodeImages(pictureFiles);
-
-        Promise.all(promises).then(function (values) {
-            AjaxManager.request("/savePost", JSON.stringify({
-                base64Images: values,
-                content: $("#post-content").val()
-            }), "POST", function (data) {
-                PostManager.createPost(data);
-            })
+        let images = PostCreator.getImages();
+        console.log(images);
+        AjaxManager.request("/posts", JSON.stringify({
+            base64Images: images,
+            content: document.getElementById("post-create-content").value
+        }), "POST", function (data) {
+            PostManager.createPost(data);
         })
     }
 }

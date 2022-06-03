@@ -59,8 +59,6 @@ public class PostController {
     @GetMapping(value = "/posts/user/{userId}", consumes = MediaType.ALL_VALUE)
     @ResponseBody
     public ResponseEntity<List<PostView>> getOwnPosts(@PathVariable String userId, @RequestParam("passedPosts") int passedPosts) {
-        System.out.println("here");
-        System.out.println(passedPosts);
         return new ResponseEntity<>(this.postService.getUserPosts(Long.parseLong(userId), passedPosts), HttpStatus.OK);
     }
 
