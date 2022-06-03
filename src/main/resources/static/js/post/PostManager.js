@@ -58,14 +58,14 @@ class PostManager {
                                                                         </div>`).get(0));
         }
         if (post.imagesUrls.length > 1) {
-            postElement.querySelector(".navigation-buttons").appendChild($(` <button class="carousel-control-prev" type="button" data-bs-target="#images-${post.id}" data-bs-slide="prev">
+            postElement.querySelector(".navigation-buttons").innerHTML = `<button class="carousel-control-prev" type="button" data-bs-target="#images-${post.id}" data-bs-slide="prev">
                                                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                                                 <span class="visually-hidden">Previous</span>
                                                                               </button>
                                                                               <button class="carousel-control-next" type="button" data-bs-target="#images-${post.id}" data-bs-slide="next">
                                                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                                                 <span class="visually-hidden">Next</span>
-                                                                              </button>`).get(0));
+                                                                              </button>`;
         }
         postElement.querySelector(".carousel-inner").children[0].classList.add("active");
         $("#posts").append(postElement);
