@@ -8,7 +8,7 @@ class AdvancedPostView {
     static numberComments;
     static like;
     static comment;
-    static postImage;
+    static postImages;
     static owner;
     static ownerImage;
     static content;
@@ -18,7 +18,8 @@ class AdvancedPostView {
         this.writeCommentInput = document.getElementById("write-comment");
         this.numberLikes = document.getElementById("number-likes");
         this.numberComments = document.getElementById("number-comments");
-        this.postImage = document.getElementById("post-image");
+        this.postImages = document.getElementById("post-carousel-images");
+        this.postImages.innerHTML = "";
         this.ownerImage = document.getElementById("post-owner-image");
         this.owner = document.getElementById("post-owner-name");
         this.content = document.getElementById("post-content");
@@ -67,7 +68,12 @@ class AdvancedPostView {
             this.like.style.color = "#818181";
         this.numberLikes.innerHTML = post.numberLikes;
         this.numberComments.innerHTML = post.numberComments;
-        this.postImage.setAttribute("src", post.imagesUrls[0]);
+        for (let image of post.imagesUrls) {
+            this.postImages.appendChild($(`<div class="carousel-item">
+                                            <img style="height: 100%;object-fit: contain" src="${image}" class="d-block w-100" alt="...">
+                                        </div>`).get(0));
+        }
+        this.postImages.children[0].classList.add("active");
         this.ownerImage.setAttribute("src", post.user.profilePicture);
         this.owner.innerHTML = post.user.firstName + " " + post.user.lastName;
         this.content.innerHTML = post.content;
