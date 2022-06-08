@@ -15,7 +15,7 @@ class Post {
             PostModal.clear();
             AdvancedPostView.getPost(instance.#post.links.self.link, function () {
                 PostModal.open();
-                window.history.pushState(postState, "", this.#post.links.self.link);
+                window.history.pushState(postState, "", this.#post.links.view.link);
             }.bind(this));
         }.bind(this);
         this.#postElement.querySelector(".likes").onclick = function () {
