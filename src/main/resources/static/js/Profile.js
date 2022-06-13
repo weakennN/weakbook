@@ -17,12 +17,12 @@ class ProfileBuilder {
         let button;
         if (!user.owner){
             if (user.areFriends) {
-                button = $(`<button class="btn btn-danger friend-request-btn mt-2">Remove friend</button>`).get(0);
+                button = $(`<button class="btn btn-danger ms-auto friend-request-btn mt-2">Remove friend</button>`).get(0);
                 button.onclick = function () {
                     FriendManager.removeFriend(user.id);
                 }
             } else {
-                button = $(`<button class="btn btn-success friend-request-btn mt-2">Add friend</button>`).get(0);
+                button = $(`<button class="btn btn-success ms-auto friend-request-btn mt-2">Add friend</button>`).get(0);
                 button.onclick = function () {
                     FriendManager.sendFriendRequest(user.id);
                 }

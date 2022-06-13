@@ -34,7 +34,7 @@ public class FriendService {
     }
 
     public void acceptFriendRequest(Long id) {
-        this.friendRequestRepository.accept(id);
+        this.friendRequestRepository.delete(id);
         FriendRequest friendRequest = this.friendRequestRepository.findById(id).get();
         this.friendRepository.save(new Friend(friendRequest.getSender(), friendRequest.getReceiver()));
         this.notificationService.deleteNotification(friendRequest.getId(), NotificationType.FRIEND_REQUEST.getId());

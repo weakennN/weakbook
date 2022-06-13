@@ -1,6 +1,7 @@
 # weakboook
 
 ___
+
 weakbook is a social media built with Spring Boot, MySQL and JavaScript.
 
 ## Features
@@ -42,3 +43,15 @@ ___
 * Java 11
 * Maven
 
+### User Credentials:
+
+* email: user1@weakbook.com
+* password: 123456789Aa
+
+## Screenshots
+
+___
+
+![ScreenShot](screenshots/Screenshot_3.png)
+
+![ScreenShot](screenshots/Screenshot_2.png)

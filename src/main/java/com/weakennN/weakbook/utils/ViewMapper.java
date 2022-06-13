@@ -111,6 +111,8 @@ public class ViewMapper {
     }
 
     public static UserProfileView mapToUserProfile(User user) {
-        return mapper.map(user, UserProfileView.class);
+        UserProfileView userProfileView = mapper.map(user, UserProfileView.class);
+        userProfileView.setProfilePicture(dropBoxService.getImageUrl(user.getProfilePicture()));
+        return userProfileView;
     }
 }

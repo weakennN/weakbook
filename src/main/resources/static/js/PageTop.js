@@ -7,7 +7,7 @@ $(document).ready(function () {
         setTimeout(function () {
             document.getElementById("search-box-suggestions").style.opacity = "0";
             document.getElementById("search-box-suggestions").style.display = "none";
-        }, 5000)
+        }, 500);
     });
     document.getElementById("search-input").oninput = function () {
         AjaxManager.request("/search?query=" + document.getElementById("search-input").value + "&limit=7"
