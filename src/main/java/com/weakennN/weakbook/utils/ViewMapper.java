@@ -9,15 +9,17 @@ import com.weakennN.weakbook.service.AuthService;
 import com.weakennN.weakbook.service.DropBoxService;
 import com.weakennN.weakbook.view.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class ViewMapper {
 
     private static final ModelMapper mapper = new ModelMapper();
+    private static final DropBoxService dropBoxService = new DropBoxService();
 
     public static PostView mapToPostView(Post post, CommentRepository commentRepository
-            , PostLikeRepository postLikeRepository, User user, DropBoxService dropBoxService) {
+            , PostLikeRepository postLikeRepository, User user) {
         PostView postView = mapper.map(post, PostView.class);
         postView
                 .setId(post.getId())
@@ -25,8 +27,8 @@ public class ViewMapper {
                 .setNumberComments(commentRepository.countCommentByPostId(post.getId()))
                 .setNumberLikes(postLikeRepository.countPostLikeByPost(post))
                 .setUser(mapper.map(user, UserView.class))
-                .setIsLiked(postLikeRepository.isLiked(AuthService.getUser().getId(), post.getId()) != null);
-        postView.getUser().setProfilePicture(user.getProfilePicture());
+                .setIsLiked(postLikeRepository.isLiked(AuthService.getUser().getId(), post.getId()) != null)
+                .getUser().setProfilePicture(dropBoxService.getImageUrl(user.getProfilePicture()));
 
         for (PostPicture postPicture : post.getPictures()) {
             postView.addImageUrl(dropBoxService.getImageUrl(postPicture.getPath()));
@@ -47,6 +49,7 @@ public class ViewMapper {
                 .setComment(comment.getComment())
                 .setUser(mapper.map(user, UserView.class))
                 .setPostId(post.getId());
+        commentView.getUser().setProfilePicture(dropBoxService.getImageUrl(commentView.getUser().getProfilePicture()));
         commentView.initLinks();
 
         return commentView;
@@ -61,7 +64,7 @@ public class ViewMapper {
                 .setCountReplies(countReplies)
                 .setId(comment.getId())
                 .setPostId(post.getId());
-
+        commentView.getUser().setProfilePicture(dropBoxService.getImageUrl(commentView.getUser().getProfilePicture()));
         if (countReplies > 10)
             commentView.setHasMoreReplies(true);
         commentView.initLinks();
@@ -79,11 +82,11 @@ public class ViewMapper {
 
         if (chatParticipants.size() == 2) {
             if (chatParticipants.get(0).getUser().getId().equals(AuthService.getUser().getId())) {
-                resultChatRoom.setRoomImage(chatParticipants.get(1).getUser().getProfilePicture());
+                resultChatRoom.setRoomImage(dropBoxService.getImageUrl(chatParticipants.get(1).getUser().getProfilePicture()));
                 resultChatRoom.setName(chatParticipants.get(1).getUser().getFirstName()
                         + " " + chatParticipants.get(1).getUser().getLastName());
             } else {
-                resultChatRoom.setRoomImage(chatParticipants.get(0).getUser().getProfilePicture());
+                resultChatRoom.setRoomImage(dropBoxService.getImageUrl(chatParticipants.get(0).getUser().getProfilePicture()));
                 resultChatRoom.setName(chatParticipants.get(0).getUser().getFirstName()
                         + " " + chatParticipants.get(0).getUser().getLastName());
             }
@@ -96,11 +99,13 @@ public class ViewMapper {
     public static Message mapMessage(ChatMessage chatMessage, User user) {
         Message message = mapper.map(chatMessage, Message.class);
         message.setUser(mapUser(user));
+        message.getUser().setProfilePicture(dropBoxService.getImageUrl(message.getUser().getProfilePicture()));
         return message;
     }
 
     public static UserView mapUser(User user) {
         UserView userView = mapper.map(user, UserView.class);
+        userView.setProfilePicture(dropBoxService.getImageUrl(userView.getProfilePicture()));
         userView.initLinks();
         return userView;
     }

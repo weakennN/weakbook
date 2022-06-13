@@ -21,12 +21,11 @@ class PostManager {
                                     <div class='mt-1' style='width: 40px;height: 40px;'> 
                                     <a href="${post.links.user.link}">
                                          <img class='post-image' 
-                                             src="${post.user.profilePictureUrl}" alt="">
+                                             src="${post.user.profilePicture}" alt="">
                                     </a>
                                     </div> 
                                     <div class='ms-2'> 
                                         <a href='${post.links.user.link}' class='card-title mb-0 post-user-name'>${post.user.firstName + " " + post.user.lastName}</a> 
-                                        <p class='post-time mb-0'>10h</p> 
                                     </div> 
                                 </div> 
                                 <p class='card-text'>${post.content}</p> 

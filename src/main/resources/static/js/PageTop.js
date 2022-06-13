@@ -4,8 +4,10 @@ $(document).ready(function () {
         document.getElementById("search-box-suggestions").style.display = "block";
     });
     document.getElementById("search-input").addEventListener("focusout", function () {
-        document.getElementById("search-box-suggestions").style.opacity = "0";
-        document.getElementById("search-box-suggestions").style.display = "none";
+        setTimeout(function () {
+            document.getElementById("search-box-suggestions").style.opacity = "0";
+            document.getElementById("search-box-suggestions").style.display = "none";
+        }, 5000)
     });
     document.getElementById("search-input").oninput = function () {
         AjaxManager.request("/search?query=" + document.getElementById("search-input").value + "&limit=7"
@@ -21,7 +23,7 @@ $(document).ready(function () {
         deleteSuggestions();
         let searchSuggestions = document.getElementById("search-box-suggestions");
         for (let user of data) {
-            searchSuggestions.appendChild($(`<a href="${user.links.self}" class="d-flex flex-row search-box-suggestion">
+            searchSuggestions.appendChild($(`<a href="${user.links.self.link}" class="d-flex flex-row search-box-suggestion">
                                                 <img src="${user.profilePicture}">
                                                     <p class="ms-2 mb-0" style="align-self: center;font-weight: 500">${user.firstName + " " + user.lastName}</p>
                                             </a>`).get(0));

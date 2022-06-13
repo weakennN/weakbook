@@ -50,7 +50,7 @@ public class PostService {
         this.addPicturesToPost(postBinding, post);
         this.postRepository.save(post);
 
-        return ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository, user, this.dropBoxService);
+        return ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository, user);
     }
 
     private void addPicturesToPost(PostBinding postBinding, Post post) {
@@ -69,7 +69,7 @@ public class PostService {
 
         for (Post post : posts) {
             result.add(ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository,
-                    this.userRepository.findById(post.getUser().getId()).get(), this.dropBoxService));
+                    this.userRepository.findById(post.getUser().getId()).get()));
         }
 
         return result;
@@ -95,7 +95,7 @@ public class PostService {
     public PostView getPost(Long postId) {
         Post post = this.postRepository.findById(postId).get();
         return ViewMapper.mapToPostView(post, this.commentRepository,
-                this.postLikeRepository, post.getUser(), this.dropBoxService);
+                this.postLikeRepository, post.getUser());
     }
 
     public List<PostView> getUserPosts(Long userId, int passedPosts) {
@@ -103,7 +103,7 @@ public class PostService {
         List<PostView> result = new ArrayList<>();
         for (Post post : posts) {
             result.add(ViewMapper.mapToPostView(post, this.commentRepository, this.postLikeRepository,
-                    this.userRepository.findById(AuthService.getUser().getId()).get(), this.dropBoxService));
+                    this.userRepository.findById(userId).get()));
         }
         return result;
     }
