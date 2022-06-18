@@ -25,12 +25,12 @@
             </a>
         </div>
         <button class="navbar-toggler ms-auto" type="button" style="box-shadow: none" data-bs-toggle="collapse"
-                data-bs-target="#navbarTogglerDemo01"
-                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                data-bs-target="#navbar-dropdown"
+                aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
     </div>
-    <div class="collapse navbar-collapse order-3 order-md-2" id="navbarTogglerDemo01">
+    <div class="collapse navbar-collapse order-3 order-md-2" id="navbar-dropdown">
         <ul class="navbar-nav mb-2 mb-lg-0">
             <a class="nav-link px-2" href="/">
                 <i class="fas fa-home"></i>
@@ -54,6 +54,13 @@
             <img th:src="${user.profilePicture}" class="nav-profile-image" alt="">
             <p th:text="${user.firstName}" class="mb-0 mt-2 ms-2"></p>
         </a>
+        <div class="dropdown">
+            <button class="btn" id="account-menu" data-bs-toggle="dropdown"><i class="fas fa-arrow-alt-circle-down"
+                                                                               style="font-size: 1.75rem"></i></button>
+            <ul class="dropdown-menu account-menu-dropdown" aria-labelledby="account-menu">
+                <li><a class="dropdown-item" href="/logout">Log out</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

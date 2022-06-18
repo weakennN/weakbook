@@ -104,9 +104,17 @@ i {
     z-index: 1300;
 }
 
+.account-menu-dropdown {
+    left: -50px !important;
+}
+
 @media all and (max-width: 768px) {
     .nav-link {
         padding-left: 0 !important;
+    }
+
+    .account-menu-dropdown {
+        left: 0 !important;
     }
 
     .navbar-brand {
