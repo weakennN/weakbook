@@ -3,6 +3,7 @@ package com.weakennN.weakbook.service;
 import com.weakennN.weakbook.entity.ChatMessage;
 import com.weakennN.weakbook.entity.ChatParticipant;
 import com.weakennN.weakbook.entity.ChatRoom;
+import com.weakennN.weakbook.entity.NotificationType;
 import com.weakennN.weakbook.repository.ChatMessagesRepository;
 import com.weakennN.weakbook.repository.ChatParticipantRepository;
 import com.weakennN.weakbook.repository.ChatRoomRepository;
@@ -25,15 +26,17 @@ public class ChatService {
     private UserRepository userRepository;
     private ChatParticipantRepository chatParticipantRepository;
     private ChatMessagesRepository chatMessagesRepository;
+    private NotificationService notificationService;
 
     public ChatService(ChatRoomRepository chatRoomRepository, UserRepository userRepository
             , ChatParticipantRepository chatParticipantRepository, WebSocketService webSocketService
-            , ChatMessagesRepository chatMessagesRepository) {
+            , ChatMessagesRepository chatMessagesRepository, NotificationService notificationService) {
         this.chatRoomRepository = chatRoomRepository;
         this.userRepository = userRepository;
         this.chatParticipantRepository = chatParticipantRepository;
         this.webSocketService = webSocketService;
         this.chatMessagesRepository = chatMessagesRepository;
+        this.notificationService = notificationService;
     }
 
     public List<ChatRoomView> getUserChatRooms() {
@@ -86,8 +89,11 @@ public class ChatService {
         else
             resultMessage.setFromCurrentUser(true);
         this.webSocketService.sendToUsers(resultMessage, "/queue/chat",
-                this.chatParticipantRepository.findParticipantsEmailByChatRoom(user.getId(), chatRoomId)
-        );
+                this.chatParticipantRepository.findParticipantsEmailByChatRoom(user.getId(), chatRoomId));
+        List<ChatParticipant> chatParticipants = this.chatParticipantRepository.findAllByChatRoom(this.chatRoomRepository.findById(chatRoomId).get());
+        Long receiverId = chatParticipants.get(0).getId().equals(user.getId())
+                ? chatParticipants.get(1).getId() : chatParticipants.get(0).getId();
+        this.notificationService.saveNotification(NotificationType.MESSAGE, receiverId, chatMessage.getId(), false);
     }
 
     private ChatMessage saveMessage(Message message, ApplicationUser applicationUser) {

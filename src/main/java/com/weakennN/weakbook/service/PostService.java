@@ -86,7 +86,7 @@ public class PostService {
             PostLike newLike = new PostLike(post, this.userRepository.findById(userId).get());
             this.postLikeRepository.save(newLike);
             if (!AuthService.getUser().getId().equals(post.getUser().getId())) {
-                this.notificationService.saveNotification(NotificationType.POST_LIKE, post.getUser().getId(), post.getId());
+                this.notificationService.saveNotification(NotificationType.POST_LIKE, post.getUser().getId(), post.getId(), true);
             }
             return new PostLikeView(true);
         }

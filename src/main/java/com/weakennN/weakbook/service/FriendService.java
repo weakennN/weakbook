@@ -30,7 +30,7 @@ public class FriendService {
     public void sendFriendRequest(Long receiverId) {
         this.friendRequestRepository.sendFriendRequest(receiverId, AuthService.getUser().getId());
         this.notificationService.saveNotification(NotificationType.FRIEND_REQUEST, receiverId,
-                this.friendRequestRepository.findByReceiverIdAndSenderId(receiverId, AuthService.getUser().getId()).getId());
+                this.friendRequestRepository.findByReceiverIdAndSenderId(receiverId, AuthService.getUser().getId()).getId(), true);
     }
 
     public void acceptFriendRequest(Long id) {

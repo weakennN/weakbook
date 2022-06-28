@@ -85,7 +85,7 @@ public class CommentService {
             return new LikeView(false);
         }
         this.commentLikeRepository.save(new CommentLike(user, comment));
-        this.notificationService.saveNotification(NotificationType.COMMENT_LIKE, comment.getUser().getId(), comment.getId());
+        this.notificationService.saveNotification(NotificationType.COMMENT_LIKE, comment.getUser().getId(), comment.getId(), true);
         return new LikeView(true);
     }
 }

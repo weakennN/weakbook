@@ -26,14 +26,15 @@ public class NotificationService {
         this.userRepository = userRepository;
     }
 
-    public void saveNotification(NotificationType notificationType, Long receiverId, Long entityId) {
+    public void saveNotification(NotificationType notificationType, Long receiverId, Long entityId, boolean insert) {
         ApplicationUser user = AuthService.getUser();
         User receiver = this.userRepository.findById(receiverId).get();
         if (user.getId().equals(receiverId)
                 || this.notificationRepository.findBySenderIdAndReceiverIdAndTypeAndEntityId(user.getId(), receiverId, notificationType.getId(), entityId) != null)
             return;
         this.sendNotification(createNotification(notificationType, user, entityId, AuthService.getUserView()), receiver.getEmail());
-        this.notificationRepository.insert(notificationType.getId(), entityId, user.getId(), receiverId);
+        if (insert)
+            this.notificationRepository.insert(notificationType.getId(), entityId, user.getId(), receiverId);
     }
 
     public List<Notification> getUserNotifications() {
