@@ -5,18 +5,33 @@ class Chat {
 
     static init() {
         this.#chatRoomsBox = document.getElementById("chat-rooms-box");
+        document.getElementById("chat-room-searcher").oninput = function () {
+            AjaxManager.request("/search?query=" + document.getElementById("chat-room-searcher").value + "&limit=5", null, "GET", function (data) {
+                document.getElementById("chat-room-results").innerHTML = "";
+                for (let user of data) {
+                    let element = $(`<div class="d-flex flex-row">
+                        <img style="width: 40px;height: 40px;border-radius: 50%" src="${user.profilePicture}" alt="">
+                        <p class="ms-2">${user.firstName + " " + user.lastName}</p>
+                      </div>`).get(0);
+                    element.onclick = function () {
+                        this.#createChatRoom(user.id);
+                    }.bind(this);
+                    document.getElementById("chat-room-results").appendChild(element);
+                }
+            }.bind(this))
+        }.bind(this);
+    }
+
+    static #createChatRoom(userId) {
+        AjaxManager.request("/chat/chatRooms/" + userId, null, "POST", function (data) {
+            this.#createChatRooms([data]);
+        }.bind(this))
     }
 
     static getChatRooms() {
         AjaxManager.request("/chat/chatRooms", {}, "GET", function (data) {
             console.log(data);
             Chat.#createChatRooms(data);
-        })
-    }
-
-    static createNewChatRoom() {
-        AjaxManager.request("/chat/chatRooms", "8", "POST", function (data) {
-
         })
     }
 
@@ -46,13 +61,6 @@ class Chat {
 }
 
 $(document).ready(function () {
-    /*setTimeout(function () {
-        Chat.currentChatRoom.disconnect();
-    }, 100000)
-
-    //   Chat.sendMessage();
-
-     */
     Chat.init();
     Chat.getChatRooms();
 })

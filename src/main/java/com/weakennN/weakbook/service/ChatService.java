@@ -27,16 +27,19 @@ public class ChatService {
     private ChatParticipantRepository chatParticipantRepository;
     private ChatMessagesRepository chatMessagesRepository;
     private NotificationService notificationService;
+    private DropBoxService dropBoxService;
 
     public ChatService(ChatRoomRepository chatRoomRepository, UserRepository userRepository
             , ChatParticipantRepository chatParticipantRepository, WebSocketService webSocketService
-            , ChatMessagesRepository chatMessagesRepository, NotificationService notificationService) {
+            , ChatMessagesRepository chatMessagesRepository, NotificationService notificationService
+            , DropBoxService dropBoxService) {
         this.chatRoomRepository = chatRoomRepository;
         this.userRepository = userRepository;
         this.chatParticipantRepository = chatParticipantRepository;
         this.webSocketService = webSocketService;
         this.chatMessagesRepository = chatMessagesRepository;
         this.notificationService = notificationService;
+        this.dropBoxService = dropBoxService;
     }
 
     public List<ChatRoomView> getUserChatRooms() {
@@ -54,16 +57,17 @@ public class ChatService {
 
     public ChatRoomView createNewChatRoom(Long userId) {
         ApplicationUser user = AuthService.getUser();
-        ChatRoom newChatRoom = this.chatRoomRepository.save(new ChatRoom());
+        ChatRoom chatRoom = this.chatRoomRepository.save(new ChatRoom());
 
         ChatParticipant chatParticipant1 = new ChatParticipant();
-        chatParticipant1.setUser(this.userRepository.findByEmail(user.getEmail()).get()).setChatRoom(newChatRoom);
+        chatParticipant1.setUser(this.userRepository.findByEmail(user.getEmail()).get()).setChatRoom(chatRoom);
         ChatParticipant chatParticipant2 = new ChatParticipant();
-        chatParticipant2.setUser(this.userRepository.findById(userId).get()).setChatRoom(newChatRoom);
+        chatParticipant2.setUser(this.userRepository.findById(userId).get()).setChatRoom(chatRoom);
 
         this.chatParticipantRepository.save(chatParticipant1);
         this.chatParticipantRepository.save(chatParticipant2);
-        return new ChatRoomView();
+
+        return ViewMapper.mapToChatRoomView(chatRoom, this.chatMessagesRepository, this.chatParticipantRepository);
     }
 
     public List<Message> getMessages(Long chatRoomId, int offset) {

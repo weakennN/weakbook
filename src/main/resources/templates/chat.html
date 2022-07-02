@@ -17,15 +17,17 @@
      style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding-left: 15px;padding-right: 15px;border-radius: 10px;height: 100%">
     <div class="row" style="height: 100%">
         <div class="col-md-4 col-12 chat-room-box-holder" style="height: 100%">
-            <div id="chat-rooms-box" style="border-style: solid;border-width: 0 1px 0 0;border-color: #c9c9c9;height: 100%">
-
+            <div id="chat-rooms-box"
+                 style="border-style: solid;border-width: 0 1px 0 0;border-color: #c9c9c9;height: 100%">
+                <div style="padding-right: 15px;padding-top: 10px">
+                    <input id="chat-room-searcher" class="form-control" type="text">
+                    <div id="chat-room-results" style="max-height: 500px;overflow-y: auto;overflow-x: unset"></div>
+                </div>
             </div>
         </div>
         <div class="col-md-8 col-12" style="height: 100%">
             <div class="d-flex flex-column" style="height: 100%">
-                <div id="chat-box" class="d-flex flex-column" style="overflow-y: auto;padding: 15px">
-
-                </div>
+                <div id="chat-box" class="d-flex flex-column" style="overflow-y: auto;padding: 15px"></div>
                 <div class="d-flex flex-row mt-auto p-3">
                     <input placeholder="Send message." id="message-box" class="form-control" type="text">
                 </div>

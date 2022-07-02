@@ -36,10 +36,10 @@ public class ChatController {
         return new ResponseEntity<>(this.chatService.getUserChatRooms(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/chatRooms", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/chatRooms/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<ChatRoomView> createChatRoom(@RequestBody String userId) {
-        return new ResponseEntity<>(this.chatService.createNewChatRoom(Long.parseLong(userId)), HttpStatus.OK);
+    public ResponseEntity<ChatRoomView> createChatRoom(@PathVariable Long userId) {
+        return new ResponseEntity<>(this.chatService.createNewChatRoom(userId), HttpStatus.OK);
     }
 
     @PostMapping(value = "/message/{chatRoomId}", consumes = MediaType.APPLICATION_JSON_VALUE)

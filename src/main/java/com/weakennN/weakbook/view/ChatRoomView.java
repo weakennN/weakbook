@@ -8,7 +8,7 @@ public class ChatRoomView extends RepresentationModel {
     private Long id;
     private String name;
     private String roomImage;
-    private String latestMessage;
+    private String latestMessage = "";
 
     public String getName() {
         return name;
