@@ -95,8 +95,8 @@ public class ChatService {
         this.webSocketService.sendToUsers(resultMessage, "/queue/chat",
                 this.chatParticipantRepository.findParticipantsEmailByChatRoom(user.getId(), chatRoomId));
         List<ChatParticipant> chatParticipants = this.chatParticipantRepository.findAllByChatRoom(this.chatRoomRepository.findById(chatRoomId).get());
-        Long receiverId = chatParticipants.get(0).getId().equals(user.getId())
-                ? chatParticipants.get(1).getId() : chatParticipants.get(0).getId();
+        Long receiverId = chatParticipants.get(0).getUser().getId().equals(user.getId())
+                ? chatParticipants.get(1).getUser().getId() : chatParticipants.get(0).getUser().getId();
         this.notificationService.saveNotification(NotificationType.MESSAGE, receiverId, chatMessage.getId(), false);
     }
 

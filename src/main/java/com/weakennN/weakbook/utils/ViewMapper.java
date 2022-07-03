@@ -99,7 +99,6 @@ public class ViewMapper {
     public static Message mapMessage(ChatMessage chatMessage, User user) {
         Message message = mapper.map(chatMessage, Message.class);
         message.setUser(mapUser(user));
-        message.getUser().setProfilePicture(dropBoxService.getImageUrl(message.getUser().getProfilePicture()));
         return message;
     }
 

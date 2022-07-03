@@ -9,7 +9,7 @@ class Chat {
             AjaxManager.request("/search?query=" + document.getElementById("chat-room-searcher").value + "&limit=5", null, "GET", function (data) {
                 document.getElementById("chat-room-results").innerHTML = "";
                 for (let user of data) {
-                    let element = $(`<div class="d-flex flex-row">
+                    let element = $(`<div class="d-flex flex-row p-2">
                         <img style="width: 40px;height: 40px;border-radius: 50%" src="${user.profilePicture}" alt="">
                         <p class="ms-2">${user.firstName + " " + user.lastName}</p>
                       </div>`).get(0);
@@ -44,7 +44,6 @@ class Chat {
                         <p class="latest-message">${chatRoom.latestMessage}</p>
                     </div>
                 </div>`).get(0);
-            // TODO: use the current chatRoomElement
             chatRoomElement.onclick = function () {
                 if (Chat.#currentChatRoom != null
                     && Chat.#currentChatRoom.getChatRoomId() === chatRoom.id) {
